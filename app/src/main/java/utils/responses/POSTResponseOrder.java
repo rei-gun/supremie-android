@@ -3,7 +3,7 @@ package utils.responses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PostResponse {
+public class POSTResponseOrder {
 
     @SerializedName("id")
     @Expose
@@ -70,7 +70,7 @@ public class PostResponse {
 
     }
 
-    public PostResponse(Integer id, Integer statusCode, String message) {
+    public POSTResponseOrder(Integer id, Integer statusCode, String message) {
         this.id = id;
         this.statusCode = statusCode;
         this.message = message;

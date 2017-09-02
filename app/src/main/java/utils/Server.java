@@ -12,6 +12,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import utils.JSONifies.GETStockJSONify;
+import utils.JSONifies.POSTOrderJSONify;
+import utils.responses.GETResponseStock;
 
 /**
  * An abstract Retrofit server.
@@ -51,11 +54,10 @@ public abstract class Server {
                     .client(client)
                     .baseUrl(getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
-                            .registerTypeAdapter(Order.class, new JSONConverter(datePattern))
-//                            .registerTypeAdapter(Date.class, new DateConverter(datePattern))
+                            .registerTypeAdapter(Order.class, new POSTOrderJSONify(datePattern))
+                            .registerTypeAdapter(GETResponseStock.class, new GETStockJSONify(datePattern))
                             .setDateFormat(datePattern)
                             .create()))
-//                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .build();
         }
     }

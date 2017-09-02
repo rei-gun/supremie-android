@@ -2,32 +2,32 @@ package utils;
 
 import android.content.Context;
 
-import domain.Order;
 import retrofit2.Call;
+import utils.responses.GETResponseStock;
 import utils.responses.POSTResponseOrder;
 
 /**
  * Exposes {@link OrderService}.
  */
-public class OrderServer extends Server {
+public class StockServer extends Server {
     public POSTResponseOrder output;
 
     /**
      * The singleton instance.
      */
-    private static OrderServer instance;
+    private static StockServer instance;
 
     /**
      * The service api conf.
      */
-    private OrderService service;
+    private StockService service;
 
     /**
      * Constructor.
      */
-    private OrderServer(Context c) {
+    private StockServer(Context c) {
         super(c);
-        service = createService(OrderService.class);
+        service = createService(StockService.class);
     }
 
     /**
@@ -35,9 +35,9 @@ public class OrderServer extends Server {
      *
      * @return The singleton instance.
      */
-    public static OrderServer getInstance(Context c) {
+    public static StockServer getInstance(Context c) {
         if (instance == null)
-            instance = new OrderServer(c);
+            instance = new StockServer(c);
         return instance;
     }
 
@@ -57,11 +57,10 @@ public class OrderServer extends Server {
     /**
      * Create a new permintaan.
      *
-     * @param order The permintaan model to be created.
      * @return The permintaan model that was added.
      */
-    public Call<POSTResponseOrder> createOrder(Order order) {
-        return service.createOrder(order);
+    public Call<GETResponseStock> getStock() {
+        return service.getStock();
         /*
         output = null;
         service.createOrder(order).enqueue(new Callback<POSTResponseOrder>() {
