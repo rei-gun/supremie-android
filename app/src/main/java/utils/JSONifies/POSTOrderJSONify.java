@@ -15,10 +15,10 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-import domain.Drink;
-import domain.Mie;
-import domain.Order;
-import domain.Topping;
+import model.Drink;
+import model.Mie;
+import model.Order;
+import model.Topping;
 import utils.responses.POSTResponseOrder;
 
 /**

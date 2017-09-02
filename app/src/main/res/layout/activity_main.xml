@@ -10,13 +10,13 @@
     <android.support.v4.app.FragmentTabHost
         android:id="@+id/tab_host"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="5dp">
 
         <TabWidget
             android:id="@+id/tab_widget"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
         </TabWidget>
 
@@ -27,13 +27,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
-
-    <!--android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation" /-->
 
 </LinearLayout>

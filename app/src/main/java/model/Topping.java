@@ -1,4 +1,4 @@
-package domain;
+package model;
 
 /**
  * Created by rei on 30/08/17.

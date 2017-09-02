@@ -1,4 +1,4 @@
-package domain;
+package model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -32,5 +32,14 @@ public class Order {
         this.diningMethod = diningMethod;
         this.mies = mies;
         this.drinks = drinks;
+    }
+
+    public Order() {
+        this.id = null;
+        this.totalPrice = null;
+        this.paymentMethod = null;
+        this.diningMethod = null;
+        this.mies = null;
+        this.drinks = null;
     }
 }

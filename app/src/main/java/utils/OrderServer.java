@@ -2,7 +2,7 @@ package utils;
 
 import android.content.Context;
 
-import domain.Order;
+import model.Order;
 import retrofit2.Call;
 import utils.responses.POSTResponseOrder;
 
