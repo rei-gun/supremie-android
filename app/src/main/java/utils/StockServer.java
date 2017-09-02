@@ -62,7 +62,7 @@ public class StockServer extends Server {
     public Call<GETResponseStock> getStock() {
         return service.getStock();
         /*
-        
+
         output = null;
         service.createOrder(order).enqueue(new Callback<POSTResponseOrder>() {
             @Override
