@@ -1,7 +1,6 @@
 package fragment;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,6 @@ public class MieFlavourGridAdapter extends BaseAdapter {
         inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.chosenFlavour = chosenFlavour;
         this.quantities = quantities;
-//     this.chosenQuantity = chosenQuantity;
     }
 
     @Override
@@ -81,10 +79,9 @@ public class MieFlavourGridAdapter extends BaseAdapter {
             public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
                 Arrays.fill(quantities, 0);
                 quantities[i] = newQuantity;
-                chosenFlavour = i;
+                //TODO: save this info when fragment is paused instead of here
                 State.getInstance().setChooseMieFragmentId(i, newQuantity);
                 State.getInstance().setMieId(items.get(i).id);
-                Log.v("DICK1", chosenFlavour.toString());
                 notifyDataSetChanged();
             }
             @Override

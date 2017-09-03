@@ -34,17 +34,8 @@ public class ChooseMieBrandFragment extends Fragment {
                 oneOfEachBrand);
         gridView.setAdapter(gridAdapter);
 
-        if (State.getInstance().getBrandId() != null) {
-//            Log.v("DICK", State.getInstance().getBrandId().toString());
-            gridView.clearFocus();
-            gridView.post(new Runnable() {
-                @Override
-                public void run() {
-                    gridView.setSelection(State.getInstance().getBrandId());
-                }
-            });
-//            gridView.setSelection(State.getInstance().getBrandId());
-        }
+        //TODO: select previously selected brand
+
         setListener(this, gridView, oneOfEachBrand);
 
         return view;
@@ -54,8 +45,14 @@ public class ChooseMieBrandFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ((MainActivity)getActivity()).setBrand(f, oneOfEachBrand.get(i).brand);
-                State.getInstance().setBrandId(i);
+
+                if (State.getInstance().getBrand() != oneOfEachBrand.get(i).brand ) {
+                    State.getInstance().setBrand(oneOfEachBrand.get(i).brand);
+                    //TODO: do this when fragment pauses instead
+                    State.getInstance().setMieId(null);
+                    State.getInstance().setChooseMieFragmentId(null, null);
+                }
+
             }
         });
     }

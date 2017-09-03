@@ -1,7 +1,6 @@
 package com.bintang5.supremie.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 
@@ -23,13 +22,12 @@ public class MainActivity extends FragmentActivity {
 
     public GETResponseStock allStock;
     public Order order;
-    public String brand;
+//    public String brand;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        State state = State.getInstance();
         FragmentTabHost tabHost = (FragmentTabHost)findViewById(R.id.tab_host);
         tabHost.setup(this, getSupportFragmentManager(), R.id.tab_content);
 
@@ -54,13 +52,13 @@ public class MainActivity extends FragmentActivity {
         return allStock;
     }
 
-    public void setBrand(Fragment caller, String brand) {
-        if (caller instanceof ChooseMieBrandFragment) {
-            this.brand = brand;
-        }
-    }
-
-    public String getBrand() {
-        return this.brand;
-    }
+//    public void setBrand(Fragment caller, String brand) {
+//        if (caller instanceof ChooseMieBrandFragment) {
+//            this.brand = brand;
+//        }
+//    }
+//
+//    public String getBrand() {
+//        return this.brand;
+//    }
 }

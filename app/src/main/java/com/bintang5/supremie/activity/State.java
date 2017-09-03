@@ -8,7 +8,7 @@ public class State  {
 
     private static State instance;
 
-    private Integer brandId = null;
+    private String brand = null;
 
     private Integer chooseMieFragmentId = null;
 
@@ -29,14 +29,18 @@ public class State  {
 
     public void clear() {
 //        order = null;
+        brand = null;
+        chooseMieFragmentId = null;
+        quantityMie = null;
+        mieId = null;
     }
 
-    public void setBrandId(Integer i) {
-        brandId = i;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
-    public Integer getBrandId() {
-        return brandId;
+    public String getBrand() {
+        return brand;
     }
 
     public void setChooseMieFragmentId(Integer chooseMieFragmentId, Integer quantityMie) {
