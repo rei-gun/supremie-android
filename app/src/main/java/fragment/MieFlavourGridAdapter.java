@@ -1,6 +1,7 @@
 package fragment;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bintang5.supremie.R;
+import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import me.himanshusoni.quantityview.QuantityView;
 import model.MieStock;
 
 /**
@@ -23,11 +27,17 @@ public class MieFlavourGridAdapter extends BaseAdapter {
     private Context context;
     public ArrayList<MieStock> items;
     LayoutInflater inflater;
+    Integer chosenFlavour;
+    int [] quantities;
 
-    public MieFlavourGridAdapter(Context context, ArrayList<MieStock> items) {
+    public MieFlavourGridAdapter(Context context, ArrayList<MieStock> items,
+                                 int[] quantities, Integer chosenFlavour) {
         this.context = context;
         this.items = items;
         inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.chosenFlavour = chosenFlavour;
+        this.quantities = quantities;
+//     this.chosenQuantity = chosenQuantity;
     }
 
     @Override
@@ -41,6 +51,11 @@ public class MieFlavourGridAdapter extends BaseAdapter {
 
         TextView brandView = (TextView)view.findViewById(R.id.mie_flavour);
         brandView.setText((getItem(i).flavour));
+
+        QuantityView quantityView = (QuantityView)view.findViewById(R.id.quantity);
+        quantityView.setQuantity(quantities[i]);
+        quantityView.setMaxQuantity(3);
+        setQuantityListener(quantityView, i);
 
         return view;
     }
@@ -57,8 +72,25 @@ public class MieFlavourGridAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return items.get(i).id;
     }
 
+    private void setQuantityListener(final QuantityView quantityView, final Integer i) {
+        quantityView.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
+            @Override
+            public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
+                Arrays.fill(quantities, 0);
+                quantities[i] = newQuantity;
+                chosenFlavour = i;
+                State.getInstance().setChooseMieFragmentId(i, newQuantity);
+                State.getInstance().setMieId(items.get(i).id);
+                Log.v("DICK1", chosenFlavour.toString());
+                notifyDataSetChanged();
+            }
+            @Override
+            public void onLimitReached() {
 
+            }
+        });
+    }
 }

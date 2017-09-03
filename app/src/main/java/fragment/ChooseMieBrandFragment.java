@@ -11,6 +11,7 @@ import android.widget.GridView;
 
 import com.bintang5.supremie.R;
 import com.bintang5.supremie.activity.MainActivity;
+import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
@@ -26,25 +27,35 @@ public class ChooseMieBrandFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_brand, container, false);
-        GridView gridView = (GridView) view.findViewById(R.id.grid_mie);
+        final GridView gridView = (GridView) view.findViewById(R.id.grid_mie_brand);
         ArrayList<MieStock> oneOfEachBrand = ((MainActivity)getActivity()).getAllStock().getOneOfEachBrand();
 
         final MieBrandGridAdapter gridAdapter = new MieBrandGridAdapter(getActivity(),
                 oneOfEachBrand);
         gridView.setAdapter(gridAdapter);
 
-        setListener(gridView, oneOfEachBrand);
+        if (State.getInstance().getBrandId() != null) {
+//            Log.v("DICK", State.getInstance().getBrandId().toString());
+            gridView.clearFocus();
+            gridView.post(new Runnable() {
+                @Override
+                public void run() {
+                    gridView.setSelection(State.getInstance().getBrandId());
+                }
+            });
+//            gridView.setSelection(State.getInstance().getBrandId());
+        }
+        setListener(this, gridView, oneOfEachBrand);
 
         return view;
     }
 
-    private void setListener(GridView gridView, final ArrayList<MieStock> oneOfEachBrand) {
+    private void setListener(final Fragment f, GridView gridView, final ArrayList<MieStock> oneOfEachBrand) {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ((MainActivity)getActivity()).setBrand(oneOfEachBrand.get(i).brand);
-//                Log.v("TITTIES", ((MainActivity)getActivity()).getBrand());
-
+                ((MainActivity)getActivity()).setBrand(f, oneOfEachBrand.get(i).brand);
+                State.getInstance().setBrandId(i);
             }
         });
     }

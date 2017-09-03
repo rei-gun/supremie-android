@@ -4,13 +4,12 @@
     android:layout_height="match_parent">
 
     <GridView
-        android:id="@+id/grid_mie"
+        android:id="@+id/grid_mie_flavour"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="2"
         android:verticalSpacing="5dp"
-        android:horizontalSpacing="5dp"
-        android:listSelector="@drawable/grid_view_selector"/>
+        android:horizontalSpacing="5dp" />
 
 
 </LinearLayout>

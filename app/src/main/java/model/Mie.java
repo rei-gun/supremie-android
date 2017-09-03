@@ -24,7 +24,8 @@ public class Mie {
 
     public ArrayList<Topping> toppings;
 
-    public Mie(Integer id, String firmness, Integer quantityMie, Integer quantityWhole, Integer price, String chiliPowder, Integer extraChili, String note, ArrayList<Topping> toppings) {
+    public Mie(Integer id, Integer quantityMie, Integer quantityWhole, Integer price,
+               String chiliPowder, Integer extraChili, String note, ArrayList<Topping> toppings) {
         this.id = id;
         this.quantityMie = quantityMie;
         this.quantityWhole = quantityWhole;

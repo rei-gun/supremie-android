@@ -54,7 +54,7 @@ public abstract class Server {
                     .client(client)
                     .baseUrl(getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
-                            .registerTypeAdapter(Order.class, new POSTOrderJSONify(datePattern))
+                            .registerTypeAdapter(Order.class, new POSTOrderJSONify())
                             .registerTypeAdapter(GETResponseStock.class, new GETStockJSONify(datePattern))
                             .setDateFormat(datePattern)
                             .create()))

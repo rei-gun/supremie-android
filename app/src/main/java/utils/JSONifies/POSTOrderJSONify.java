@@ -1,37 +1,22 @@
 package utils.JSONifies;
 
-import android.util.Log;
-
 import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 import model.Drink;
 import model.Mie;
 import model.Order;
 import model.Topping;
-import utils.responses.POSTResponseOrder;
 
 /**
- * Serializes and deserializes {@link Order}s.
+ * Serializes {@link Order}s.
  */
-public class POSTOrderJSONify implements JsonSerializer<Order>, JsonDeserializer<POSTResponseOrder> {
-
-    private final SimpleDateFormat dateFormat;
-
-    public POSTOrderJSONify(String datePattern) {
-        this.dateFormat = new SimpleDateFormat(datePattern);
-        this.dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-    }
+public class POSTOrderJSONify implements JsonSerializer<Order> {
 
     @Override
     public JsonElement serialize(Order src, Type srcType, JsonSerializationContext context) {
@@ -78,17 +63,6 @@ public class POSTOrderJSONify implements JsonSerializer<Order>, JsonDeserializer
         }
         orderObject.add("drinks", drinkArray);
 
-        Log.v("JSONCUNT", orderKey.toString());
         return orderKey;
     }
-
-    @Override
-    public POSTResponseOrder deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-        JsonObject j = (JsonObject)json;
-        Integer id = j.getAsJsonPrimitive("id").getAsInt();
-        Integer statusCode = j.getAsJsonPrimitive("status_code").getAsInt();
-        String message = j.getAsJsonPrimitive("message").getAsString();
-        return new POSTResponseOrder(id, statusCode, message);
-    }
-
 }
