@@ -10,6 +10,7 @@ import android.widget.GridView;
 
 import com.bintang5.supremie.R;
 import com.bintang5.supremie.activity.MainActivity;
+import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
@@ -21,16 +22,23 @@ import model.ToppingStock;
 
 public class ChooseToppingFragment extends Fragment {
 
+    int[] quantities;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_topping, container, false);
         GridView gridView = (GridView) view.findViewById(R.id.grid_mie_flavour);
         MainActivity activity = (MainActivity)getActivity();
-        ArrayList<ToppingStock> toppingStocks = activity.getAllStock().getToppingStocks();
 
+        ArrayList<ToppingStock> toppingStocks = activity.getAllStock().getToppingStocks();
+        if (State.getInstance().getToppingQuantities() != null) {
+            quantities = State.getInstance().getToppingQuantities();
+        } else {
+            State.getInstance().initToppingQuantities(toppingStocks.size());
+            quantities = State.getInstance().getToppingQuantities();
+        }
         final ToppingGridAdapter gridAdapter = new ToppingGridAdapter(getActivity(),
-                toppingStocks);
+                toppingStocks, quantities);
         gridView.setAdapter(gridAdapter);
 
         return view;

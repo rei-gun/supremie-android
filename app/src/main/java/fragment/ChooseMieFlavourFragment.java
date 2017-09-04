@@ -36,15 +36,15 @@ public class ChooseMieFlavourFragment extends Fragment {
         mainActivity = (MainActivity)getActivity();
         oneBrand = mainActivity.getAllStock().getOfBrand(State.getInstance().getBrand());
         quantities = new int[oneBrand.size()];
-        for (int i=0; i<oneBrand.size(); i++) {
-            quantities[i] = 0;
-        }
+//        for (int i=0; i<oneBrand.size(); i++) {
+//            quantities[i] = 0;
+//        }
 
         if (State.getInstance().getChooseMieFragmentId() != null) {
             quantities[State.getInstance().getChooseMieFragmentId()] =
                     State.getInstance().getQuantityMie();
         }
-        final MieFlavourGridAdapter gridAdapter = new MieFlavourGridAdapter(getActivity(),
+        MieFlavourGridAdapter gridAdapter = new MieFlavourGridAdapter(getActivity(),
                 oneBrand, quantities, chosenFlavour);
         gridView.setAdapter(gridAdapter);
         return view;

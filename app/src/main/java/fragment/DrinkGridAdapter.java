@@ -12,6 +12,7 @@ import com.bintang5.supremie.R;
 
 import java.util.ArrayList;
 
+import me.himanshusoni.quantityview.QuantityView;
 import model.DrinkStock;
 
 /**
@@ -23,11 +24,13 @@ public class DrinkGridAdapter extends BaseAdapter {
     private Context context;
     public ArrayList<DrinkStock> items;
     LayoutInflater inflater;
+    int[] quantities;
 
-    public DrinkGridAdapter(Context context, ArrayList<DrinkStock> items) {
+    public DrinkGridAdapter(Context context, ArrayList<DrinkStock> items, int[] quantities) {
         this.context = context;
         this.items = items;
         inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.quantities = quantities;
     }
 
     @Override
@@ -41,6 +44,11 @@ public class DrinkGridAdapter extends BaseAdapter {
 
         TextView brandView = (TextView)view.findViewById(R.id.mie_flavour);
         brandView.setText((getItem(i).brand)+" "+getItem(i).flavour);
+
+        QuantityView quantityView = (QuantityView)view.findViewById(R.id.quantity);
+        quantityView.setQuantity(quantities[i]);
+        quantityView.setMaxQuantity(2);
+        setQuantityListener(quantityView, i);
 
         return view;
     }
@@ -57,8 +65,23 @@ public class DrinkGridAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return items.get(i).id;
     }
 
+    private void setQuantityListener(final QuantityView quantityView, final Integer i) {
+        quantityView.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
+            @Override
+            public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
+                quantities[i] = newQuantity;
+                //TODO: save this info when fragment is paused instead of here
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLimitReached() {
+
+            }
+        });
+    }
 
 }

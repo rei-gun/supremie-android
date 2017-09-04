@@ -16,9 +16,26 @@ public class State  {
 
     private Integer mieId = null;
 
-//    private Order order;
+    private int[] drinkQuantities = null;
 
-    private State() {}
+    private int[] toppingQuantities = null;
+
+    private Integer pedasLevel = null;
+
+    private int[] pedasPrices;
+
+    public int getPedasPrice(int i) {
+        return pedasPrices[i];
+    }
+    //    private Order order;
+
+    private State() {
+        pedasPrices = new int[4];
+        pedasPrices[0] = 0;
+        pedasPrices[1] = 1000;
+        pedasPrices[2] = 2000;
+        pedasPrices[3] = 3000;
+    }
 
     public static State getInstance() {
         if (instance == null) {
@@ -33,6 +50,9 @@ public class State  {
         chooseMieFragmentId = null;
         quantityMie = null;
         mieId = null;
+        drinkQuantities = null;
+        toppingQuantities = null;
+        pedasLevel = null;
     }
 
     public void setBrand(String brand) {
@@ -62,5 +82,37 @@ public class State  {
 
     public Integer getQuantityMie() {
         return quantityMie;
+    }
+
+    public int[] getDrinkQuantities() {
+        return drinkQuantities;
+    }
+
+    public int[] getToppingQuantities() {
+        return toppingQuantities;
+    }
+
+    public void setDrinkQuantity(Integer id, Integer quantity) {
+        this.drinkQuantities[id] = quantity;
+    }
+
+    public void initDrinkQuantities(int size) {
+        drinkQuantities = new int[size];
+    }
+
+    public void setToppingQuantity(Integer id, Integer quantity) {
+        this.toppingQuantities[id] = quantity;
+    }
+
+    public void initToppingQuantities(int size) {
+        toppingQuantities = new int[size];
+    }
+
+    public Integer getPedasLevel() {
+        return pedasLevel;
+    }
+
+    public void setPedasLevel(Integer pedasLevel) {
+        this.pedasLevel = pedasLevel;
     }
 }

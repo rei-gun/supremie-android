@@ -12,6 +12,7 @@ import com.bintang5.supremie.R;
 
 import java.util.ArrayList;
 
+import me.himanshusoni.quantityview.QuantityView;
 import model.ToppingStock;
 
 /**
@@ -23,11 +24,13 @@ public class ToppingGridAdapter extends BaseAdapter {
     private Context context;
     public ArrayList<ToppingStock> items;
     LayoutInflater inflater;
+    int[] quantities;
 
-    public ToppingGridAdapter(Context context, ArrayList<ToppingStock> items) {
+    public ToppingGridAdapter(Context context, ArrayList<ToppingStock> items, int[] quantities) {
         this.context = context;
         this.items = items;
         inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.quantities = quantities;
     }
 
     @Override
@@ -41,6 +44,11 @@ public class ToppingGridAdapter extends BaseAdapter {
 
         TextView brandView = (TextView)view.findViewById(R.id.mie_flavour);
         brandView.setText((getItem(i).name));
+
+        QuantityView quantityView = (QuantityView)view.findViewById(R.id.quantity);
+        quantityView.setQuantity(quantities[i]);
+        quantityView.setMaxQuantity(2);
+        setQuantityListener(quantityView, i);
 
         return view;
     }
@@ -60,5 +68,17 @@ public class ToppingGridAdapter extends BaseAdapter {
         return 0;
     }
 
-
+    private void setQuantityListener(final QuantityView quantityView, final Integer i) {
+        quantityView.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
+            @Override
+            public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
+                quantities[i] = newQuantity; //quantites is changing State
+                //TODO: save this info when fragment is paused instead of here
+                notifyDataSetChanged();
+            }
+            @Override
+            public void onLimitReached() {
+            }
+        });
+    }
 }

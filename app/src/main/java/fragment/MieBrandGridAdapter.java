@@ -23,11 +23,13 @@ public class MieBrandGridAdapter extends BaseAdapter {
     private Context context;
     public ArrayList<MieStock> items;
     LayoutInflater inflater;
+    String selectedBrand;
 
-    public MieBrandGridAdapter(Context context, ArrayList<MieStock> items) {
+    public MieBrandGridAdapter(Context context, ArrayList<MieStock> items, String selectedBrand) {
         this.context = context;
         this.items = items;
-        inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.selectedBrand = selectedBrand;
     }
 
     @Override
@@ -44,6 +46,12 @@ public class MieBrandGridAdapter extends BaseAdapter {
 
         TextView priceView = (TextView)view.findViewById(R.id.mie_brand_price);
         priceView.setText((getItem(i).price.toString()));
+
+        if (getItem(i).brand.equals(selectedBrand)) {
+            view.setBackgroundColor(context.getColor(R.color.colorPrimaryDark));
+        } else {
+            view.setBackgroundColor(context.getColor(R.color.white));
+        }
 
         return view;
     }
@@ -63,7 +71,4 @@ public class MieBrandGridAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void setSelectedItem(int i) {
-
-    }
 }

@@ -27,7 +27,7 @@ public class MieFlavourGridAdapter extends BaseAdapter {
     public ArrayList<MieStock> items;
     LayoutInflater inflater;
     Integer chosenFlavour;
-    int [] quantities;
+    int[] quantities;
 
     public MieFlavourGridAdapter(Context context, ArrayList<MieStock> items,
                                  int[] quantities, Integer chosenFlavour) {
@@ -77,11 +77,15 @@ public class MieFlavourGridAdapter extends BaseAdapter {
         quantityView.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
             @Override
             public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
-                Arrays.fill(quantities, 0);
+                if (chosenFlavour != i) {
+                    Arrays.fill(quantities, 0);
+//                    ((View)quantityView.getParent()).setBackgroundColor();
+                }
                 quantities[i] = newQuantity;
                 //TODO: save this info when fragment is paused instead of here
                 State.getInstance().setChooseMieFragmentId(i, newQuantity);
                 State.getInstance().setMieId(items.get(i).id);
+
                 notifyDataSetChanged();
             }
             @Override

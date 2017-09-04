@@ -10,6 +10,7 @@ import android.widget.GridView;
 
 import com.bintang5.supremie.R;
 import com.bintang5.supremie.activity.MainActivity;
+import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ import model.DrinkStock;
  */
 
 public class ChooseDrinkFragment extends Fragment {
-
+    int[] quantities;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,9 +30,15 @@ public class ChooseDrinkFragment extends Fragment {
         MainActivity activity = (MainActivity)getActivity();
 
         ArrayList<DrinkStock> drinkStocks = activity.getAllStock().getDrinkStocks();
+        if (State.getInstance().getDrinkQuantities() != null) {
+            quantities = State.getInstance().getDrinkQuantities();
+        } else {
+            State.getInstance().initDrinkQuantities(drinkStocks.size());
+            quantities = State.getInstance().getDrinkQuantities();
+        }
 
-        final DrinkGridAdapter gridAdapter = new DrinkGridAdapter(activity,
-                drinkStocks);
+        DrinkGridAdapter gridAdapter = new DrinkGridAdapter(activity,
+                drinkStocks, quantities);
         gridView.setAdapter(gridAdapter);
 
         return view;
