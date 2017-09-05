@@ -3,6 +3,7 @@ package utils;
 import android.content.Context;
 
 import com.bintang5.supremie.activity.MainActivity;
+import com.bintang5.supremie.activity.State;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,7 +57,7 @@ public class StockServer extends Server {
             service.getStock().enqueue(new Callback<GETResponseStock>() {
                 @Override
                 public void onResponse(Call<GETResponseStock> call, Response<GETResponseStock> response) {
-                    callingActivity.allStock = response.body();
+                    State.getInstance().setAllStock(response.body());
                 }
 
                 @Override

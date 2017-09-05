@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.MainActivity;
 import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
@@ -27,9 +26,9 @@ public class ChooseDrinkFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_topping, container, false);
         GridView gridView = (GridView) view.findViewById(R.id.grid_mie_flavour);
-        MainActivity activity = (MainActivity)getActivity();
+        State state = State.getInstance();
 
-        ArrayList<DrinkStock> drinkStocks = activity.getAllStock().getDrinkStocks();
+        ArrayList<DrinkStock> drinkStocks = state.getAllStock().getDrinkStocks();
         if (State.getInstance().getDrinkQuantities() != null) {
             quantities = State.getInstance().getDrinkQuantities();
         } else {
@@ -37,7 +36,7 @@ public class ChooseDrinkFragment extends Fragment {
             quantities = State.getInstance().getDrinkQuantities();
         }
 
-        DrinkGridAdapter gridAdapter = new DrinkGridAdapter(activity,
+        DrinkGridAdapter gridAdapter = new DrinkGridAdapter(getActivity(),
                 drinkStocks, quantities);
         gridView.setAdapter(gridAdapter);
 

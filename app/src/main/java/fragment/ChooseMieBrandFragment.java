@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.MainActivity;
 import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class ChooseMieBrandFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_brand, container, false);
         final GridView gridView = (GridView) view.findViewById(R.id.grid_mie_brand);
-        ArrayList<MieStock> oneOfEachBrand = ((MainActivity)getActivity()).getAllStock().getOneOfEachBrand();
+        ArrayList<MieStock> oneOfEachBrand = State.getInstance().getAllStock().getOneOfEachBrand();
         selectedBrand = State.getInstance().getBrand();
 
         gridAdapter = new MieBrandGridAdapter(getActivity(),

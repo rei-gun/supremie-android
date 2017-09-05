@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.MainActivity;
 import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class ChooseMieFlavourFragment extends Fragment {
 
     Integer chosenFlavour;
     int[] quantities;
-    MainActivity mainActivity;
+    State state;
     ArrayList<MieStock> oneBrand;
 
 
@@ -33,8 +32,8 @@ public class ChooseMieFlavourFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_flavour, container, false);
         GridView gridView = (GridView) view.findViewById(R.id.grid_mie_flavour);
-        mainActivity = (MainActivity)getActivity();
-        oneBrand = mainActivity.getAllStock().getOfBrand(State.getInstance().getBrand());
+        state = State.getInstance();
+        oneBrand = state.getAllStock().getOfBrand(State.getInstance().getBrand());
         quantities = new int[oneBrand.size()];
 //        for (int i=0; i<oneBrand.size(); i++) {
 //            quantities[i] = 0;
@@ -55,9 +54,9 @@ public class ChooseMieFlavourFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (chosenFlavour != null) {
-            State.getInstance().setChooseMieFragmentId(chosenFlavour, quantities[chosenFlavour]);
-            State.getInstance().setMieId(oneBrand.get(chosenFlavour).id);
-        }
+//        if (chosenFlavour != null) {
+//            State.getInstance().setChooseMieFragmentId(chosenFlavour, quantities[chosenFlavour]);
+//            State.getInstance().setMieId(oneBrand.get(chosenFlavour).id);
+//        }
     }
 }

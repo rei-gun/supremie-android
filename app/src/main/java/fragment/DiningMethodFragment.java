@@ -9,15 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.MainActivity;
-
-import java.util.ArrayList;
-
-import model.Drink;
-import model.Mie;
-import model.Order;
-import model.Topping;
-import utils.OrderServer;
+import com.bintang5.supremie.activity.State;
 
 /**
  * Created by rei on 2/09/17.
@@ -34,7 +26,7 @@ public class DiningMethodFragment extends Fragment{
         dineInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).getOrder().diningMethod = "makan sini";
+                State.getInstance().setDiningMethod("makan sini");
             }
         });
 
@@ -42,20 +34,7 @@ public class DiningMethodFragment extends Fragment{
         takeawayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).getOrder().diningMethod = "bungkus";
-
-                Topping topping = new Topping(1, 1, null, 3000);
-                ArrayList toppings = new ArrayList();
-                toppings.add(topping);
-                Mie mie = new Mie(1, 2, 1, 3000, "pakai", 2, "", toppings);
-                ArrayList mies = new ArrayList();
-                mies.add(mie);
-                Drink drink = new Drink(1, 1, 2500);
-                ArrayList drinks = new ArrayList();
-                drinks.add(drink);
-                Order order = new Order(10000, "cash", "bungkus", mies, drinks);
-
-                OrderServer.getInstance(getActivity()).createOrder(order);
+                State.getInstance().setDiningMethod("bungkus");
             }
         });
 

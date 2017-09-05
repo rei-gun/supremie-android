@@ -31,7 +31,7 @@ public class ChoosePedasFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_choose_pedas, container, false);
         GridView gridView = (GridView) view.findViewById(R.id.grid_pedas);
         pedasLevel = State.getInstance().getPedasLevel();
-        items = new boolean[5];
+        items = new boolean[4];
         if (pedasLevel != null) {
             items[pedasLevel] = true;
         }

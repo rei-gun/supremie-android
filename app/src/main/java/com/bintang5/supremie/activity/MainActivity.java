@@ -3,6 +3,7 @@ package com.bintang5.supremie.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.widget.TabHost;
 
 import com.bintang5.supremie.R;
 
@@ -10,21 +11,15 @@ import fragment.ChooseDrinkFragment;
 import fragment.ChooseMieBrandFragment;
 import fragment.ChooseMieFlavourFragment;
 import fragment.ChoosePedasFragment;
-import fragment.OrderSummaryFragment;
 import fragment.ChooseToppingFragment;
 import fragment.DiningMethodFragment;
-import model.Order;
+import fragment.OrderSummaryFragment;
 import utils.StockServer;
-import utils.responses.GETResponseStock;
 
 /*
  * Supremie's one and only activity. Contains a FragmentTabHost. Calls the GET stock API upon creation.
  */
 public class MainActivity extends FragmentActivity {
-
-    public GETResponseStock allStock;
-    public Order order;
-//    public String brand;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +29,6 @@ public class MainActivity extends FragmentActivity {
         tabHost.setup(this, getSupportFragmentManager(), R.id.tab_content);
 
         StockServer.getInstance(this).getStock(this);
-        order = new Order();
 
         tabHost.addTab(tabHost.newTabSpec("choose_dining_method").setIndicator("Welcome!"), new DiningMethodFragment().getClass(), null);
         tabHost.addTab(tabHost.newTabSpec("choose_mie_brand").setIndicator("Pilih Mie"), new ChooseMieBrandFragment().getClass(), null);
@@ -43,24 +37,14 @@ public class MainActivity extends FragmentActivity {
         tabHost.addTab(tabHost.newTabSpec("choose_chili").setIndicator("Pilih Pedas"), new ChoosePedasFragment().getClass(), null);
         tabHost.addTab(tabHost.newTabSpec("choose_drink").setIndicator("Pilih Minum"), new ChooseDrinkFragment().getClass(), null);
         tabHost.addTab(tabHost.newTabSpec("summary").setIndicator("Order Summary"), new OrderSummaryFragment().getClass(), null);
-        tabHost.addTab(tabHost.newTabSpec("choose_payment").setIndicator("Pilih Pembayaran"), new DiningMethodFragment().getClass(), null);
-    }
 
-    public Order getOrder() {
-        return order;
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String s) {
+                if (State.getInstance().isOrderDataSetup()) {
+                    State.getInstance().deleteOrderData();
+                }
+            }
+        });
     }
-
-    public GETResponseStock getAllStock() {
-        return allStock;
-    }
-
-//    public void setBrand(Fragment caller, String brand) {
-//        if (caller instanceof ChooseMieBrandFragment) {
-//            this.brand = brand;
-//        }
-//    }
-//
-//    public String getBrand() {
-//        return this.brand;
-//    }
 }

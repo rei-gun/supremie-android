@@ -1,6 +1,7 @@
 package fragment;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +86,7 @@ public class MieFlavourGridAdapter extends BaseAdapter {
                 //TODO: save this info when fragment is paused instead of here
                 State.getInstance().setChooseMieFragmentId(i, newQuantity);
                 State.getInstance().setMieId(items.get(i).id);
+                Log.v("SAVED", items.get(i).id.toString()+items.get(i).flavour);
 
                 notifyDataSetChanged();
             }
