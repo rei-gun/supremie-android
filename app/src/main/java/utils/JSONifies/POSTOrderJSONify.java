@@ -1,5 +1,7 @@
 package utils.JSONifies;
 
+import android.util.Log;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -62,7 +64,7 @@ public class POSTOrderJSONify implements JsonSerializer<Order> {
 
         }
         orderObject.add("drinks", drinkArray);
-
+        Log.v("BIGDICK", orderKey.toString());
         return orderKey;
     }
 }

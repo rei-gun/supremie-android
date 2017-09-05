@@ -39,16 +39,8 @@ public class ChoosePedasFragment extends Fragment {
         gridAdapter = new PedasGridAdapter(getActivity(),
                 items);
         gridView.setAdapter(gridAdapter);
-//        if (pedasLevel != null) {
-//            gridAdapter.setSelectedPosition(pedasLevel);
-//            gridAdapter.notifyDataSetChanged();
-//        }
-//        gridAdapter.setSelectedPosition(pedasLevel);
 
-        //TODO: select previously selected selectedBrand
-//        if (pedasLevel != null) {
         setListener(this, gridView, items);
-//        }
         return view;
     }
 

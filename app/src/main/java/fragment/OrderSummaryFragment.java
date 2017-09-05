@@ -30,7 +30,6 @@ import model.ToppingStock;
 
 public class OrderSummaryFragment extends Fragment {
 
-//    Integer pedasLevel;
     ArrayList<OrderSummaryItem> items;
     OrderSummaryGridAdapter gridAdapter;
 
@@ -138,7 +137,6 @@ public class OrderSummaryFragment extends Fragment {
                     State.getInstance().setPedasLevel(i);
                     gridAdapter.notifyDataSetChanged();
                 }
-
             }
         });
     }
