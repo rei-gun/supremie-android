@@ -1,5 +1,6 @@
 package com.bintang5.supremie.activity;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +10,15 @@ import android.view.View;
 import android.widget.Button;
 
 import com.bintang5.supremie.R;
+import com.cashlez.android.sdk.CLPayment;
+import com.cashlez.android.sdk.bean.TransactionType;
+import com.cashlez.android.sdk.payment.CLVerificationMode;
 
 import java.util.ArrayList;
 
 import model.Mie;
 import model.Order;
+import utils.CashlezPayment;
 import utils.OrderServer;
 
 /**
@@ -22,13 +27,30 @@ import utils.OrderServer;
 
 public class PaymentMethodActivity extends AppCompatActivity {
 
+    protected BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    private CashlezPayment cashlezPayment;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        cashlezPayment.initLocation();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_method);
 
-        Button dineInButton = (Button)findViewById(R.id.button_cash);
-        dineInButton.setOnClickListener(new View.OnClickListener() {
+
+        if (!bluetoothAdapter.isEnabled()) {
+            //TODO: bluetooth not enabled
+        } else {
+            cashlezPayment = new CashlezPayment(this);
+
+        }
+
+        Button cashButton = (Button)findViewById(R.id.button_cash);
+        cashButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(PaymentMethodActivity.this);
@@ -51,28 +73,23 @@ public class PaymentMethodActivity extends AppCompatActivity {
             }
         });
 
-        Button takeawayButton = (Button)findViewById(R.id.button_card);
-        takeawayButton.setOnClickListener(new View.OnClickListener() {
+        Button debitButton = (Button)findViewById(R.id.button_credit);
+            debitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                State.getInstance().setDiningMethod("bungkus");
-/*
-                Topping topping = new Topping(1, 1, null, 3000);
-                ArrayList toppings = new ArrayList();
-                toppings.add(topping);
-                Mie mie = new Mie(1, 2, 1, 3000, "pakai", 2, "", toppings);
-                ArrayList mies = new ArrayList();
-                mies.add(mie);
-                Drink drink = new Drink(1, 1, 2500);
-                ArrayList drinks = new ArrayList();
-                drinks.add(drink);
-                Order order = new Order(10000, "cash", "bungkus", mies, drinks);
 
-                OrderServer.getInstance(getActivity()).createOrder(order);
-                */
+            }
+        });
+
+        Button creditButton = (Button)findViewById(R.id.button_debit);
+        creditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postOrder("card");
             }
         });
     }
+
 
     private void postOrder(String paymentMethod) {
 
@@ -86,6 +103,34 @@ public class PaymentMethodActivity extends AppCompatActivity {
                 paymentMethod, State.getInstance().getDiningMethod(),
                 mies, State.getInstance().getDrinks());
 
-        OrderServer.getInstance(this).createOrder(order);
+        if (paymentMethod.equals("cash")) {
+            OrderServer.getInstance(this).createOrder(cashlezPayment, order);
+        } else if (paymentMethod.equals("card")) {
+            //TODO: trigger Cashlez card payment SDK
+            CLPayment debitCLPayment = new CLPayment();
+            debitCLPayment.setAmount("10000");
+            debitCLPayment.setDescription("blabla");
+            debitCLPayment.setTransactionType(TransactionType.DEBIT);
+            debitCLPayment.setVerificationMode(CLVerificationMode.PIN);
+//            debitCLPayment.setImage(payment.getItemImage());
+            cashlezPayment.doPayDebitPin(debitCLPayment);
+//        cashlezPayment.doPayCreditPin();
+            //then createOrder(order)
+        }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cashlezPayment.unregisterReceiver();
+        cashlezPayment.stopLocationServices();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cashlezPayment.registerReceiver();
+        cashlezPayment.doStartPayment();
+    }
+
 }

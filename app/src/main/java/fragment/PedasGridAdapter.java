@@ -1,7 +1,6 @@
 package fragment;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,6 @@ public class PedasGridAdapter extends BaseAdapter {
         TextView textView = (TextView)view.findViewById(R.id.pedas_text);
         textView.setText(String.valueOf(i+1));
 
-        Log.v("DICK", String.valueOf(items[i]));
         if(items[i])
         {
             view.setBackgroundColor(context.getColor(R.color.colorPrimaryDark));

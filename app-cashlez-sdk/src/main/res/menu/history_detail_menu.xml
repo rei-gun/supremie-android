@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".help.HelpActivity">
+
+    <item
+        android:id="@+id/void_payment"
+        android:orderInCategory="100"
+        android:title="@string/void_transaction"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/print"
+        android:orderInCategory="100"
+        android:title="@string/print"
+        app:showAsAction="never" />
+</menu>

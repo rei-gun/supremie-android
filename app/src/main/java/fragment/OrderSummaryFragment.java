@@ -39,6 +39,7 @@ public class OrderSummaryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_summary, container, false);
         GridView gridView = (GridView) view.findViewById(R.id.grid_pedas);
+        //offset of -1 because mySQL IDs start at 1, not 0
         MieStock chosenMie = State.getInstance().getAllStock().getMieStocks().get(State.getInstance().getMieId()-1);
         items = new ArrayList<>();
         Integer subTotal = 0;

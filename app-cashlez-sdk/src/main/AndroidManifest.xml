@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cashlez.android.garuda.library.cashlezlib">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:name=".ApplicationState"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".WelcomeActivity"
+            android:theme="@style/Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".history.HistoryActivity" />
+        </activity>
+        <activity
+            android:name=".login.LoginActivity"
+            android:theme="@style/Fullscreen" />
+        <activity
+            android:name=".history.PaymentHistoryActivity"
+            android:parentActivityName=".payment.activity.PaymentActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".payment.activity.PaymentActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".payment.activity.PaymentActivity"
+            android:label="@string/payment"
+            android:parentActivityName=".payment.landing.LandingActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".payment.landing.LandingActivity" />
+        </activity>
+        <activity
+            android:name=".history.PaymentHistoryDetailActivity"
+            android:parentActivityName=".history.PaymentHistoryActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".history.PaymentHistoryActivity" />
+        </activity>
+        <activity
+            android:name=".changepin.ChangePinActivity"
+            android:label="@string/change_password"
+            android:parentActivityName=".login.LoginActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".login.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".activation.ActivationActivity"
+            android:parentActivityName=".login.LoginActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".login.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".payment.landing.LandingActivity"
+            android:label="@string/merchant_name"
+            android:theme="@style/AppTheme">
+        </activity>
+    </application>
+
+</manifest>

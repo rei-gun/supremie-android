@@ -3,6 +3,12 @@ package utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.cashlez.android.sdk.model.CLPrintObject;
+import com.cashlez.android.sdk.service.CLPrintAlignEnum;
+import com.cashlez.android.sdk.service.CLPrintEnum;
+
+import java.util.ArrayList;
+
 import model.Order;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,8 +19,6 @@ import utils.responses.POSTResponseOrder;
  * Exposes {@link OrderService}.
  */
 public class OrderServer extends Server {
-    public POSTResponseOrder output;
-
     /**
      * The singleton instance.
      */
@@ -50,13 +54,23 @@ public class OrderServer extends Server {
      * @param order The permintaan model to be created.
      * @return The permintaan model that was added.
      */
-    public void createOrder(Order order) {
+    public void createOrder(final CashlezPayment cashlezPayment, Order order) {
 
         service.createOrder(order).enqueue(new Callback<POSTResponseOrder>() {
             @Override
             public void onResponse(Call<POSTResponseOrder> call, Response<POSTResponseOrder> response) {
                 POSTResponseOrder r = response.body();
-                Log.v("CUNT", r.getId().toString()+r.getStatusCode());
+                //TODO print the id to Cashlez's printer here
+
+
+                ArrayList<CLPrintObject> freeText = new ArrayList<>();
+                CLPrintObject clPrintObject = new CLPrintObject();
+                clPrintObject.setFreeText("Your order id is :"+r.getId());
+                clPrintObject.setFormat(CLPrintEnum.TITLE);
+                clPrintObject.setAlign(CLPrintAlignEnum.CENTER);
+                freeText.add(clPrintObject);
+                Log.v("BOOM", clPrintObject.getFreeText());
+                cashlezPayment.doPrintFreeText(freeText);
 //                Intent intent = new Intent( MainActivity.class);
 //                startActivity(intent);
             }

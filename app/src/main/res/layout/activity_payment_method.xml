@@ -8,21 +8,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/centre_point"
+        android:layout_above="@+id/button_credit"
         android:text="CASH"/>
-    <TextView
-        android:id="@+id/centre_point"
+    <Button
+        android:id="@+id/button_credit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:text="CREDIT"/>
 
     <Button
-        android:id="@+id/button_card"
+        android:id="@+id/button_debit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/centre_point"
-        android:text="CARD"/>
+        android:layout_below="@+id/button_credit"
+        android:text="DEBIT"/>
 
 </RelativeLayout>
