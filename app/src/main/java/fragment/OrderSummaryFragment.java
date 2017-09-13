@@ -59,43 +59,47 @@ public class OrderSummaryFragment extends Fragment {
 
         //create topping rows
         int[] toppingQuantities = State.getInstance().getToppingQuantities();
-        ArrayList<ToppingStock> toppings = State.getInstance().getAllStock().getToppingStocks();
-        ArrayList<Topping> ts = new ArrayList<>();
-        for (int i = 0; i<toppingQuantities.length; i++) {
-            if (toppingQuantities[i] > 0) {
-                ToppingStock toppingStock = toppings.get(i);
-                OrderSummaryItem topping = new OrderSummaryItem("TOPPING - "+toppingStock.name,
-                        "QTY - "+String.valueOf(toppingQuantities[i]),
-                        "RP "+String.valueOf(toppingQuantities[i]*toppingStock.price));
-                items.add(topping);
-                subTotal += toppingQuantities[i]*toppingStock.price;
+        if (toppingQuantities != null) {
+            ArrayList<ToppingStock> toppings = State.getInstance().getAllStock().getToppingStocks();
+            ArrayList<Topping> ts = new ArrayList<>();
+            for (int i = 0; i < toppingQuantities.length; i++) {
+                if (toppingQuantities[i] > 0) {
+                    ToppingStock toppingStock = toppings.get(i);
+                    OrderSummaryItem topping = new OrderSummaryItem("TOPPING - " + toppingStock.name,
+                            "QTY - " + String.valueOf(toppingQuantities[i]),
+                            "RP " + String.valueOf(toppingQuantities[i] * toppingStock.price));
+                    items.add(topping);
+                    subTotal += toppingQuantities[i] * toppingStock.price;
 
-                //TODO: put below in a new thread
-                Topping t = new Topping(toppingStock.id, toppingQuantities[i], null,toppingStock.price);
-                ts.add(t);
+                    //TODO: put below in a new thread
+                    Topping t = new Topping(toppingStock.id, toppingQuantities[i], null, toppingStock.price);
+                    ts.add(t);
+                }
             }
+            State.getInstance().setToppings(ts);
         }
-        State.getInstance().setToppings(ts);
 
         //create drink rows
         int[] drinkQuantities = State.getInstance().getDrinkQuantities();
-        ArrayList<DrinkStock> ds = State.getInstance().getAllStock().getDrinkStocks();
-        ArrayList<Drink> drinks = new ArrayList<>();
-        for (int i=0; i<drinkQuantities.length; i++) {
-            if (drinkQuantities[i] > 0) {
-                DrinkStock d = ds.get(i);
-                OrderSummaryItem dRow = new OrderSummaryItem("MINUMAN - "+d.brand+" "+d.flavour,
-                        "QTY - "+String.valueOf(drinkQuantities[i]),
-                        "RP "+String.valueOf(drinkQuantities[i]*d.price));
-                items.add(dRow);
-                subTotal += drinkQuantities[i]*d.price;
+        if (drinkQuantities != null) {
+            ArrayList<DrinkStock> ds = State.getInstance().getAllStock().getDrinkStocks();
+            ArrayList<Drink> drinks = new ArrayList<>();
+            for (int i = 0; i < drinkQuantities.length; i++) {
+                if (drinkQuantities[i] > 0) {
+                    DrinkStock d = ds.get(i);
+                    OrderSummaryItem dRow = new OrderSummaryItem("MINUMAN - " + d.brand + " " + d.flavour,
+                            "QTY - " + String.valueOf(drinkQuantities[i]),
+                            "RP " + String.valueOf(drinkQuantities[i] * d.price));
+                    items.add(dRow);
+                    subTotal += drinkQuantities[i] * d.price;
 
-                //TODO: put below in a new thread
-                Drink drink = new Drink(d.id, drinkQuantities[i], d.price);
-                drinks.add(drink);
+                    //TODO: put below in a new thread
+                    Drink drink = new Drink(d.id, drinkQuantities[i], d.price);
+                    drinks.add(drink);
+                }
             }
+            State.getInstance().setDrinks(drinks);
         }
-        State.getInstance().setDrinks(drinks);
 
         //create subtotal row
         OrderSummaryItem o = new OrderSummaryItem("", "SUB TOTAL",
@@ -118,7 +122,7 @@ public class OrderSummaryFragment extends Fragment {
         gridAdapter = new OrderSummaryGridAdapter(getActivity(),
                 items);
         gridView.setAdapter(gridAdapter);
-        setListener(gridView, items);
+//        setListener(gridView, items);
 
         FloatingActionButton b = (FloatingActionButton) view.findViewById(R.id.button_go_to_payment_method);
         setBListener(b);

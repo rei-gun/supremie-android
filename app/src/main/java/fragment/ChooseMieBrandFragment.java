@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.bintang5.supremie.R;
+import com.bintang5.supremie.activity.MainActivity;
 import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
@@ -51,8 +52,10 @@ public class ChooseMieBrandFragment extends Fragment {
                     gridAdapter.selectedBrand = oneOfEachBrand.get(i).brand;
                     State.getInstance().setBrand(oneOfEachBrand.get(i).brand);
                     //TODO: do this when fragment pauses instead
-                    State.getInstance().setMieId(null);
+                    State.getInstance().setMieId(null); //clear flavour
                     State.getInstance().setChooseMieFragmentId(null, null);//clear flavour
+                    //TODO: do this only on the first time gridView is clicked
+                    ((MainActivity)getActivity()).enableTab(2); //enable flavour tab
                     gridAdapter.notifyDataSetChanged();
                 }
 

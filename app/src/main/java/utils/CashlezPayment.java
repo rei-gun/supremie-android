@@ -59,10 +59,24 @@ public class CashlezPayment implements ICLPaymentService,
     @Override
     public void onGetPaymentResponse(CLPaymentResponse clPayment) {
         Log.v("Payment received", clPayment.toString());
-        if (clPayment.getTransactionStatus() != null || !clPayment.isSuccess()) {
+        Log.v("BITCH", String.valueOf(clPayment.isSuccess()));
+        /*
+        if (clPayment.getErrorCode().equals("008090")) {
+            Log.v("Transaction cancelled", "oops");
 
-
+        } else if (clPayment.getTransactionStatus() != null || !clPayment.isSuccess()) {
+            Log.v("Payment success: ", clPayment.toString());
+            Mie mie = new Mie(State.getInstance().getMieId(), State.getInstance().getQuantityMie(),
+                    1, State.getInstance().getAllStock().getMieStocks().get(State.getInstance().getMieId()).price,
+                    State.getInstance().getPedasLevel() , "", State.getInstance().getToppings());
+            ArrayList mies = new ArrayList();
+            mies.add(mie);
+            Order order = new Order(State.getInstance().getGrandTotal(),
+                clPayment.getTransactionType().toString(), State.getInstance().getDiningMethod(),
+                mies, State.getInstance().getDrinks());
+            OrderServer.getInstance(callingActivity).createOrder(this, order);
         }
+        */
     }
 
     @Override
@@ -85,10 +99,7 @@ public class CashlezPayment implements ICLPaymentService,
 
     @Override
     public void onGetPrintingResponse(CLPrinterResponse printerResponse) {
-//        if (isViewAttached()) {
-//            getView().onHideLoading();
-//            getView().onPrinterResponse(printerResponse.getMessage());
-//        }
+
     }
 
     @Override

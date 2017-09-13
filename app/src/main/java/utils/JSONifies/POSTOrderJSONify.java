@@ -1,5 +1,7 @@
 package utils.JSONifies;
 
+import android.util.Log;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -29,6 +31,7 @@ public class POSTOrderJSONify implements JsonSerializer<Order> {
 
         JsonArray mieArray = new JsonArray();
         for (Mie m : src.mies) {
+            Log.v("BIGDICK2", m.toString());
             JsonObject jsonMie = new JsonObject();
             jsonMie.addProperty("id", m.id);
             jsonMie.addProperty("quantity_mie", m.quantityMie);
@@ -37,32 +40,37 @@ public class POSTOrderJSONify implements JsonSerializer<Order> {
             jsonMie.addProperty("extra_chili", m.extraChili);
             jsonMie.addProperty("note", m.note);
             JsonArray toppingArray = new JsonArray();
-            for (Topping t : m.toppings) {
-                JsonObject jsonTopping = new JsonObject();
-                jsonTopping.addProperty("id", t.id);
-                jsonTopping.addProperty("quantity", t.quantity);
-                jsonTopping.addProperty("price", t.price);
-                if (t.type != null) {
-                    jsonTopping.addProperty("type", t.type);
+            if (m.toppings != null) {
+                for (Topping t : m.toppings) {
+                    Log.v("BIGDICK3", m.toString());
+                    JsonObject jsonTopping = new JsonObject();
+                    jsonTopping.addProperty("id", t.id);
+                    jsonTopping.addProperty("quantity", t.quantity);
+                    jsonTopping.addProperty("price", t.price);
+                    if (t.type != null) {
+                        jsonTopping.addProperty("type", t.type);
+                    }
+                    toppingArray.add(jsonTopping);
                 }
-                toppingArray.add(jsonTopping);
             }
             jsonMie.add("toppings", toppingArray);
             mieArray.add(jsonMie);
         }
         orderObject.add("mies", mieArray);
+        Log.v("BIGDICK", mieArray.toString());
 
         JsonArray drinkArray = new JsonArray();
-        for (Drink d : src.drinks) {
-            JsonObject jsonDrink = new JsonObject();
-            jsonDrink.addProperty("id", d.id);
-            jsonDrink.addProperty("quantity", d.quantity);
-            jsonDrink.addProperty("price", d.price);
-            drinkArray.add(jsonDrink);
-
+        if (src.drinks != null) {
+            for (Drink d : src.drinks) {
+                JsonObject jsonDrink = new JsonObject();
+                jsonDrink.addProperty("id", d.id);
+                jsonDrink.addProperty("quantity", d.quantity);
+                jsonDrink.addProperty("price", d.price);
+                drinkArray.add(jsonDrink);
+            }
         }
         orderObject.add("drinks", drinkArray);
-//        Log.v("BIGDICK", orderKey.toString());
+        Log.v("BIGDICK", orderKey.toString());
         return orderKey;
     }
 }
