@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
 
-import domain.Order;
+import model.Order;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -54,7 +54,7 @@ public abstract class Server {
                     .client(client)
                     .baseUrl(getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
-                            .registerTypeAdapter(Order.class, new POSTOrderJSONify(datePattern))
+                            .registerTypeAdapter(Order.class, new POSTOrderJSONify())
                             .registerTypeAdapter(GETResponseStock.class, new GETStockJSONify(datePattern))
                             .setDateFormat(datePattern)
                             .create()))

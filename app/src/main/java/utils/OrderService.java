@@ -1,6 +1,6 @@
 package utils;
 
-import domain.Order;
+import model.Order;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;

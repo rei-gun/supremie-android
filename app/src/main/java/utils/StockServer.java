@@ -2,7 +2,12 @@ package utils;
 
 import android.content.Context;
 
+import com.bintang5.supremie.activity.MainActivity;
+import com.bintang5.supremie.activity.State;
+
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import utils.responses.GETResponseStock;
 import utils.responses.POSTResponseOrder;
 
@@ -42,63 +47,25 @@ public class StockServer extends Server {
     }
 
     /**
-     * Get a permintaan, given its id.
-     *
-     * @param id The permintaan's id.
-     * @return The permintaan.
-
-    public Observable<Permintaan> getPermintaan(String id) {
-        return service.getPermintaan(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-*/
-
-    /**
      * Create a new permintaan.
      *
      * @return The permintaan model that was added.
      */
-    public Call<GETResponseStock> getStock() {
-        return service.getStock();
-        /*
-        output = null;
-        service.createOrder(order).enqueue(new Callback<POSTResponseOrder>() {
-            @Override
-            public void onResponse(Call<POSTResponseOrder> call, Response<POSTResponseOrder> response) {
+    public void getStock(final MainActivity callingActivity) {
 
-                output = new POSTResponseOrder(response.body().getId(), response.body().getStatusCode(),
-                        response.body().getMessage());
-                Log.v("CUNT", output.toString());
-                mTextMessage.setText(output.getStatusCode());
-            }
+        if (callingActivity instanceof MainActivity) {
+            service.getStock().enqueue(new Callback<GETResponseStock>() {
+                @Override
+                public void onResponse(Call<GETResponseStock> call, Response<GETResponseStock> response) {
+                    State.getInstance().setAllStock(response.body());
+                }
 
-            @Override
-            public void onFailure(Call<POSTResponseOrder> call, Throwable t) {
+                @Override
+                public void onFailure(Call<GETResponseStock> call, Throwable t) {
 
-            }
-        });
-//        return output;
-*/
+                }
+            });
+        }
     }
-
-    /**
-     * Update a permintaan.
-     *
-     * @param permintaan The permintaan model to be created.
-     * @return The permintaan model that was added.
-     *
-    public Observable<Boolean> updatePermintaan(Permintaan permintaan) {
-        return service.updatePermintaan(permintaan._id, permintaan)
-                .map(new Func1<PutResponse, Boolean>() {
-                    @Override
-                    public Boolean call(PutResponse response) {
-                        return response.ok;
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-*/
 
 }

@@ -12,9 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
-import domain.DrinkStock;
-import domain.MieStock;
-import domain.ToppingStock;
+import model.DrinkStock;
+import model.MieStock;
+import model.ToppingStock;
 import utils.responses.GETResponseStock;
 
 /**

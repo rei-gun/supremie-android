@@ -1,17 +1,24 @@
 package utils;
 
 import android.content.Context;
+import android.util.Log;
 
-import domain.Order;
+import com.cashlez.android.sdk.model.CLPrintObject;
+import com.cashlez.android.sdk.service.CLPrintAlignEnum;
+import com.cashlez.android.sdk.service.CLPrintEnum;
+
+import java.util.ArrayList;
+
+import model.Order;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import utils.responses.POSTResponseOrder;
 
 /**
  * Exposes {@link OrderService}.
  */
 public class OrderServer extends Server {
-    public POSTResponseOrder output;
-
     /**
      * The singleton instance.
      */
@@ -42,64 +49,37 @@ public class OrderServer extends Server {
     }
 
     /**
-     * Get a permintaan, given its id.
-     *
-     * @param id The permintaan's id.
-     * @return The permintaan.
-
-    public Observable<Permintaan> getPermintaan(String id) {
-        return service.getPermintaan(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-*/
-
-    /**
      * Create a new permintaan.
      *
      * @param order The permintaan model to be created.
      * @return The permintaan model that was added.
      */
-    public Call<POSTResponseOrder> createOrder(Order order) {
-        return service.createOrder(order);
-        /*
-        output = null;
+    public void createOrder(final CashlezPayment cashlezPayment, Order order) {
+
         service.createOrder(order).enqueue(new Callback<POSTResponseOrder>() {
             @Override
             public void onResponse(Call<POSTResponseOrder> call, Response<POSTResponseOrder> response) {
+                POSTResponseOrder r = response.body();
+                //TODO print the id to Cashlez's printer here
 
-                output = new POSTResponseOrder(response.body().getId(), response.body().getStatusCode(),
-                        response.body().getMessage());
-                Log.v("CUNT", output.toString());
-                mTextMessage.setText(output.getStatusCode());
+
+                ArrayList<CLPrintObject> freeText = new ArrayList<>();
+                CLPrintObject clPrintObject = new CLPrintObject();
+                clPrintObject.setFreeText("Your order id is :"+r.getId());
+                clPrintObject.setFormat(CLPrintEnum.TITLE);
+                clPrintObject.setAlign(CLPrintAlignEnum.CENTER);
+                freeText.add(clPrintObject);
+                Log.v("BOOM", clPrintObject.getFreeText());
+                cashlezPayment.doPrintFreeText(freeText);
+//                Intent intent = new Intent( MainActivity.class);
+//                startActivity(intent);
             }
-
             @Override
             public void onFailure(Call<POSTResponseOrder> call, Throwable t) {
 
             }
         });
-//        return output;
-*/
-    }
 
-    /**
-     * Update a permintaan.
-     *
-     * @param permintaan The permintaan model to be created.
-     * @return The permintaan model that was added.
-     *
-    public Observable<Boolean> updatePermintaan(Permintaan permintaan) {
-        return service.updatePermintaan(permintaan._id, permintaan)
-                .map(new Func1<PutResponse, Boolean>() {
-                    @Override
-                    public Boolean call(PutResponse response) {
-                        return response.ok;
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
     }
-*/
 
 }
