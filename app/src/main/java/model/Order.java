@@ -42,4 +42,20 @@ public class Order {
         this.mies = null;
         this.drinks = null;
     }
+
+    @Override
+    public String toString() {
+        String output = "";
+//        output += "ID: "+this.id.toString();
+        output += ", total price: "+this.totalPrice.toString();
+        output += ", payment method: "+this.paymentMethod;
+        output += ", dining method: "+this.diningMethod;
+        output += ", mies: "+this.mies.toString();
+        if (this.drinks == null) {
+            output += ", drinks: null";
+        } else {
+            output += ", drinks: " + this.drinks.toString();
+        }
+        return output;
+    }
 }

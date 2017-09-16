@@ -16,10 +16,12 @@ public class State  {
 
     private String brand = null;
 
+    //id of the chosen flavour in chosen brand
     private Integer chooseMieFragmentId = null;
 
     private Integer quantityMie = null;
 
+    //overall mie id
     private Integer mieId = null;
 
     private int[] drinkQuantities = null;

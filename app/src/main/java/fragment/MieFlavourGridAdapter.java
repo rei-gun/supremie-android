@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bintang5.supremie.R;
+import com.bintang5.supremie.activity.MainActivity;
 import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
@@ -87,7 +88,11 @@ public class MieFlavourGridAdapter extends BaseAdapter {
                 State.getInstance().setChooseMieFragmentId(i, newQuantity);
                 State.getInstance().setMieId(items.get(i).id);
                 Log.v("SAVED", items.get(i).id.toString()+items.get(i).flavour);
-
+                //TODO: change this to first time onClick hears something
+                ((MainActivity)context).enableTab(3);
+                ((MainActivity)context).enableTab(4);
+                ((MainActivity)context).enableTab(5);
+                ((MainActivity)context).enableTab(6);
                 notifyDataSetChanged();
             }
             @Override

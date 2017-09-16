@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.bintang5.supremie.R;
+import com.bintang5.supremie.activity.MainActivity;
 import com.bintang5.supremie.activity.State;
 
 /**
@@ -27,6 +28,7 @@ public class DiningMethodFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 State.getInstance().setDiningMethod("makan sini");
+                ((MainActivity)getActivity()).enableTab(1);
             }
         });
 
@@ -35,6 +37,7 @@ public class DiningMethodFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 State.getInstance().setDiningMethod("bungkus");
+                ((MainActivity)getActivity()).enableTab(1);
             }
         });
 
