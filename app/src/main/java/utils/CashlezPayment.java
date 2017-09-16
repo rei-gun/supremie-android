@@ -6,6 +6,7 @@ package utils;
 import android.app.Activity;
 import android.util.Log;
 
+import com.bintang5.supremie.activity.State;
 import com.cashlez.android.sdk.CLPayment;
 import com.cashlez.android.sdk.checkcompanion.CLCompanionResponse;
 import com.cashlez.android.sdk.checkcompanion.ICLCheckCompanionService;
@@ -23,6 +24,9 @@ import com.cashlez.android.sdk.sendreceipt.CLSendReceiptResponse;
 import com.cashlez.android.sdk.sendreceipt.ICLSendReceiptService;
 
 import java.util.ArrayList;
+
+import model.Mie;
+import model.Order;
 
 /**
  * Created by Taslim on 12/05/2017.
@@ -59,10 +63,34 @@ public class CashlezPayment implements ICLPaymentService,
     @Override
     public void onGetPaymentResponse(CLPaymentResponse clPayment) {
         Log.v("Payment received", clPayment.toString());
-        if (clPayment.getTransactionStatus() != null || !clPayment.isSuccess()) {
-
-
+        Log.v("BITCH", String.valueOf(clPayment.isSuccess()));
+        if (clPayment.getTransactionId() == null) {
+            Log.v("Payment", "null");
+        } else {
+            Log.v("Payment", clPayment.getTransactionId().toString());
         }
+
+        /*if (clPayment.getErrorCode().equals("008090")) {
+            Log.v("Transaction cancelled", "oops");
+
+        } else*/ if (clPayment.getTransactionType() != null && clPayment.isSuccess()) {
+            Log.v("Payment success: ", clPayment.toString());
+            Mie mie = new Mie(State.getInstance().getMieId(), State.getInstance().getQuantityMie(),
+                    1, State.getInstance().getAllStock().getMieStocks().get(State.getInstance().getMieId()).price,
+                    State.getInstance().getPedasLevel() , "", State.getInstance().getToppings());
+            ArrayList mies = new ArrayList();
+            mies.add(mie);
+            Order order = new Order(State.getInstance().getGrandTotal(),
+                "card", State.getInstance().getDiningMethod(),
+                mies, State.getInstance().getDrinks());
+            OrderServer.getInstance(callingActivity).createOrder(this, order);
+        } else if (clPayment.getErrorCode() != null) {
+            Log.v("Transaction cancelled", clPayment.getErrorMessage());
+        } else if (clPayment.getMessage() != null) {
+            Log.v("Transaction message", clPayment.getMessage());
+        }
+
+
     }
 
     @Override
@@ -85,10 +113,7 @@ public class CashlezPayment implements ICLPaymentService,
 
     @Override
     public void onGetPrintingResponse(CLPrinterResponse printerResponse) {
-//        if (isViewAttached()) {
-//            getView().onHideLoading();
-//            getView().onPrinterResponse(printerResponse.getMessage());
-//        }
+
     }
 
     @Override

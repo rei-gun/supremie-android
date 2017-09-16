@@ -1,10 +1,10 @@
 package com.bintang5.supremie.activity;
 
-import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 
 import com.bintang5.supremie.R;
 import com.cashlez.android.sdk.payment.CLPaymentResponse;
@@ -26,16 +26,19 @@ import utils.StockServer;
  */
 public class MainActivity extends FragmentActivity implements ICLPaymentService {
 
-    protected BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    FragmentTabHost tabHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentTabHost tabHost = (FragmentTabHost)findViewById(R.id.tab_host);
+        tabHost = (FragmentTabHost)findViewById(R.id.tab_host);
         tabHost.setup(this, getSupportFragmentManager(), R.id.tab_content);
-
+        //Get stock data from server
         StockServer.getInstance(this).getStock(this);
+        //Log in to Cashlez
+        CashlezLogin cashlezLogin = new CashlezLogin(this);
+        cashlezLogin.doLoginAggregator(new User());
 
         tabHost.addTab(tabHost.newTabSpec("choose_dining_method").setIndicator("Welcome!"), new DiningMethodFragment().getClass(), null);
         tabHost.addTab(tabHost.newTabSpec("choose_mie_brand").setIndicator("Pilih Mie"), new ChooseMieBrandFragment().getClass(), null);
@@ -45,17 +48,27 @@ public class MainActivity extends FragmentActivity implements ICLPaymentService 
         tabHost.addTab(tabHost.newTabSpec("choose_drink").setIndicator("Pilih Minum"), new ChooseDrinkFragment().getClass(), null);
         tabHost.addTab(tabHost.newTabSpec("summary").setIndicator("Order Summary"), new OrderSummaryFragment().getClass(), null);
 
-        CashlezLogin cashlezLogin = new CashlezLogin(this);
-        cashlezLogin.doLoginAggregator(new User());
+        //disable tabs in front of Choose Dining Method
+        for (int i=1; i<tabHost.getTabWidget().getTabCount(); i++) {
+            tabHost.getTabWidget().getChildTabViewAt(i).setEnabled(false);
+        }
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
+                //coming out of Order Summary tab
                 if (State.getInstance().isOrderDataSetup()) {
                     State.getInstance().deleteOrderData();
                 }
+                //mie flavour has not been chosen, disable Order Summary
+                if (State.getInstance().getMieId() == null) {
+                    TabWidget tabWidget = tabHost.getTabWidget();
+                    tabWidget.getChildTabViewAt(tabWidget.getTabCount()-1);
+                }
             }
         });
+        //default pedas level to level 1
+        State.getInstance().setPedasLevel(0);
     }
 
     @Override
@@ -71,5 +84,13 @@ public class MainActivity extends FragmentActivity implements ICLPaymentService 
     @Override
     public void onProvideSignature(CLPaymentResponse clPaymentResponse) {
 
+    }
+
+    public void enableTab(Integer tabId) {
+        tabHost.getTabWidget().getChildTabViewAt(tabId).setEnabled(true);
+    }
+
+    public void disableTab(Integer tabId) {
+        tabHost.getTabWidget().getChildTabViewAt(tabId).setEnabled(false);
     }
 }

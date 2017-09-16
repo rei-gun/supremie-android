@@ -51,17 +51,16 @@ public class OrderServer extends Server {
     /**
      * Create a new permintaan.
      *
-     * @param order The permintaan model to be created.
-     * @return The permintaan model that was added.
+     * @param order The Order model to be created.
      */
     public void createOrder(final CashlezPayment cashlezPayment, Order order) {
+        Log.v("TEST", "test");
 
         service.createOrder(order).enqueue(new Callback<POSTResponseOrder>() {
             @Override
             public void onResponse(Call<POSTResponseOrder> call, Response<POSTResponseOrder> response) {
                 POSTResponseOrder r = response.body();
                 //TODO print the id to Cashlez's printer here
-
 
                 ArrayList<CLPrintObject> freeText = new ArrayList<>();
                 CLPrintObject clPrintObject = new CLPrintObject();

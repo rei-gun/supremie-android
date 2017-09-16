@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -77,7 +78,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
             debitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                postOrder("credit");
             }
         });
 
@@ -85,37 +86,40 @@ public class PaymentMethodActivity extends AppCompatActivity {
         creditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                postOrder("card");
+                postOrder("debit");
             }
         });
     }
 
 
     private void postOrder(String paymentMethod) {
-
         Mie mie = new Mie(State.getInstance().getMieId(), State.getInstance().getQuantityMie(),
                 1, State.getInstance().getAllStock().getMieStocks().get(State.getInstance().getMieId()).price,
                 State.getInstance().getPedasLevel() , "", State.getInstance().getToppings());
         ArrayList mies = new ArrayList();
         mies.add(mie);
 
-        Order order = new Order(State.getInstance().getGrandTotal(),
-                paymentMethod, State.getInstance().getDiningMethod(),
-                mies, State.getInstance().getDrinks());
-
         if (paymentMethod.equals("cash")) {
+            Order order = new Order(State.getInstance().getGrandTotal(),
+                    paymentMethod, State.getInstance().getDiningMethod(),
+                    mies, State.getInstance().getDrinks());
+            Log.v("BIGDICK", order.toString());
             OrderServer.getInstance(this).createOrder(cashlezPayment, order);
-        } else if (paymentMethod.equals("card")) {
-            //TODO: trigger Cashlez card payment SDK
+        } else if (paymentMethod.equals("debit")) {
             CLPayment debitCLPayment = new CLPayment();
-            debitCLPayment.setAmount("10000");
-            debitCLPayment.setDescription("blabla");
+            debitCLPayment.setAmount("5");//State.getInstance().getGrandTotal().toString());
+            debitCLPayment.setDescription("debit test");
             debitCLPayment.setTransactionType(TransactionType.DEBIT);
             debitCLPayment.setVerificationMode(CLVerificationMode.PIN);
-//            debitCLPayment.setImage(payment.getItemImage());
             cashlezPayment.doPayDebitPin(debitCLPayment);
-//        cashlezPayment.doPayCreditPin();
             //then createOrder(order)
+        } else if (paymentMethod.equals("credit")) {
+            CLPayment debitCLPayment = new CLPayment();
+            debitCLPayment.setAmount("100");//State.getInstance().getGrandTotal().toString());
+            debitCLPayment.setDescription("credit test");
+            debitCLPayment.setTransactionType(TransactionType.DEBIT);
+            debitCLPayment.setVerificationMode(CLVerificationMode.PIN);
+            cashlezPayment.doPayCreditPin(debitCLPayment);
         }
     }
 

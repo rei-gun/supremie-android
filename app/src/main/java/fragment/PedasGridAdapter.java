@@ -30,7 +30,7 @@ public class PedasGridAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         if (view == null) {
-            view = inflater.inflate(R.layout.grid_pedas_item, null);
+            view = inflater.inflate(R.layout.grid_item_with_quantity, null);
         }
         ImageView imgView = (ImageView)view.findViewById(R.id.pedas_img);
 //        imgView.setImageAlpha();
