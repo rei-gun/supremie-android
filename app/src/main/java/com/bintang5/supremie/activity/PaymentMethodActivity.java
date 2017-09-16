@@ -107,16 +107,16 @@ public class PaymentMethodActivity extends AppCompatActivity {
             OrderServer.getInstance(this).createOrder(cashlezPayment, order);
         } else if (paymentMethod.equals("debit")) {
             CLPayment debitCLPayment = new CLPayment();
-            debitCLPayment.setAmount("10000");
-            debitCLPayment.setDescription("blabla");
+            debitCLPayment.setAmount("5");//State.getInstance().getGrandTotal().toString());
+            debitCLPayment.setDescription("debit test");
             debitCLPayment.setTransactionType(TransactionType.DEBIT);
             debitCLPayment.setVerificationMode(CLVerificationMode.PIN);
             cashlezPayment.doPayDebitPin(debitCLPayment);
             //then createOrder(order)
         } else if (paymentMethod.equals("credit")) {
             CLPayment debitCLPayment = new CLPayment();
-            debitCLPayment.setAmount("10000");
-            debitCLPayment.setDescription("blabla");
+            debitCLPayment.setAmount("100");//State.getInstance().getGrandTotal().toString());
+            debitCLPayment.setDescription("credit test");
             debitCLPayment.setTransactionType(TransactionType.DEBIT);
             debitCLPayment.setVerificationMode(CLVerificationMode.PIN);
             cashlezPayment.doPayCreditPin(debitCLPayment);
