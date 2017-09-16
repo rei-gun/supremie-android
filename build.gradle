@@ -1,10 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     repositories {
         jcenter()
         maven {
-            url "https://maven.google.com"
+            url "https://jitpack.io"
         }
     }
     dependencies {
@@ -14,13 +13,14 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
 allprojects {
     repositories {
         jcenter()
     }
 }
-
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+dependencies {
 }

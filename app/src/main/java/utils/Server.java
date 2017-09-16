@@ -76,7 +76,7 @@ public abstract class Server {
      */
     public static String getBaseUrl() {
         return "http://139.59.96.68:8000"; // DigitalOcean server
-//       return "http://192.168.10.113:80"; // Raspberry Pi @ Bintang 5 Group FL-1
+//       return "http://192.168.0.100:80"; // Raspberry Pi @ Supremie
     }
 
     /*
