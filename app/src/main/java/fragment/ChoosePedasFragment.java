@@ -24,7 +24,6 @@ public class ChoosePedasFragment extends Fragment {
     boolean[] items;
     PedasGridAdapter gridAdapter;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class ChoosePedasFragment extends Fragment {
         }
 
         gridAdapter = new PedasGridAdapter(getActivity(),
-                items);
+                items, State.getInstance().getPedasDescriptions());
         gridView.setAdapter(gridAdapter);
 
         setListener(this, gridView, items);

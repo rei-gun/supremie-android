@@ -58,6 +58,7 @@ public class StockServer extends Server {
                 @Override
                 public void onResponse(Call<GETResponseStock> call, Response<GETResponseStock> response) {
                     State.getInstance().setAllStock(response.body());
+                    callingActivity.enableUserInput();
                 }
 
                 @Override

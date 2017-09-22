@@ -1,14 +1,19 @@
 package fragment;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bintang5.supremie.R;
+import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
@@ -38,12 +43,24 @@ public class ToppingGridAdapter extends BaseAdapter {
 
         if (view == null) {
             view = inflater.inflate(R.layout.grid_mie_flavour_item, null);
+            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 500));
         }
+        ToppingStock topping = getItem(i);
+        String uri = "@drawable/"+topping.name;
+        uri = uri.replace(" ", "").toLowerCase();
+        Log.v("HERP", uri);
+        Log.v("HERP", String.valueOf(i));
+        int imgResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+        Drawable res = context.getDrawable(imgResource);
         ImageView imgView = (ImageView)view.findViewById(R.id.mie_flavour_img);
-//        imgView.setImageAlpha();
+        imgView.setImageDrawable(res);
 
-        TextView brandView = (TextView)view.findViewById(R.id.mie_flavour);
-        brandView.setText((getItem(i).name));
+        TextView nameView = (TextView)view.findViewById(R.id.mie_flavour);
+        nameView.setText(topping.name);
+        nameView.setTextColor(ContextCompat.getColor(context, R.color.black));
+
+        TextView priceView = (TextView)view.findViewById(R.id.price);
+        priceView.setText(State.getInstance().addDot("RP "+topping.price));
 
         QuantityView quantityView = (QuantityView)view.findViewById(R.id.quantity);
         quantityView.setQuantity(quantities[i]);

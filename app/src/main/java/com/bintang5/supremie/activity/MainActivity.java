@@ -3,8 +3,11 @@ package com.bintang5.supremie.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.content.ContextCompat;
+import android.view.WindowManager;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.bintang5.supremie.R;
 import com.cashlez.android.sdk.payment.CLPaymentResponse;
@@ -33,8 +36,9 @@ public class MainActivity extends FragmentActivity implements ICLPaymentService 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tabHost = (FragmentTabHost)findViewById(R.id.tab_host);
-        tabHost.setup(this, getSupportFragmentManager(), R.id.tab_content);
+        tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         //Get stock data from server
+        disableUserInput();
         StockServer.getInstance(this).getStock(this);
         //Log in to Cashlez
         CashlezLogin cashlezLogin = new CashlezLogin(this);
@@ -46,11 +50,17 @@ public class MainActivity extends FragmentActivity implements ICLPaymentService 
         tabHost.addTab(tabHost.newTabSpec("choose_topping").setIndicator("Pilih Topping"), new ChooseToppingFragment().getClass(), null);
         tabHost.addTab(tabHost.newTabSpec("choose_chili").setIndicator("Pilih Pedas"), new ChoosePedasFragment().getClass(), null);
         tabHost.addTab(tabHost.newTabSpec("choose_drink").setIndicator("Pilih Minum"), new ChooseDrinkFragment().getClass(), null);
-        tabHost.addTab(tabHost.newTabSpec("summary").setIndicator("Order Summary"), new OrderSummaryFragment().getClass(), null);
+        tabHost.addTab(tabHost.newTabSpec("summary").setIndicator("Review Pesanan"), new OrderSummaryFragment().getClass(), null);
 
-        //disable tabs in front of Choose Dining Method
+        //disable and set color of tabs in front of Choose Dining Method
+        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.tab_color_selector);
+        TextView tabText = (TextView)tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+        tabText.setTextColor(ContextCompat.getColorStateList(this, R.color.tab_text_selector));
         for (int i=1; i<tabHost.getTabWidget().getTabCount(); i++) {
             tabHost.getTabWidget().getChildTabViewAt(i).setEnabled(false);
+            tabText = (TextView)tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tabText.setTextColor(getColor(R.color.pureWhite));
+            tabHost.getTabWidget().getChildAt(i).setBackgroundColor(getColor(R.color.darkGrey));
         }
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -87,10 +97,29 @@ public class MainActivity extends FragmentActivity implements ICLPaymentService 
     }
 
     public void enableTab(Integer tabId) {
+        tabHost.getTabWidget().getChildAt(tabId).setBackgroundResource(R.drawable.tab_color_selector);
+        TextView tabText = (TextView)tabHost.getTabWidget().getChildAt(tabId).findViewById(android.R.id.title);
+        tabText.setTextColor(ContextCompat.getColorStateList(this, R.color.tab_text_selector));
         tabHost.getTabWidget().getChildTabViewAt(tabId).setEnabled(true);
+
     }
 
     public void disableTab(Integer tabId) {
         tabHost.getTabWidget().getChildTabViewAt(tabId).setEnabled(false);
+    }
+
+
+    /**
+     * Disables the entire screen from user input
+     */
+    public void disableUserInput() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    /**
+     * Enables the entire screen for user input
+     */
+    public void enableUserInput() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 }

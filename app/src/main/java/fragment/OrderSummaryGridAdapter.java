@@ -1,6 +1,7 @@
 package fragment;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bintang5.supremie.R;
+import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
@@ -42,7 +44,11 @@ public class OrderSummaryGridAdapter extends BaseAdapter {
         middleView.setText(items.get(i).middleText);
 
         TextView rightText = (TextView)view.findViewById(R.id.right_text);
-        rightText.setText(items.get(i).rightText);
+        if (i != 1) {
+            rightText.setText(State.getInstance().addDot(items.get(i).rightText));
+        } else {
+            rightText.setText(items.get(i).rightText);
+        }
 
         return view;
     }

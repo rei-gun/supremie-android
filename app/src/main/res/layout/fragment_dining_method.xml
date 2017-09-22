@@ -3,26 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/supremie_logo"/>
+
+    <TextView
+        android:id="@+id/logo_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INSTANT NOODLE HOUSE"
+        android:textSize="35dp"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="25dp"/>
+
+    <ImageButton
         android:id="@+id/button_dine_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/centre_point"
-        android:text="MAKAN SINI"/>
-    <TextView
-        android:id="@+id/centre_point"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_below="@+id/logo_caption"
+        android:src="@drawable/makan_disini"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/button_takeaway"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/centre_point"
-        android:text="BUNGKUS"/>
+        android:layout_below="@+id/button_dine_in"
+        android:src="@drawable/bungkus"/>
 
 </RelativeLayout>

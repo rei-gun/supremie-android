@@ -2,16 +2,16 @@ package fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.TextView;
 
 import com.bintang5.supremie.R;
+import com.bintang5.supremie.activity.ExpandableHeightGridView;
 import com.bintang5.supremie.activity.PaymentMethodActivity;
 import com.bintang5.supremie.activity.State;
 
@@ -34,11 +34,11 @@ public class OrderSummaryFragment extends Fragment {
     OrderSummaryGridAdapter gridAdapter;
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_summary, container, false);
-        GridView gridView = (GridView) view.findViewById(R.id.grid_pedas);
+        ExpandableHeightGridView gridView = (ExpandableHeightGridView)view.findViewById(R.id.grid_order_summary);
+
         //offset of -1 because mySQL IDs start at 1, not 0
         MieStock chosenMie = State.getInstance().getAllStock().getMieStocks().get(State.getInstance().getMieId()-1);
         items = new ArrayList<>();
@@ -102,48 +102,33 @@ public class OrderSummaryFragment extends Fragment {
         }
 
         //create subtotal row
-        OrderSummaryItem o = new OrderSummaryItem("", "SUB TOTAL",
-                "RP "+subTotal.toString());
-        items.add(o);
+        ((TextView)view.findViewById(R.id.subtotal_value)).setText(
+                State.getInstance().addDot("RP "+subTotal.toString()));
+
 
         //create tax & service charge row
         Double taxCharge = subTotal*0.15;
-        OrderSummaryItem taxRow = new OrderSummaryItem("", "TAX & SERVICE CHARGE 15%",
-                "RP "+String.valueOf(taxCharge.intValue()));
-        items.add(taxRow);
+        ((TextView)view.findViewById(R.id.tax_value)).setText(
+                State.getInstance().addDot("RP "+String.valueOf(taxCharge.intValue())));
 
         Double grandTotal = subTotal+ (subTotal*0.15);
-        OrderSummaryItem totalRow = new OrderSummaryItem("", "GRAND TOTAL",
-                "RP "+String.valueOf(grandTotal.intValue()));
-        items.add(totalRow);
+        String s = "RP "+String.valueOf(grandTotal.intValue());
+        s = State.getInstance().addDot(s);
+        ((TextView)view.findViewById(R.id.total_value)).setText(s);
 
         State.getInstance().setGrandTotal(grandTotal.intValue());
 
         gridAdapter = new OrderSummaryGridAdapter(getActivity(),
                 items);
         gridView.setAdapter(gridAdapter);
-//        setListener(gridView, items);
+        gridView.setExpanded(true);
+        gridView.setFocusable(false);
 
         FloatingActionButton b = (FloatingActionButton) view.findViewById(R.id.button_go_to_payment_method);
         setBListener(b);
         b.bringToFront();
 
         return view;
-    }
-
-    private void setListener(GridView gridView, final ArrayList<OrderSummaryItem>  items) {
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                if (State.getInstance().getPedasLevel() == null ||
-                        State.getInstance().getPedasLevel() != i) {
-                    //TODO: do this when fragment pauses instead
-                    State.getInstance().setPedasLevel(i);
-                    gridAdapter.notifyDataSetChanged();
-                }
-            }
-        });
     }
 
     private void setBListener(FloatingActionButton b) {

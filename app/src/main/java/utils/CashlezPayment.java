@@ -6,6 +6,7 @@ package utils;
 import android.app.Activity;
 import android.util.Log;
 
+import com.bintang5.supremie.activity.PaymentMethodActivity;
 import com.bintang5.supremie.activity.State;
 import com.cashlez.android.sdk.CLPayment;
 import com.cashlez.android.sdk.checkcompanion.CLCompanionResponse;
@@ -36,10 +37,10 @@ public class CashlezPayment implements ICLPaymentService,
         ICLPrintingService, ICLSendReceiptService, ICLHelpMessageService, ICLCheckCompanionService {
 
     private ICLPaymentHandler paymentHandler;
-    private Activity callingActivity;
+    private PaymentMethodActivity callingActivity;
     private CLPrinterHandler printerHandler;
 
-    public CashlezPayment(Activity callingActivity) {
+    public CashlezPayment(PaymentMethodActivity callingActivity) {
         this.callingActivity = callingActivity;
         initHandler();
     }
@@ -48,6 +49,7 @@ public class CashlezPayment implements ICLPaymentService,
         //TODO: bingung disini
         paymentHandler = new CLPaymentHandler(callingActivity.getBaseContext(), callingActivity.getIntent().getExtras(), this);
         initPrinter();
+        callingActivity.enableUserInput();
     }
 
     private void initPrinter() {
@@ -83,7 +85,7 @@ public class CashlezPayment implements ICLPaymentService,
             Order order = new Order(State.getInstance().getGrandTotal(),
                 "card", State.getInstance().getDiningMethod(),
                 mies, State.getInstance().getDrinks());
-            OrderServer.getInstance(callingActivity).createOrder(this, order);
+            OrderServer.getInstance(callingActivity).createOrder(this, callingActivity, order);
         } else if (clPayment.getErrorCode() != null) {
             Log.v("Transaction cancelled", clPayment.getErrorMessage());
         } else if (clPayment.getMessage() != null) {

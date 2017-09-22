@@ -8,7 +8,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.bintang5.supremie.R;
 import com.cashlez.android.sdk.CLPayment;
@@ -46,6 +48,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
         if (!bluetoothAdapter.isEnabled()) {
             //TODO: bluetooth not enabled
         } else {
+            disableUserInput();
             cashlezPayment = new CashlezPayment(this);
 
         }
@@ -73,7 +76,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
                 builder.show();
             }
         });
-
+/*
         Button debitButton = (Button)findViewById(R.id.button_credit);
             debitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +92,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
                 postOrder("debit");
             }
         });
+        */
     }
 
 
@@ -103,23 +107,33 @@ public class PaymentMethodActivity extends AppCompatActivity {
             Order order = new Order(State.getInstance().getGrandTotal(),
                     paymentMethod, State.getInstance().getDiningMethod(),
                     mies, State.getInstance().getDrinks());
-            Log.v("BIGDICK", order.toString());
-            OrderServer.getInstance(this).createOrder(cashlezPayment, order);
+            OrderServer.getInstance(this).createOrder(cashlezPayment, this, order);
         } else if (paymentMethod.equals("debit")) {
+            /*
             CLPayment debitCLPayment = new CLPayment();
             debitCLPayment.setAmount("5");//State.getInstance().getGrandTotal().toString());
             debitCLPayment.setDescription("debit test");
             debitCLPayment.setTransactionType(TransactionType.DEBIT);
             debitCLPayment.setVerificationMode(CLVerificationMode.PIN);
             cashlezPayment.doPayDebitPin(debitCLPayment);
-            //then createOrder(order)
+            */
+            Order order = new Order(State.getInstance().getGrandTotal(),
+                    "card", State.getInstance().getDiningMethod(),
+                    mies, State.getInstance().getDrinks());
+            OrderServer.getInstance(this).createOrder(cashlezPayment, this, order);
         } else if (paymentMethod.equals("credit")) {
+            /*
             CLPayment debitCLPayment = new CLPayment();
             debitCLPayment.setAmount("100");//State.getInstance().getGrandTotal().toString());
             debitCLPayment.setDescription("credit test");
             debitCLPayment.setTransactionType(TransactionType.DEBIT);
             debitCLPayment.setVerificationMode(CLVerificationMode.PIN);
             cashlezPayment.doPayCreditPin(debitCLPayment);
+            */
+            Order order = new Order(State.getInstance().getGrandTotal(),
+                    "card", State.getInstance().getDiningMethod(),
+                    mies, State.getInstance().getDrinks());
+            OrderServer.getInstance(this).createOrder(cashlezPayment, this,order);
         }
     }
 
@@ -127,7 +141,6 @@ public class PaymentMethodActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         cashlezPayment.unregisterReceiver();
-        cashlezPayment.stopLocationServices();
     }
 
     @Override
@@ -135,6 +148,20 @@ public class PaymentMethodActivity extends AppCompatActivity {
         super.onResume();
         cashlezPayment.registerReceiver();
         cashlezPayment.doStartPayment();
+    }
+
+    /**
+     * Disables the entire screen from user input
+     */
+    public void disableUserInput() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    /**
+     * Enables the entire screen for user input
+     */
+    public void enableUserInput() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
 }

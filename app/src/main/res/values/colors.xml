@@ -4,4 +4,33 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
+    <color name="supremieRed">#E52729</color>
+
+    <color name="colorNavBar">#AC0D13</color>
+    <color name="colorNavBarBackground">#FFFFFF</color>
+    <color name="colorButton">#AC0D13</color>
+    <color name="splashScreenTransparent">#99AC0D13</color>
+    <color name="languageScreenTransparent">#90FFFFFF</color>
+    <color name="roomNumberBackground">#be142d</color>
+    <color name="guestHomeBackgroundColor">#FFFFFF</color>
+    <color name="darkGrey">#808184</color>
+    <color name="lightGrey">#9b808184</color>
+
+    <color name="guestTextColor">#FFFFFF</color>
+    <color name="dialogConfirmationBackground">#b9ac0d13</color>
+    <color name="black">#000000</color>
+    <color name="darkRed">#AC0D13</color>
+    <color name="darkerRed">#7d090e</color>
+    <color name="lightRed">#DE4646</color>
+    <color name="whiteTransparent">#96ffffff</color>
+    <color name="pureWhite">#ffffff</color>
+
+    <color name="colorChatInputBackground">#FFFFFF</color>
+    <color name="colorChatSelected">#606060</color>
+
+    <color name="permintaanRed">#ff0000</color>
+    <color name="permintaanGreen">#00ff00</color>
+
+    <color name="textHint">#808080</color>
+    <color name="textLink">#AEDBF5</color>
 </resources>

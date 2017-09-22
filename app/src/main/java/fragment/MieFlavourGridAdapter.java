@@ -1,11 +1,14 @@
 package fragment;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +18,7 @@ import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.StringTokenizer;
 
 import me.himanshusoni.quantityview.QuantityView;
 import model.MieStock;
@@ -45,12 +49,20 @@ public class MieFlavourGridAdapter extends BaseAdapter {
 
         if (view == null) {
             view = inflater.inflate(R.layout.grid_mie_flavour_item, null);
+            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 500));
         }
+        MieStock mie = getItem(i);
+        //set image
+        String uri = "@drawable/"+mie.brand+"_"+mie.flavour;
+        uri = uri.replaceAll(" |\\(|\\)", "").toLowerCase();
+        int imgResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+        Drawable res = context.getDrawable(imgResource);
         ImageView imgView = (ImageView)view.findViewById(R.id.mie_flavour_img);
-//        imgView.setImageAlpha();
+        imgView.setImageDrawable(res);
 
-        TextView brandView = (TextView)view.findViewById(R.id.mie_flavour);
-        brandView.setText((getItem(i).flavour));
+        TextView flavourView = (TextView)view.findViewById(R.id.price);
+        flavourView.setText(mie.flavour);
+        flavourView.setTextColor(ContextCompat.getColor(context, R.color.supremieRed));
 
         QuantityView quantityView = (QuantityView)view.findViewById(R.id.quantity);
         quantityView.setQuantity(quantities[i]);
@@ -100,5 +112,19 @@ public class MieFlavourGridAdapter extends BaseAdapter {
 
             }
         });
+    }
+
+    public void setQuantity(Integer i) {
+        quantities[i] += 1;
+        //TODO: save this info when fragment is paused instead of here
+        State.getInstance().setChooseMieFragmentId(i, quantities[i]);
+        State.getInstance().setMieId(items.get(i).id);
+        Log.v("SAVED", items.get(i).id.toString()+items.get(i).flavour);
+        //TODO: change this to first time onClick hears something
+        ((MainActivity)context).enableTab(3);
+        ((MainActivity)context).enableTab(4);
+        ((MainActivity)context).enableTab(5);
+        ((MainActivity)context).enableTab(6);
+        notifyDataSetChanged();
     }
 }

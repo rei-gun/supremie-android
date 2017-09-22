@@ -8,9 +8,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button_credit"
-        android:text="CASH"/>
-    <Button
+        android:layout_centerVertical="true"
+        android:text="CASH"
+        android:textSize="20dp"
+        android:background="@drawable/ic_cash"
+        />
+    <!--Button
         android:id="@+id/button_credit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,6 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/button_credit"
-        android:text="DEBIT"/>
+        android:text="DEBIT"/-->
 
 </RelativeLayout>

@@ -3,9 +3,11 @@ package fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.bintang5.supremie.R;
@@ -35,17 +37,22 @@ public class ChooseMieFlavourFragment extends Fragment {
         state = State.getInstance();
         oneBrand = state.getAllStock().getOfBrand(State.getInstance().getBrand());
         quantities = new int[oneBrand.size()];
-//        for (int i=0; i<oneBrand.size(); i++) {
-//            quantities[i] = 0;
-//        }
 
         if (State.getInstance().getChooseMieFragmentId() != null) {
             quantities[State.getInstance().getChooseMieFragmentId()] =
                     State.getInstance().getQuantityMie();
         }
-        MieFlavourGridAdapter gridAdapter = new MieFlavourGridAdapter(getActivity(),
+        final MieFlavourGridAdapter gridAdapter = new MieFlavourGridAdapter(getActivity(),
                 oneBrand, quantities, chosenFlavour);
         gridView.setAdapter(gridAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.v("DERP", String.valueOf(i));
+                gridAdapter.setQuantity(i);
+                gridAdapter.notifyDataSetChanged();
+            }
+        });
         return view;
     }
 

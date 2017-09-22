@@ -43,6 +43,8 @@ public class State  {
         return pedasPrices[i];
     }
 
+    private String[] pedasDescriptions;
+
     private State() {
         pedasPrices = new int[4];
         pedasPrices[0] = 0;
@@ -52,6 +54,11 @@ public class State  {
         toppings = new ArrayList();
 //        mies = new ArrayList();
         drinks = new ArrayList();
+        pedasDescriptions = new String[4];
+        pedasDescriptions[0] = "RP 0\nLEVEL 0 (TANPA BUBUK CABAI DI DALAM PACKAGING)";
+        pedasDescriptions[1] = "RP 0\nLEVEL 1 (HANYA BUBUK CABAI DI DALAM PACKAGING)";
+        pedasDescriptions[2] = "RP 1.000\nLEVEL 2 (BUBUK CABAI DI DALAM PACKAGING + 5 CABAI RAWIT";
+        pedasDescriptions[3] = "RP 2.000\nLEVEL 3 (BUBUK CABAI DI DALAM PACKAGAING + 20 CABAI RAWIT";
     }
 
     public static State getInstance() {
@@ -69,6 +76,10 @@ public class State  {
         drinkQuantities = null;
         toppingQuantities = null;
         pedasLevel = null;
+        toppings = null;
+        drinks = null;
+        allStock = null;
+        grandTotal = null;
     }
 
     public void setBrand(String brand) {
@@ -192,5 +203,13 @@ public class State  {
 
     public GETResponseStock getAllStock() {
         return allStock;
+    }
+
+    public String[] getPedasDescriptions() {
+        return pedasDescriptions;
+    }
+
+    public String addDot(String s) {
+        return new StringBuffer(s).insert(s.length() - 3, ".").toString();
     }
 }

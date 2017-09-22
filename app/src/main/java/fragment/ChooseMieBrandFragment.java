@@ -1,6 +1,7 @@
 package fragment;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TabHost;
 
 import com.bintang5.supremie.R;
 import com.bintang5.supremie.activity.MainActivity;
@@ -38,16 +40,16 @@ public class ChooseMieBrandFragment extends Fragment {
         gridView.setAdapter(gridAdapter);
 
         //TODO: select previously selected selectedBrand
-        setListener(this, gridView, oneOfEachBrand);
+        setListener(gridView, oneOfEachBrand);
 
         return view;
     }
 
-    private void setListener(final Fragment f, GridView gridView, final ArrayList<MieStock> oneOfEachBrand) {
+    private void setListener(GridView gridView, final ArrayList<MieStock> oneOfEachBrand) {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                //check clicked Brand is different to previous click
                 if (State.getInstance().getBrand() != oneOfEachBrand.get(i).brand ) {
                     gridAdapter.selectedBrand = oneOfEachBrand.get(i).brand;
                     State.getInstance().setBrand(oneOfEachBrand.get(i).brand);
@@ -57,6 +59,16 @@ public class ChooseMieBrandFragment extends Fragment {
                     //TODO: do this only on the first time gridView is clicked
                     ((MainActivity)getActivity()).enableTab(2); //enable flavour tab
                     gridAdapter.notifyDataSetChanged();
+
+                    //Delay tab switch 2 seconds
+                    view.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            TabHost tabHost = (TabHost)getActivity().findViewById(R.id.tab_host);
+                            tabHost.setCurrentTab(2);
+                        }
+                    }, 2000);
+
                 }
 
             }

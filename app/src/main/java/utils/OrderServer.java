@@ -1,8 +1,12 @@
 package utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
+import com.bintang5.supremie.activity.MainActivity;
+import com.bintang5.supremie.activity.State;
 import com.cashlez.android.sdk.model.CLPrintObject;
 import com.cashlez.android.sdk.service.CLPrintAlignEnum;
 import com.cashlez.android.sdk.service.CLPrintEnum;
@@ -53,7 +57,7 @@ public class OrderServer extends Server {
      *
      * @param order The Order model to be created.
      */
-    public void createOrder(final CashlezPayment cashlezPayment, Order order) {
+    public void createOrder(final CashlezPayment cashlezPayment, final Activity callingActivity, Order order) {
         Log.v("TEST", "test");
 
         service.createOrder(order).enqueue(new Callback<POSTResponseOrder>() {
@@ -70,12 +74,15 @@ public class OrderServer extends Server {
                 freeText.add(clPrintObject);
                 Log.v("BOOM", clPrintObject.getFreeText());
                 cashlezPayment.doPrintFreeText(freeText);
-//                Intent intent = new Intent( MainActivity.class);
-//                startActivity(intent);
+                cashlezPayment.unregisterReceiver();
+                State.getInstance().clear();
+                Intent intent = new Intent(callingActivity, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                callingActivity.startActivity(intent);
             }
             @Override
             public void onFailure(Call<POSTResponseOrder> call, Throwable t) {
-
+        
             }
         });
 
