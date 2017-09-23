@@ -13,16 +13,11 @@ import com.bintang5.supremie.R;
 import com.cashlez.android.sdk.payment.CLPaymentResponse;
 import com.cashlez.android.sdk.payment.noncash.ICLPaymentService;
 
-import fragment.ChooseDrinkFragment;
-import fragment.ChooseMieBrandFragment;
-import fragment.ChooseMieFlavourFragment;
 import fragment.ChoosePedasFragment;
 import fragment.ChooseToppingFragment;
-import fragment.DiningMethodFragment;
 import fragment.OrderSummaryFragment;
 import model.User;
 import utils.CashlezLogin;
-import utils.StockServer;
 
 /*
  * Supremie's one and only activity. Contains a FragmentTabHost. Calls the GET stock API upon creation.
@@ -39,13 +34,13 @@ public class MainActivity extends FragmentActivity implements ICLPaymentService 
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         //Get stock data from server
         disableUserInput();
-        StockServer.getInstance(this).getStock(this);
+//        StockServer.getInstance(this).getStock(this);
         //Log in to Cashlez
         CashlezLogin cashlezLogin = new CashlezLogin(this);
         cashlezLogin.doLoginAggregator(new User());
 
-        tabHost.addTab(tabHost.newTabSpec("choose_dining_method").setIndicator("Welcome!"), new DiningMethodFragment().getClass(), null);
-        tabHost.addTab(tabHost.newTabSpec("choose_mie_brand").setIndicator("Pilih Mie"), new ChooseMieBrandFragment().getClass(), null);
+//        tabHost.addTab(tabHost.newTabSpec("choose_dining_method").setIndicator("Welcome!"), new DiningMethodFragment().getClass(), null);
+//        tabHost.addTab(tabHost.newTabSpec("choose_mie_brand").setIndicator("Pilih Mie"), new ChooseMieBrandFragment().getClass(), null);
         tabHost.addTab(tabHost.newTabSpec("choose_mie_flavour").setIndicator("Pilih Rasa"), new ChooseMieFlavourFragment().getClass(), null);
         tabHost.addTab(tabHost.newTabSpec("choose_topping").setIndicator("Pilih Topping"), new ChooseToppingFragment().getClass(), null);
         tabHost.addTab(tabHost.newTabSpec("choose_chili").setIndicator("Pilih Pedas"), new ChoosePedasFragment().getClass(), null);

@@ -1,48 +1,59 @@
-package fragment;
+package com.bintang5.supremie.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
-import android.widget.TabHost;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.MainActivity;
-import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
+import fragment.MieBrandGridAdapter;
 import model.MieStock;
 
 /**
  * Created by rei on 2/09/17.
  */
 
-public class ChooseMieBrandFragment extends Fragment {
+public class ChooseMieBrandFragment extends AppCompatActivity {
 
     String selectedBrand;
     MieBrandGridAdapter gridAdapter;
     @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_choose_brand, container, false);
-        final GridView gridView = (GridView) view.findViewById(R.id.grid_mie_brand);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_choose_brand);
+        final GridView gridView = (GridView)findViewById(R.id.grid_mie_brand);
         ArrayList<MieStock> oneOfEachBrand = State.getInstance().getAllStock().getOneOfEachBrand();
         selectedBrand = State.getInstance().getBrand();
 
-        gridAdapter = new MieBrandGridAdapter(getActivity(),
+        gridAdapter = new MieBrandGridAdapter(this,
                 oneOfEachBrand, selectedBrand);
         gridView.setAdapter(gridAdapter);
 
         //TODO: select previously selected selectedBrand
         setListener(gridView, oneOfEachBrand);
 
-        return view;
+        Button lanjut = (Button)findViewById(R.id.brand_lanjutkan);
+        lanjut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                if (State.getInstance().getBrand() == null) {
+                    i = new Intent(ChooseMieBrandFragment.this, ChooseDrinkFragment.class);
+                } else {
+                    i = new Intent(ChooseMieBrandFragment.this, ChooseMieFlavourFragment.class);
+                }
+                startActivity(i);
+                overridePendingTransition(R.anim.enter, R.anim.exit);
+            }
+        });
+
     }
 
     private void setListener(GridView gridView, final ArrayList<MieStock> oneOfEachBrand) {
@@ -57,19 +68,19 @@ public class ChooseMieBrandFragment extends Fragment {
                     State.getInstance().setMieId(null); //clear flavour
                     State.getInstance().setChooseMieFragmentId(null, null);//clear flavour
                     //TODO: do this only on the first time gridView is clicked
-                    ((MainActivity)getActivity()).enableTab(2); //enable flavour tab
+//                    ((MainActivity)getActivity()).enableTab(2); //enable flavour tab
                     gridAdapter.notifyDataSetChanged();
 
-                    //Delay tab switch 2 seconds
-                    view.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            TabHost tabHost = (TabHost)getActivity().findViewById(R.id.tab_host);
-                            tabHost.setCurrentTab(2);
-                        }
-                    }, 2000);
-
                 }
+                //Delay tab switch 2 seconds
+                view.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(ChooseMieBrandFragment.this, ChooseMieFlavourFragment.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.enter, R.anim.exit);
+                    }
+                }, 1500);
 
             }
         });

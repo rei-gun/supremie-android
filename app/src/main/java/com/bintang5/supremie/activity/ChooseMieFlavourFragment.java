@@ -1,27 +1,25 @@
-package fragment;
+package com.bintang5.supremie.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
+import fragment.MieFlavourGridAdapter;
 import model.MieStock;
 
 /**
  * Created by rei on 2/09/17.
  */
 
-public class ChooseMieFlavourFragment extends Fragment {
+public class ChooseMieFlavourFragment extends AppCompatActivity {
 
     Integer chosenFlavour;
     int[] quantities;
@@ -30,10 +28,12 @@ public class ChooseMieFlavourFragment extends Fragment {
 
 
     @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_choose_flavour, container, false);
-        GridView gridView = (GridView) view.findViewById(R.id.grid_mie_flavour);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_choose_flavour);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        GridView gridView = (GridView)findViewById(R.id.grid_mie_flavour);
         state = State.getInstance();
         oneBrand = state.getAllStock().getOfBrand(State.getInstance().getBrand());
         quantities = new int[oneBrand.size()];
@@ -42,18 +42,17 @@ public class ChooseMieFlavourFragment extends Fragment {
             quantities[State.getInstance().getChooseMieFragmentId()] =
                     State.getInstance().getQuantityMie();
         }
-        final MieFlavourGridAdapter gridAdapter = new MieFlavourGridAdapter(getActivity(),
+        final MieFlavourGridAdapter gridAdapter = new MieFlavourGridAdapter(this,
                 oneBrand, quantities, chosenFlavour);
         gridView.setAdapter(gridAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.v("DERP", String.valueOf(i));
-                gridAdapter.setQuantity(i);
+                gridAdapter.addQuantity(i);
                 gridAdapter.notifyDataSetChanged();
             }
         });
-        return view;
     }
 
 

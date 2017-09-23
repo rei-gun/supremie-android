@@ -28,7 +28,7 @@ public class MieBrandGridAdapter extends BaseAdapter {
     private Context context;
     public ArrayList<MieStock> items;
     LayoutInflater inflater;
-    String selectedBrand;
+    public String selectedBrand;
 
     public MieBrandGridAdapter(Context context, ArrayList<MieStock> items, String selectedBrand) {
         this.context = context;

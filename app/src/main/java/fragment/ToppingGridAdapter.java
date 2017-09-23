@@ -42,8 +42,8 @@ public class ToppingGridAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         if (view == null) {
-            view = inflater.inflate(R.layout.grid_mie_flavour_item, null);
-            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 500));
+            view = inflater.inflate(R.layout.grid_quantity_price_item, null);
+            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 700));
         }
         ToppingStock topping = getItem(i);
         String uri = "@drawable/"+topping.name;
@@ -62,10 +62,10 @@ public class ToppingGridAdapter extends BaseAdapter {
         TextView priceView = (TextView)view.findViewById(R.id.price);
         priceView.setText(State.getInstance().addDot("RP "+topping.price));
 
-        QuantityView quantityView = (QuantityView)view.findViewById(R.id.quantity);
-        quantityView.setQuantity(quantities[i]);
-        quantityView.setMaxQuantity(2);
-        setQuantityListener(quantityView, i);
+//        QuantityView quantityView = (QuantityView)view.findViewById(R.id.quantity);
+//        quantityView.addQuantity(quantities[i]);
+//        quantityView.setMaxQuantity(2);
+//        setQuantityListener(quantityView, i);
 
         return view;
     }

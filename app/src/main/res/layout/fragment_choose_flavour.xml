@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,9 +7,18 @@
         android:id="@+id/grid_mie_flavour"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="3"
+        android:numColumns="2"
         android:verticalSpacing="5dp"
         android:horizontalSpacing="5dp"
         android:gravity="center"
-        android:stretchMode="columnWidth"/>
-</LinearLayout>
+        android:stretchMode="columnWidth"
+        android:layout_marginBottom="100dp"/>
+
+    <Button
+        android:id="@+id/flavour_lanjutkan"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="LANJUTKAN"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

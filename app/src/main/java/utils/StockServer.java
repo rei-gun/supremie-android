@@ -2,6 +2,7 @@ package utils;
 
 import android.content.Context;
 
+import com.bintang5.supremie.activity.DiningMethodFragment;
 import com.bintang5.supremie.activity.MainActivity;
 import com.bintang5.supremie.activity.State;
 
@@ -50,23 +51,22 @@ public class StockServer extends Server {
      * Create a new permintaan.
      *
      * @return The permintaan model that was added.
+     * @param callingActivity
      */
-    public void getStock(final MainActivity callingActivity) {
+    public void getStock(final DiningMethodFragment callingActivity) {
 
-        if (callingActivity instanceof MainActivity) {
-            service.getStock().enqueue(new Callback<GETResponseStock>() {
-                @Override
-                public void onResponse(Call<GETResponseStock> call, Response<GETResponseStock> response) {
-                    State.getInstance().setAllStock(response.body());
-                    callingActivity.enableUserInput();
-                }
+        service.getStock().enqueue(new Callback<GETResponseStock>() {
+            @Override
+            public void onResponse(Call<GETResponseStock> call, Response<GETResponseStock> response) {
+                State.getInstance().setAllStock(response.body());
+                callingActivity.enableUserInput();
+            }
 
-                @Override
-                public void onFailure(Call<GETResponseStock> call, Throwable t) {
+            @Override
+            public void onFailure(Call<GETResponseStock> call, Throwable t) {
 
-                }
-            });
-        }
+            }
+        });
     }
 
 }

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.DiningMethodFragment"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,6 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.PaymentMethodActivity" />
+        <activity android:name=".activity.ChooseMieBrandFragment" />
+        <activity android:name=".activity.ChooseMieFlavourFragment" />
+        <activity android:name=".activity.ChooseDrinkFragment" />
     </application>
 
 </manifest>

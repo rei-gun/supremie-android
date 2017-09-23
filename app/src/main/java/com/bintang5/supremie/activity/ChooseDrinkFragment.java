@@ -1,8 +1,9 @@
-package fragment;
+package com.bintang5.supremie.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +14,21 @@ import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
+import fragment.DrinkGridAdapter;
 import model.DrinkStock;
 
 /**
  * Created by rei on 2/09/17.
  */
 
-public class ChooseDrinkFragment extends Fragment {
+public class ChooseDrinkFragment extends AppCompatActivity {
     int[] quantities;
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_choose_topping, container, false);
-        GridView gridView = (GridView) view.findViewById(R.id.grid_mie_flavour);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_choose_topping);
+        GridView gridView = (GridView)findViewById(R.id.grid_mie_flavour);
         State state = State.getInstance();
 
         ArrayList<DrinkStock> drinkStocks = state.getAllStock().getDrinkStocks();
@@ -36,11 +39,10 @@ public class ChooseDrinkFragment extends Fragment {
             quantities = State.getInstance().getDrinkQuantities();
         }
 
-        DrinkGridAdapter gridAdapter = new DrinkGridAdapter(getActivity(),
+        DrinkGridAdapter gridAdapter = new DrinkGridAdapter(this,
                 drinkStocks, quantities);
         gridView.setAdapter(gridAdapter);
 
-        return view;
     }
 
 }
