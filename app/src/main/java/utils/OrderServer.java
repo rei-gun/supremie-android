@@ -82,7 +82,7 @@ public class OrderServer extends Server {
             }
             @Override
             public void onFailure(Call<POSTResponseOrder> call, Throwable t) {
-        
+
             }
         });
 

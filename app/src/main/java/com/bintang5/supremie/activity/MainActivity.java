@@ -4,7 +4,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
@@ -30,7 +35,6 @@ import utils.StockServer;
 public class MainActivity extends FragmentActivity implements ICLPaymentService {
 
     FragmentTabHost tabHost;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +66,21 @@ public class MainActivity extends FragmentActivity implements ICLPaymentService 
             tabText.setTextColor(getColor(R.color.pureWhite));
             tabHost.getTabWidget().getChildAt(i).setBackgroundColor(getColor(R.color.darkGrey));
         }
-
+        State.getInstance().setPrevTabId(0);
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
+                View currView = tabHost.getCurrentView();
+                if (tabHost.getCurrentTab() > State.getInstance().getPrevTabId()) {
+                    currView.setAnimation(inFromRightAnimation());
+                    Log.v("DERP", "DIRT");
+                } else {
+                    currView.setAnimation(outToRightAnimation());
+                    Log.v("DERP", "MIRT");
+                }
+                State.getInstance().setPrevTabId(tabHost.getCurrentTab());
                 //coming out of Order Summary tab
+
                 if (State.getInstance().isOrderDataSetup()) {
                     State.getInstance().deleteOrderData();
                 }
@@ -107,6 +121,32 @@ public class MainActivity extends FragmentActivity implements ICLPaymentService 
     public void disableTab(Integer tabId) {
         tabHost.getTabWidget().getChildTabViewAt(tabId).setEnabled(false);
     }
+
+    public Animation inFromRightAnimation()
+    {
+
+        Animation inFromRight = new TranslateAnimation(
+                Animation.RELATIVE_TO_PARENT, +1.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f);
+        inFromRight.setDuration(2000);
+        inFromRight.setInterpolator(new AccelerateInterpolator());
+        return inFromRight;
+    }
+
+    public Animation outToRightAnimation()
+    {
+        Animation outtoLeft = new TranslateAnimation(
+                Animation.RELATIVE_TO_PARENT, -1.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f);
+        outtoLeft.setDuration(2000);
+        outtoLeft.setInterpolator(new AccelerateInterpolator());
+        return outtoLeft;
+    }
+
 
 
     /**

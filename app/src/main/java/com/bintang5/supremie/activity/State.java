@@ -45,6 +45,8 @@ public class State  {
 
     private String[] pedasDescriptions;
 
+    private int prevTabId;
+
     private State() {
         pedasPrices = new int[4];
         pedasPrices[0] = 0;
@@ -211,5 +213,13 @@ public class State  {
 
     public String addDot(String s) {
         return new StringBuffer(s).insert(s.length() - 3, ".").toString();
+    }
+
+    public void setPrevTabId(int i) {
+        prevTabId = i;
+    }
+
+    public int getPrevTabId() {
+        return prevTabId;
     }
 }

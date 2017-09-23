@@ -1,5 +1,6 @@
 package fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -23,14 +24,14 @@ import model.MieStock;
  * Created by rei on 2/09/17.
  */
 
-public class ChooseMieBrandFragment extends Fragment {
+public class ChooseMieBrandFragment extends Activity {
 
     String selectedBrand;
     MieBrandGridAdapter gridAdapter;
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_choose_brand, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_choose_brand);
         final GridView gridView = (GridView) view.findViewById(R.id.grid_mie_brand);
         ArrayList<MieStock> oneOfEachBrand = State.getInstance().getAllStock().getOneOfEachBrand();
         selectedBrand = State.getInstance().getBrand();
