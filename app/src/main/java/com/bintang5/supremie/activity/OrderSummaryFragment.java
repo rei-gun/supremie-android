@@ -1,13 +1,15 @@
-package fragment;
+package com.bintang5.supremie.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bintang5.supremie.R;
@@ -17,6 +19,7 @@ import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
+import fragment.OrderSummaryGridAdapter;
 import model.Drink;
 import model.DrinkStock;
 import model.MieStock;
@@ -28,16 +31,17 @@ import model.ToppingStock;
  * Created by rei on 2/09/17.
  */
 
-public class OrderSummaryFragment extends Fragment {
+public class OrderSummaryFragment extends AppCompatActivity {
 
     ArrayList<OrderSummaryItem> items;
     OrderSummaryGridAdapter gridAdapter;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_order_summary, container, false);
-        ExpandableHeightGridView gridView = (ExpandableHeightGridView)view.findViewById(R.id.grid_order_summary);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_order_summary);
+        ExpandableHeightGridView gridView = (ExpandableHeightGridView)findViewById(R.id.grid_order_summary);
 
         //offset of -1 because mySQL IDs start at 1, not 0
         MieStock chosenMie = State.getInstance().getAllStock().getMieStocks().get(State.getInstance().getMieId()-1);
@@ -102,41 +106,41 @@ public class OrderSummaryFragment extends Fragment {
         }
 
         //create subtotal row
-        ((TextView)view.findViewById(R.id.subtotal_value)).setText(
+        ((TextView)findViewById(R.id.subtotal_value)).setText(
                 State.getInstance().addDot("RP "+subTotal.toString()));
 
 
         //create tax & service charge row
         Double taxCharge = subTotal*0.15;
-        ((TextView)view.findViewById(R.id.tax_value)).setText(
+        ((TextView)findViewById(R.id.tax_value)).setText(
                 State.getInstance().addDot("RP "+String.valueOf(taxCharge.intValue())));
 
         Double grandTotal = subTotal+ (subTotal*0.15);
         String s = "RP "+String.valueOf(grandTotal.intValue());
         s = State.getInstance().addDot(s);
-        ((TextView)view.findViewById(R.id.total_value)).setText(s);
+        ((TextView)findViewById(R.id.total_value)).setText(s);
 
         State.getInstance().setGrandTotal(grandTotal.intValue());
 
-        gridAdapter = new OrderSummaryGridAdapter(getActivity(),
+        gridAdapter = new OrderSummaryGridAdapter(this,
                 items);
         gridView.setAdapter(gridAdapter);
         gridView.setExpanded(true);
         gridView.setFocusable(false);
 
-        FloatingActionButton b = (FloatingActionButton) view.findViewById(R.id.button_go_to_payment_method);
+        Button b = (Button)findViewById(R.id.button_go_to_payment_method);
         setBListener(b);
         b.bringToFront();
 
-        return view;
     }
 
-    private void setBListener(FloatingActionButton b) {
+    private void setBListener(Button b) {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PaymentMethodActivity.class);
+                Intent intent = new Intent(OrderSummaryFragment.this, PaymentMethodActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
     }

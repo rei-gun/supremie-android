@@ -48,6 +48,7 @@ public class DiningMethodFragment extends AppCompatActivity {
 //                setAndChangeTab();
                 Intent intent = new Intent(DiningMethodFragment.this, ChooseMieBrandFragment.class);
                 DiningMethodFragment.this.startActivity(intent);
+                overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
 
@@ -56,6 +57,9 @@ public class DiningMethodFragment extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 State.getInstance().setDiningMethod("bungkus");
+                Intent intent = new Intent(DiningMethodFragment.this, ChooseMieBrandFragment.class);
+                DiningMethodFragment.this.startActivity(intent);
+                overridePendingTransition(R.anim.enter, R.anim.exit);
 //                setAndChangeTab();
             }
         });

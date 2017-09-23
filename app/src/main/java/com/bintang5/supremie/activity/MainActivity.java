@@ -13,9 +13,6 @@ import com.bintang5.supremie.R;
 import com.cashlez.android.sdk.payment.CLPaymentResponse;
 import com.cashlez.android.sdk.payment.noncash.ICLPaymentService;
 
-import fragment.ChoosePedasFragment;
-import fragment.ChooseToppingFragment;
-import fragment.OrderSummaryFragment;
 import model.User;
 import utils.CashlezLogin;
 

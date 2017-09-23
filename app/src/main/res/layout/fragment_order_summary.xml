@@ -22,92 +22,90 @@
             />
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="700dp"
             android:layout_below="@id/grid_order_summary">
-        <TextView
-            android:id="@+id/subtotal_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            <TextView
+                android:id="@+id/subtotal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
 
-            android:layout_above="@+id/tax_text"
-            android:textColor="@color/black"
-            android:text="SUB TOTAL"
-            android:textSize="30dp"/>
+                android:layout_above="@+id/tax_text"
+                android:textColor="@color/black"
+                android:text="SUB TOTAL"
+                android:textSize="30dp"/>
 
-        <TextView
-            android:id="@+id/subtotal_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/tax_text"
-            android:layout_alignParentEnd="true"
-            android:textColor="@color/supremieRed"
-            android:textSize="30dp"
-            android:layout_marginRight="50dp"
-            />
+            <TextView
+                android:id="@+id/subtotal_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tax_text"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/supremieRed"
+                android:textSize="30dp"
+                android:layout_marginRight="50dp"
+                />
 
-        <TextView
-            android:id="@+id/tax_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@+id/order_summary_logo"
-            android:text="TAX &amp; SERVICE CHARGE 15%"
-            android:textColor="@color/black"
-            android:layout_marginTop="15dp"
-            />
-        <TextView
-            android:id="@+id/tax_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_above="@+id/order_summary_logo"
-            android:textColor="@color/supremieRed"
-            android:layout_marginRight="50dp"/>
+            <TextView
+                android:id="@+id/tax_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_above="@+id/order_summary_logo"
+                android:text="TAX &amp; SERVICE CHARGE 15%"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                />
+            <TextView
+                android:id="@+id/tax_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_above="@+id/order_summary_logo"
+                android:textColor="@color/supremieRed"
+                android:layout_marginRight="50dp"/>
 
-        <ImageView
-            android:id="@+id/order_summary_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="75dp"
-            android:src="@drawable/supremie_logo"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@+id/total_value"
-            android:layout_marginBottom="25dp"
-            android:layout_marginTop="35dp"/>
+            <ImageView
+                android:id="@+id/order_summary_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="75dp"
+                android:src="@drawable/supremie_logo"
+                android:layout_centerHorizontal="true"
+                android:layout_above="@+id/total_value"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="35dp"/>
 
-        <TextView
-            android:id="@+id/total_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/supremieRed"
-            android:textSize="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@+id/total_harga"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="50dp"/>
+            <TextView
+                android:id="@+id/total_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/supremieRed"
+                android:textSize="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_above="@+id/total_harga"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="50dp"/>
 
-        <TextView
-            android:id="@+id/total_harga"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TOTAL HARGA"
-            android:textColor="@color/lightGrey"
-            android:textSize="25dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:layout_alignParentBottom="true"/>
+            <TextView
+                android:id="@+id/total_harga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOTAL HARGA"
+                android:textColor="@color/lightGrey"
+                android:textSize="25dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_above="@+id/button_go_to_payment_method"/>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/button_go_to_payment_method"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="50dp"
-            android:layout_marginBottom="25dp"
-            android:src="@mipmap/ic_shopping_cart_black_36dp"/>
+            <Button
+                android:id="@+id/button_go_to_payment_method"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="PEMBAYARAN"
+                android:background="@color/supremieRed"
+                android:layout_alignParentBottom="true"/>
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

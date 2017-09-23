@@ -22,6 +22,9 @@
         <activity android:name=".activity.ChooseMieBrandFragment" />
         <activity android:name=".activity.ChooseMieFlavourFragment" />
         <activity android:name=".activity.ChooseDrinkFragment" />
+        <activity android:name=".activity.ChoosePedasFragment" />
+        <activity android:name=".activity.ChooseToppingFragment" />
+        <activity android:name=".activity.OrderSummaryFragment" />
     </application>
 
 </manifest>

@@ -33,6 +33,7 @@ public class MieFlavourGridAdapter extends BaseAdapter {
     LayoutInflater inflater;
     Integer chosenFlavour;
     int[] quantities;
+    OnQuantityChangeListener onQuantityChangeListener;
 
     public MieFlavourGridAdapter(Context context, ArrayList<MieStock> items,
                                  int[] quantities, Integer chosenFlavour) {
@@ -56,7 +57,7 @@ public class MieFlavourGridAdapter extends BaseAdapter {
         uri = uri.replaceAll(" |\\(|\\)", "").toLowerCase();
         int imgResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
         Drawable res = context.getDrawable(imgResource);
-        ImageView imgView = (ImageView)view.findViewById(R.id.mie_flavour_img);
+        ImageView imgView = (ImageView)view.findViewById(R.id.grid_img);
         imgView.setImageDrawable(res);
 
         TextView flavourView = (TextView)view.findViewById(R.id.mie_flavour);
@@ -81,6 +82,8 @@ public class MieFlavourGridAdapter extends BaseAdapter {
                 addQuantity(i);
             }
         });
+
+
 //        QuantityView quantityView = (QuantityView)view.findViewById(R.id.quantity);
 //        quantityView.addQuantity(quantities[i]);
 //        quantityView.setMaxQuantity(3);
@@ -110,7 +113,6 @@ public class MieFlavourGridAdapter extends BaseAdapter {
             public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
                 if (chosenFlavour != i) {
                     Arrays.fill(quantities, 0);
-//                    ((View)quantityView.getParent()).setBackgroundColor();
                 }
                 quantities[i] = newQuantity;
                 //TODO: save this info when fragment is paused instead of here
@@ -118,10 +120,6 @@ public class MieFlavourGridAdapter extends BaseAdapter {
                 State.getInstance().setMieId(items.get(i).id);
                 Log.v("SAVED", items.get(i).id.toString()+items.get(i).flavour);
                 //TODO: change this to first time onClick hears something
-//                ((MainActivity)context).enableTab(3);
-//                ((MainActivity)context).enableTab(4);
-//                ((MainActivity)context).enableTab(5);
-//                ((MainActivity)context).enableTab(6);
                 notifyDataSetChanged();
             }
             @Override
@@ -132,19 +130,28 @@ public class MieFlavourGridAdapter extends BaseAdapter {
     }
 
     public void addQuantity(Integer i) {
-        if (quantities[i] < 3) {
-            quantities[i] += 1;
+        Integer prevQuantity;
+        prevQuantity = quantities[i];
+        if (State.getInstance().getSubMieId() != null) {
+            Integer prevSubMieId = State.getInstance().getSubMieId();
+            if (i != prevSubMieId) {
+                Arrays.fill(quantities, 0);
+            }
+        }
+        if (prevQuantity < 3) {
+            quantities[i] = prevQuantity + 1;
+
             //TODO: save this info when fragment is paused instead of here
             State.getInstance().setChooseMieFragmentId(i, quantities[i]);
             State.getInstance().setMieId(items.get(i).id);
-            Log.v("SAVED", items.get(i).id.toString() + items.get(i).flavour);
             //TODO: change this to first time onClick hears something
-//        ((MainActivity)context).enableTab(3);
-//        ((MainActivity)context).enableTab(4);
-//        ((MainActivity)context).enableTab(5);
-//        ((MainActivity)context).enableTab(6);
+            if (onQuantityChangeListener != null) {
+                onQuantityChangeListener.onQuantityChange(quantities[i]);
+            }
             notifyDataSetChanged();
+            setState(i);
         }
+
     }
 
     public void minusQuantity(Integer i) {
@@ -155,11 +162,24 @@ public class MieFlavourGridAdapter extends BaseAdapter {
             State.getInstance().setMieId(items.get(i).id);
             Log.v("SAVED", items.get(i).id.toString() + items.get(i).flavour);
             //TODO: change this to first time onClick hears something
-//        ((MainActivity)context).enableTab(3);
-//        ((MainActivity)context).enableTab(4);
-//        ((MainActivity)context).enableTab(5);
-//        ((MainActivity)context).enableTab(6);
+            if (onQuantityChangeListener != null) {
+                onQuantityChangeListener.onQuantityChange(quantities[i]);
+            }
             notifyDataSetChanged();
+            setState(i);
         }
+    }
+
+    public interface OnQuantityChangeListener {
+        void onQuantityChange(int quantity);
+    }
+
+    public void setOnQuantityChangeListener(OnQuantityChangeListener onQuantityChangeListener) {
+        this.onQuantityChangeListener = onQuantityChangeListener;
+    }
+
+    public void setState(int i) {
+        State.getInstance().setChooseMieFragmentId(i, quantities[i]);
+        State.getInstance().setMieId(items.get(i).id);
     }
 }

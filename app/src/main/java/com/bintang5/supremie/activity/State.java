@@ -17,7 +17,7 @@ public class State  {
     private String brand = null;
 
     //id of the chosen flavour in chosen brand
-    private Integer chooseMieFragmentId = null;
+    private Integer subMieId = null;
 
     private Integer quantityMie = null;
 
@@ -70,7 +70,7 @@ public class State  {
 
     public void clear() {
         brand = null;
-        chooseMieFragmentId = null;
+        subMieId = null;
         quantityMie = null;
         mieId = null;
         drinkQuantities = null;
@@ -91,7 +91,7 @@ public class State  {
     }
 
     public void setChooseMieFragmentId(Integer chooseMieFragmentId, Integer quantityMie) {
-        this.chooseMieFragmentId = chooseMieFragmentId;
+        this.subMieId = chooseMieFragmentId;
         this.quantityMie = quantityMie;
     }
 
@@ -99,8 +99,8 @@ public class State  {
         this.mieId = mieId;
     }
 
-    public Integer getChooseMieFragmentId() {
-        return chooseMieFragmentId;
+    public Integer getSubMieId() {
+        return subMieId;
     }
 
     public Integer getMieId() {

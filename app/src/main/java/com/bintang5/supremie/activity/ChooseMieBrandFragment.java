@@ -46,11 +46,9 @@ public class ChooseMieBrandFragment extends AppCompatActivity {
                 Intent i;
                 if (State.getInstance().getBrand() == null) {
                     i = new Intent(ChooseMieBrandFragment.this, ChooseDrinkFragment.class);
-                } else {
-                    i = new Intent(ChooseMieBrandFragment.this, ChooseMieFlavourFragment.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.enter, R.anim.exit);
                 }
-                startActivity(i);
-                overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
 
@@ -72,15 +70,10 @@ public class ChooseMieBrandFragment extends AppCompatActivity {
                     gridAdapter.notifyDataSetChanged();
 
                 }
-                //Delay tab switch 2 seconds
-                view.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(ChooseMieBrandFragment.this, ChooseMieFlavourFragment.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.enter, R.anim.exit);
-                    }
-                }, 1500);
+                Intent intent = new Intent(ChooseMieBrandFragment.this, ChooseMieFlavourFragment.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.enter, R.anim.exit);
+
 
             }
         });

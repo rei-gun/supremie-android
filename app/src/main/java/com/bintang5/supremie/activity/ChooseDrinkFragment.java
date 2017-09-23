@@ -1,16 +1,14 @@
 package com.bintang5.supremie.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
@@ -42,6 +40,16 @@ public class ChooseDrinkFragment extends AppCompatActivity {
         DrinkGridAdapter gridAdapter = new DrinkGridAdapter(this,
                 drinkStocks, quantities);
         gridView.setAdapter(gridAdapter);
+
+        Button lanjut = (Button)findViewById(R.id.topping_lanjutkan);
+        lanjut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ChooseDrinkFragment.this, OrderSummaryFragment.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.enter, R.anim.exit);
+            }
+        });
 
     }
 

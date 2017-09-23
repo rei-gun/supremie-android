@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/mie_flavour_img"
+        android:id="@+id/grid_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -17,23 +17,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/mie_flavour_img"
+        android:layout_below="@+id/grid_img"
         android:layout_marginBottom="10dp"
         android:textSize="30dp"
         />
 
-    <!--me.himanshusoni.quantityview.QuantityView
-        android:id="@+id/quantity"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        app:qv_quantityDialog="false"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        app:qv_quantityPadding="25dp"
-        app:qv_addButtonText="TAMBAHKAN"
-        app:qv_removeButtonText="KURANGI"
-        /-->
     <RelativeLayout
         android:id="@+id/quantity_layout"
         android:layout_width="match_parent"
