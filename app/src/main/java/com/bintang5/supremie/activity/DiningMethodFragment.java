@@ -1,22 +1,14 @@
 package com.bintang5.supremie.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TabHost;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.MainActivity;
 import com.bintang5.supremie.activity.State;
-import com.bintang5.supremie.activity.ChooseMieBrandFragment;
 
 import model.User;
 import utils.CashlezLogin;
@@ -26,13 +18,12 @@ import utils.StockServer;
  * Created by rei on 2/09/17.
  */
 
-public class DiningMethodFragment extends AppCompatActivity {
+public class DiningMethodFragment extends SupremieActivity {
 
-    @Nullable
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_dining_method);
-
         //Get stock data from server
         disableUserInput();
         StockServer.getInstance(this).getStock(this);
@@ -45,7 +36,6 @@ public class DiningMethodFragment extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 State.getInstance().setDiningMethod("makan sini");
-//                setAndChangeTab();
                 Intent intent = new Intent(DiningMethodFragment.this, ChooseMieBrandFragment.class);
                 DiningMethodFragment.this.startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
@@ -60,18 +50,10 @@ public class DiningMethodFragment extends AppCompatActivity {
                 Intent intent = new Intent(DiningMethodFragment.this, ChooseMieBrandFragment.class);
                 DiningMethodFragment.this.startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
-//                setAndChangeTab();
             }
         });
 
     }
-
-    private void setAndChangeTab() {
-//        ((MainActivity)getActivity()).enableTab(1);
-//        TabHost tabHost = (TabHost)getActivity().findViewById(R.id.tab_host);
-//        tabHost.setCurrentTab(1);
-    }
-
 
     /**
      * Disables the entire screen from user input

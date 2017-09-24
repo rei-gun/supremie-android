@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -20,14 +22,15 @@ import model.MieStock;
  * Created by rei on 2/09/17.
  */
 
-public class ChooseMieBrandFragment extends AppCompatActivity {
+public class ChooseMieBrandFragment extends SupremieActivity {
 
     String selectedBrand;
     MieBrandGridAdapter gridAdapter;
     @Nullable
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_choose_brand);
+        super.onCreate(savedInstanceState);
+
         final GridView gridView = (GridView)findViewById(R.id.grid_mie_brand);
         ArrayList<MieStock> oneOfEachBrand = State.getInstance().getAllStock().getOneOfEachBrand();
         selectedBrand = State.getInstance().getBrand();
@@ -78,4 +81,5 @@ public class ChooseMieBrandFragment extends AppCompatActivity {
             }
         });
     }
+
 }

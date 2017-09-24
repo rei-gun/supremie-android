@@ -35,8 +35,6 @@ public class ChooseMieFlavourFragment extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_choose_flavour);
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         GridView gridView = (GridView)findViewById(R.id.grid_mie_flavour);
         state = State.getInstance();
         oneBrand = state.getAllStock().getOfBrand(State.getInstance().getBrand());
