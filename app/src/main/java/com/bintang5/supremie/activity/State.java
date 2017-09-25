@@ -90,8 +90,8 @@ public class State  {
         return brand;
     }
 
-    public void setChooseMieFragmentId(Integer chooseMieFragmentId, Integer quantityMie) {
-        this.subMieId = chooseMieFragmentId;
+    public void setChooseMieFragmentId(Integer subMieId, Integer quantityMie) {
+        this.subMieId = subMieId;
         this.quantityMie = quantityMie;
     }
 

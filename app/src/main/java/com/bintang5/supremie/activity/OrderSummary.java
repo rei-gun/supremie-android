@@ -3,19 +3,12 @@ package com.bintang5.supremie.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.ExpandableHeightGridView;
-import com.bintang5.supremie.activity.PaymentMethodActivity;
-import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
@@ -31,7 +24,7 @@ import model.ToppingStock;
  * Created by rei on 2/09/17.
  */
 
-public class OrderSummaryFragment extends AppCompatActivity {
+public class OrderSummary extends AppCompatActivity {
 
     ArrayList<OrderSummaryItem> items;
     OrderSummaryGridAdapter gridAdapter;
@@ -40,8 +33,14 @@ public class OrderSummaryFragment extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_order_summary);
-        ExpandableHeightGridView gridView = (ExpandableHeightGridView)findViewById(R.id.grid_order_summary);
+        setContentView(R.layout.order_summary);
+        ExpHeightGridView gridView = (ExpHeightGridView)findViewById(R.id.grid_order_summary);
+
+        if (State.getInstance().getMieId() == null) {
+            Log.v("HELLO", "null");
+        } else {
+            Log.v("HELLO", State.getInstance().getMieId().toString());
+        }
 
         //offset of -1 because mySQL IDs start at 1, not 0
         MieStock chosenMie = State.getInstance().getAllStock().getMieStocks().get(State.getInstance().getMieId()-1);
@@ -56,10 +55,12 @@ public class OrderSummaryFragment extends AppCompatActivity {
         subTotal += State.getInstance().getQuantityMie()*chosenMie.price;
 
         //set 2nd row
-        OrderSummaryItem pedas = new OrderSummaryItem("LEVEL PEDAS - LEVEL "+State.getInstance().getPedasLevel().toString(),
-                "", "RP "+String.valueOf(State.getInstance().getPedasPrice(State.getInstance().getPedasLevel())));
-        items.add(pedas);
-        subTotal += State.getInstance().getPedasPrice(State.getInstance().getPedasLevel());
+        if (State.getInstance().getPedasLevel() != null) {
+            OrderSummaryItem pedas = new OrderSummaryItem("LEVEL PEDAS - LEVEL " + State.getInstance().getPedasLevel().toString(),
+                    "", "RP " + String.valueOf(State.getInstance().getPedasPrice(State.getInstance().getPedasLevel())));
+            items.add(pedas);
+            subTotal += State.getInstance().getPedasPrice(State.getInstance().getPedasLevel());
+        }
 
         //create topping rows
         int[] toppingQuantities = State.getInstance().getToppingQuantities();
@@ -128,17 +129,17 @@ public class OrderSummaryFragment extends AppCompatActivity {
         gridView.setExpanded(true);
         gridView.setFocusable(false);
 
-        Button b = (Button)findViewById(R.id.button_go_to_payment_method);
+        FloatingActionButton b = (FloatingActionButton) findViewById(R.id.button_go_to_payment_method);
         setBListener(b);
         b.bringToFront();
 
     }
 
-    private void setBListener(Button b) {
+    private void setBListener(FloatingActionButton b) {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OrderSummaryFragment.this, PaymentMethodActivity.class);
+                Intent intent = new Intent(OrderSummary.this, ChoosePaymentMethod.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
             }

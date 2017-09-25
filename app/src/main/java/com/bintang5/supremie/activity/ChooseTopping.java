@@ -3,18 +3,13 @@ package com.bintang5.supremie.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
@@ -25,14 +20,18 @@ import model.ToppingStock;
  * Created by rei on 2/09/17.
  */
 
-public class ChooseToppingFragment extends AppCompatActivity {
+public class ChooseTopping extends SupremieActivity {
 
     int[] quantities;
     @Nullable
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.grid_always_active_lanjut);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_choose_topping);
+
+        TextView title = (TextView)findViewById(R.id.toolbar_title);
+        title.setText("PILIH TOPPING");
+
         GridView gridView = (GridView)findViewById(R.id.grid_mie_flavour);
         State state = State.getInstance();
 
@@ -59,7 +58,7 @@ public class ChooseToppingFragment extends AppCompatActivity {
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ChooseToppingFragment.this, ChoosePedasFragment.class);
+                Intent i = new Intent(ChooseTopping.this, ChoosePedas.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
             }

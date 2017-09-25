@@ -2,8 +2,7 @@ package utils;
 
 import android.content.Context;
 
-import com.bintang5.supremie.activity.DiningMethodFragment;
-import com.bintang5.supremie.activity.MainActivity;
+import com.bintang5.supremie.activity.ChooseDiningMethod;
 import com.bintang5.supremie.activity.State;
 
 import retrofit2.Call;
@@ -53,7 +52,7 @@ public class StockServer extends Server {
      * @return The permintaan model that was added.
      * @param callingActivity
      */
-    public void getStock(final DiningMethodFragment callingActivity) {
+    public void getStock(final ChooseDiningMethod callingActivity) {
 
         service.getStock().enqueue(new Callback<GETResponseStock>() {
             @Override

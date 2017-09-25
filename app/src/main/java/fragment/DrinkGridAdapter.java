@@ -18,7 +18,6 @@ import com.bintang5.supremie.activity.State;
 
 import java.util.ArrayList;
 
-import me.himanshusoni.quantityview.QuantityView;
 import model.DrinkStock;
 
 /**
@@ -44,7 +43,7 @@ public class DrinkGridAdapter extends BaseAdapter {
 
         if (view == null) {
             view = inflater.inflate(R.layout.grid_quantity_price_item, null);
-            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 650));
+            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 750));
         }
 
         DrinkStock drink = getItem(i);
@@ -81,6 +80,12 @@ public class DrinkGridAdapter extends BaseAdapter {
                 addQuantity(i);
             }
         });
+
+        if (quantities[i] > 0) {
+            view.setBackgroundColor(context.getColor(R.color.lightGrey));
+        } else {
+            view.setBackgroundColor(context.getColor(R.color.white));
+        }
 
         return view;
     }

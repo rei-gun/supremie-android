@@ -30,6 +30,7 @@ public class ToppingGridAdapter extends BaseAdapter {
     public ArrayList<ToppingStock> items;
     LayoutInflater inflater;
     int[] quantities;
+    View gridItemView;
 
     public ToppingGridAdapter(Context context, ArrayList<ToppingStock> items, int[] quantities) {
         this.context = context;
@@ -43,8 +44,9 @@ public class ToppingGridAdapter extends BaseAdapter {
 
         if (view == null) {
             view = inflater.inflate(R.layout.grid_quantity_price_item, null);
-            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 650));
+            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 750));
         }
+        gridItemView = view;
         ToppingStock topping = getItem(i);
         String uri = "@drawable/"+topping.name;
         uri = uri.replace(" ", "").toLowerCase();
@@ -55,18 +57,18 @@ public class ToppingGridAdapter extends BaseAdapter {
         ImageView imgView = (ImageView)view.findViewById(R.id.grid_img);
         imgView.setImageDrawable(res);
 
-        TextView nameView = (TextView)view.findViewById(R.id.name);
+        TextView nameView = (TextView)gridItemView.findViewById(R.id.name);
         nameView.setText(topping.name);
         nameView.setTextColor(ContextCompat.getColor(context, R.color.black));
 
-        TextView priceView = (TextView)view.findViewById(R.id.price);
+        TextView priceView = (TextView)gridItemView.findViewById(R.id.price);
         priceView.setText(State.getInstance().addDot("RP "+topping.price));
 
 
-        TextView quantityView = (TextView)view.findViewById(R.id.item_quantity);
+        TextView quantityView = (TextView)gridItemView.findViewById(R.id.item_quantity);
         quantityView.setText(String.valueOf(quantities[i]));
 
-        Button minus = (Button)view.findViewById(R.id.minus_button);
+        Button minus = (Button)gridItemView.findViewById(R.id.minus_button);
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,13 +76,19 @@ public class ToppingGridAdapter extends BaseAdapter {
             }
         });
 
-        Button plus = (Button)view.findViewById(R.id.plus_button);
+        Button plus = (Button)gridItemView.findViewById(R.id.plus_button);
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addQuantity(i);
             }
         });
+
+        if (quantities[i] > 0) {
+            view.setBackgroundColor(context.getColor(R.color.lightGrey));
+        } else {
+            view.setBackgroundColor(context.getColor(R.color.white));
+        }
 
         return view;
     }

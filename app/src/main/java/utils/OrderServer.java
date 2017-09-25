@@ -5,8 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.bintang5.supremie.activity.DiningMethodFragment;
-import com.bintang5.supremie.activity.MainActivity;
+import com.bintang5.supremie.activity.ChooseDiningMethod;
 import com.bintang5.supremie.activity.State;
 import com.cashlez.android.sdk.model.CLPrintObject;
 import com.cashlez.android.sdk.service.CLPrintAlignEnum;
@@ -77,7 +76,7 @@ public class OrderServer extends Server {
                 cashlezPayment.doPrintFreeText(freeText);
                 cashlezPayment.unregisterReceiver();
                 State.getInstance().clear();
-                Intent intent = new Intent(callingActivity, DiningMethodFragment.class);
+                Intent intent = new Intent(callingActivity, ChooseDiningMethod.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 callingActivity.startActivity(intent);
             }

@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.bintang5.supremie.R;
 
@@ -22,7 +22,7 @@ import model.MieStock;
  * Created by rei on 2/09/17.
  */
 
-public class ChooseMieFlavourFragment extends AppCompatActivity {
+public class ChooseMieFlavour extends SupremieActivity {
 
     Integer chosenFlavour;
     int[] quantities;
@@ -30,11 +30,13 @@ public class ChooseMieFlavourFragment extends AppCompatActivity {
     ArrayList<MieStock> oneBrand;
     Button lanjut;
 
-
     @Nullable
     public void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.choose_flavour);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_choose_flavour);
+        TextView title = (TextView)findViewById(R.id.toolbar_title);
+        title.setText("PILIH MIE");
+
         GridView gridView = (GridView)findViewById(R.id.grid_mie_flavour);
         state = State.getInstance();
         oneBrand = state.getAllStock().getOfBrand(State.getInstance().getBrand());
@@ -68,6 +70,12 @@ public class ChooseMieFlavourFragment extends AppCompatActivity {
             }
         });
 
+        //initialise the lanjutkan button
+        if (State.getInstance().getMieId() != null) {
+            enableLanjut();
+        } else {
+            disableLanjut();
+        }
     }
 
     public void enableLanjut() {
@@ -75,7 +83,7 @@ public class ChooseMieFlavourFragment extends AppCompatActivity {
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ChooseMieFlavourFragment.this, ChooseToppingFragment.class);
+                Intent i = new Intent(ChooseMieFlavour.this, ChooseTopping.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
             }

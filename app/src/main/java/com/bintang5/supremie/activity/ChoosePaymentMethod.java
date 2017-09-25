@@ -6,16 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.bintang5.supremie.R;
-import com.cashlez.android.sdk.CLPayment;
-import com.cashlez.android.sdk.bean.TransactionType;
-import com.cashlez.android.sdk.payment.CLVerificationMode;
 
 import java.util.ArrayList;
 
@@ -28,7 +23,7 @@ import utils.OrderServer;
  * Created by rei on 2/09/17.
  */
 
-public class PaymentMethodActivity extends AppCompatActivity {
+public class ChoosePaymentMethod extends AppCompatActivity {
 
     protected BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private CashlezPayment cashlezPayment;
@@ -42,7 +37,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment_method);
+        setContentView(R.layout.choose_payment_method);
 
 
         if (!bluetoothAdapter.isEnabled()) {
@@ -57,7 +52,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
         cashButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(PaymentMethodActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ChoosePaymentMethod.this);
                 builder.setTitle("Pastikan Anda mau bayar dengan cash");
                 builder.setMessage("Anda tidak bisa berubah putusan setelah kini");
                 builder.setPositiveButton("Konfirmasi", new DialogInterface.OnClickListener() {

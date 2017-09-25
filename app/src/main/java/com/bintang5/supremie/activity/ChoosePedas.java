@@ -3,16 +3,12 @@ package com.bintang5.supremie.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.State;
 
 import java.util.Arrays;
 
@@ -22,7 +18,7 @@ import fragment.PedasGridAdapter;
  * Created by rei on 2/09/17.
  */
 
-public class ChoosePedasFragment extends AppCompatActivity {
+public class ChoosePedas extends SupremieActivity {
 
     Integer pedasLevel;
     boolean[] items;
@@ -31,8 +27,11 @@ public class ChoosePedasFragment extends AppCompatActivity {
     @Nullable
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        setContentView(R.layout.choose_pedas);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_choose_pedas);
+        TextView title = (TextView)findViewById(R.id.toolbar_title);
+        title.setText("PILIH PEDAS");
+
         GridView gridView = (GridView)findViewById(R.id.grid_pedas);
         pedasLevel = State.getInstance().getPedasLevel();
         items = new boolean[4];
@@ -59,7 +58,7 @@ public class ChoosePedasFragment extends AppCompatActivity {
                     //TODO: do this when fragment pauses instead
                     State.getInstance().setPedasLevel(i);
 //                    gridAdapter.notifyDataSetChanged();
-                    Intent intent = new Intent(ChoosePedasFragment.this, ChooseDrinkFragment.class);
+                    Intent intent = new Intent(ChoosePedas.this, ChooseDrink.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.enter, R.anim. exit);
                 }

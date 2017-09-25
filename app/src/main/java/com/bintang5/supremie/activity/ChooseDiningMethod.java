@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.TabHost;
 
 import com.bintang5.supremie.R;
-import com.bintang5.supremie.activity.State;
 
 import model.User;
 import utils.CashlezLogin;
@@ -18,12 +16,12 @@ import utils.StockServer;
  * Created by rei on 2/09/17.
  */
 
-public class DiningMethodFragment extends SupremieActivity {
+public class ChooseDiningMethod extends SupremieActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_dining_method);
+        setContentView(R.layout.choose_dining_method);
         //Get stock data from server
         disableUserInput();
         StockServer.getInstance(this).getStock(this);
@@ -36,8 +34,11 @@ public class DiningMethodFragment extends SupremieActivity {
             @Override
             public void onClick(View view) {
                 State.getInstance().setDiningMethod("makan sini");
-                Intent intent = new Intent(DiningMethodFragment.this, ChooseMieBrandFragment.class);
-                DiningMethodFragment.this.startActivity(intent);
+//                if (State.getInstance().getMieId() == null) {
+                    //initialize all Order items inside State
+//                }
+                Intent intent = new Intent(ChooseDiningMethod.this, ChooseMieBrand.class);
+                ChooseDiningMethod.this.startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
@@ -47,8 +48,8 @@ public class DiningMethodFragment extends SupremieActivity {
             @Override
             public void onClick(View view) {
                 State.getInstance().setDiningMethod("bungkus");
-                Intent intent = new Intent(DiningMethodFragment.this, ChooseMieBrandFragment.class);
-                DiningMethodFragment.this.startActivity(intent);
+                Intent intent = new Intent(ChooseDiningMethod.this, ChooseMieBrand.class);
+                ChooseDiningMethod.this.startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });

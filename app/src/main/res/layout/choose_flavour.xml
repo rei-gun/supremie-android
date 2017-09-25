@@ -7,14 +7,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/actionbar"/>
+        <include layout="@layout/actionbar" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <GridView
-                android:id="@+id/grid_mie_brand"
+                android:id="@+id/grid_mie_flavour"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:numColumns="2"
@@ -25,12 +25,13 @@
                 android:layout_marginBottom="100dp"/>
 
             <Button
-                android:id="@+id/brand_lanjutkan"
+                android:id="@+id/flavour_lanjutkan"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:text="PILIH MINUM AJA"
-                android:layout_alignParentBottom="true"
-                />
+                android:textSize="50dp"
+                android:text="LANJUTKAN"
+                android:layout_alignParentBottom="true"/>
+
         </RelativeLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

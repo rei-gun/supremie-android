@@ -19,7 +19,6 @@ import com.bintang5.supremie.activity.State;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import me.himanshusoni.quantityview.QuantityView;
 import model.MieStock;
 
 /**
@@ -49,7 +48,7 @@ public class MieFlavourGridAdapter extends BaseAdapter {
 
         if (view == null) {
             view = inflater.inflate(R.layout.grid_quantity_item, null);
-            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 700));
+            view.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 670));
         }
         MieStock mie = getItem(i);
         //set image
@@ -83,6 +82,12 @@ public class MieFlavourGridAdapter extends BaseAdapter {
             }
         });
 
+        if (quantities[i] > 0) {
+            view.setBackgroundColor(context.getColor(R.color.lightGrey));
+        } else {
+            view.setBackgroundColor(context.getColor(R.color.white));
+        }
+
         return view;
     }
 
@@ -114,14 +119,13 @@ public class MieFlavourGridAdapter extends BaseAdapter {
             quantities[i] = prevQuantity + 1;
 
             //TODO: save this info when fragment is paused instead of here
-            State.getInstance().setChooseMieFragmentId(i, quantities[i]);
-            State.getInstance().setMieId(items.get(i).id);
+            setState(i);
             //TODO: change this to first time onClick hears something
             if (onQuantityChangeListener != null) {
                 onQuantityChangeListener.onQuantityChange(quantities[i]);
             }
             notifyDataSetChanged();
-            setState(i);
+
         }
 
     }
@@ -129,17 +133,15 @@ public class MieFlavourGridAdapter extends BaseAdapter {
     public void minusQuantity(Integer i) {
         if (quantities[i] > 0) {
             quantities[i] -= 1;
-            //TODO: save this info when fragment is paused instead of here
-            State.getInstance().setChooseMieFragmentId(i, quantities[i]);
-            State.getInstance().setMieId(items.get(i).id);
-            Log.v("SAVED", items.get(i).id.toString() + items.get(i).flavour);
-            //TODO: change this to first time onClick hears something
+            setState(i);
+                //TODO: change this to first time onClick hears something
             if (onQuantityChangeListener != null) {
                 onQuantityChangeListener.onQuantityChange(quantities[i]);
+
             }
             notifyDataSetChanged();
-            setState(i);
         }
+
     }
 
     public interface OnQuantityChangeListener {
@@ -151,7 +153,13 @@ public class MieFlavourGridAdapter extends BaseAdapter {
     }
 
     public void setState(int i) {
-        State.getInstance().setChooseMieFragmentId(i, quantities[i]);
-        State.getInstance().setMieId(items.get(i).id);
+        if (quantities[i] == 0) {
+
+            State.getInstance().setChooseMieFragmentId(null, null);
+            State.getInstance().setMieId(null);
+        } else {
+            State.getInstance().setChooseMieFragmentId(i, quantities[i]);
+            State.getInstance().setMieId(items.get(i).id);
+        }
     }
 }

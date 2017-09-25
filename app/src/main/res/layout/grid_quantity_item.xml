@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/grid_img"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         />
@@ -18,46 +18,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/grid_img"
-        android:layout_marginBottom="10dp"
-        android:textSize="30dp"
+        android:textSize="33dp"
         />
 
-    <RelativeLayout
-        android:id="@+id/quantity_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/price">
-        <Button
-            android:id="@+id/minus_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/item_quantity"
-            android:layout_marginTop="10dp"
-            android:text="-"
-            android:focusable="false"
-            android:layout_alignParentBottom="true"/>
-        <TextView
-            android:id="@+id/item_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17dp"
-            android:layout_marginTop="10dp"
-            android:paddingRight="19dp"
-            android:paddingLeft="19dp"
-            android:paddingTop="7dp"
-            android:paddingBottom="8dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            />
-        <Button
-            android:id="@+id/plus_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/item_quantity"
-            android:layout_marginTop="10dp"
-            android:text="+"
-            android:focusable="false"/>
-    </RelativeLayout>
+    <include layout="@layout/quantity_layout"/>
 
 </RelativeLayout>

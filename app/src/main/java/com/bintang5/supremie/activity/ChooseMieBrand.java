@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.bintang5.supremie.R;
 
@@ -23,7 +21,7 @@ import model.MieStock;
  * Created by rei on 2/09/17.
  */
 
-public class ChooseMieBrandFragment extends SupremieActivity {
+public class ChooseMieBrand extends SupremieActivity {
 
     String selectedBrand;
     MieBrandGridAdapter gridAdapter;
@@ -31,8 +29,10 @@ public class ChooseMieBrandFragment extends SupremieActivity {
 
     @Nullable
     public void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.fragment_choose_brand);
+        setContentView(R.layout.choose_brand);
         super.onCreate(savedInstanceState);
+        TextView actionBarTitle = (TextView)findViewById(R.id.toolbar_title);
+        actionBarTitle.setText("PILIH MIE");
 
         final GridView gridView = (GridView)findViewById(R.id.grid_mie_brand);
         ArrayList<MieStock> oneOfEachBrand = State.getInstance().getAllStock().getOneOfEachBrand();
@@ -69,7 +69,7 @@ public class ChooseMieBrandFragment extends SupremieActivity {
                     gridAdapter.notifyDataSetChanged();
 
                 }
-                Intent intent = new Intent(ChooseMieBrandFragment.this, ChooseMieFlavourFragment.class);
+                Intent intent = new Intent(ChooseMieBrand.this, ChooseMieFlavour.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
 
@@ -86,7 +86,7 @@ public class ChooseMieBrandFragment extends SupremieActivity {
             public void onClick(View view) {
                 Intent i;
                 if (State.getInstance().getBrand() == null) {
-                    i = new Intent(ChooseMieBrandFragment.this, ChooseDrinkFragment.class);
+                    i = new Intent(ChooseMieBrand.this, ChooseDrink.class);
                     startActivity(i);
                     overridePendingTransition(R.anim.enter, R.anim.exit);
                 }
