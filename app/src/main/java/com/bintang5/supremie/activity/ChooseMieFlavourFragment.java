@@ -57,6 +57,7 @@ public class ChooseMieFlavourFragment extends AppCompatActivity {
                 }
             }
         });
+
         gridView.setAdapter(flavourGridAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

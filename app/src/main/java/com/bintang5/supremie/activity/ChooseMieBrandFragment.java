@@ -3,6 +3,7 @@ package com.bintang5.supremie.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -26,6 +27,8 @@ public class ChooseMieBrandFragment extends SupremieActivity {
 
     String selectedBrand;
     MieBrandGridAdapter gridAdapter;
+    Button lanjut;
+
     @Nullable
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.fragment_choose_brand);
@@ -37,24 +40,17 @@ public class ChooseMieBrandFragment extends SupremieActivity {
 
         gridAdapter = new MieBrandGridAdapter(this,
                 oneOfEachBrand, selectedBrand);
+
         gridView.setAdapter(gridAdapter);
 
         //TODO: select previously selected selectedBrand
         setListener(gridView, oneOfEachBrand);
 
-        Button lanjut = (Button)findViewById(R.id.brand_lanjutkan);
-        lanjut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i;
-                if (State.getInstance().getBrand() == null) {
-                    i = new Intent(ChooseMieBrandFragment.this, ChooseDrinkFragment.class);
-                    startActivity(i);
-                    overridePendingTransition(R.anim.enter, R.anim.exit);
-                }
-            }
-        });
-
+        if (State.getInstance().getBrand() == null) {
+            enableLanjut();
+        } else {
+            disableLanjut();
+        }
     }
 
     private void setListener(GridView gridView, final ArrayList<MieStock> oneOfEachBrand) {
@@ -69,7 +65,7 @@ public class ChooseMieBrandFragment extends SupremieActivity {
                     State.getInstance().setMieId(null); //clear flavour
                     State.getInstance().setChooseMieFragmentId(null, null);//clear flavour
                     //TODO: do this only on the first time gridView is clicked
-//                    ((MainActivity)getActivity()).enableTab(2); //enable flavour tab
+                    disableLanjut();
                     gridAdapter.notifyDataSetChanged();
 
                 }
@@ -80,6 +76,30 @@ public class ChooseMieBrandFragment extends SupremieActivity {
 
             }
         });
+    }
+
+
+    public void enableLanjut() {
+        lanjut = (Button)findViewById(R.id.brand_lanjutkan);
+        lanjut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                if (State.getInstance().getBrand() == null) {
+                    i = new Intent(ChooseMieBrandFragment.this, ChooseDrinkFragment.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.enter, R.anim.exit);
+                }
+            }
+        });
+        lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.supremieRed));
+    }
+
+
+    public void disableLanjut() {
+        lanjut = (Button)findViewById(R.id.brand_lanjutkan);
+        lanjut.setOnClickListener(null);
+        lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));
     }
 
 }

@@ -83,12 +83,6 @@ public class MieFlavourGridAdapter extends BaseAdapter {
             }
         });
 
-
-//        QuantityView quantityView = (QuantityView)view.findViewById(R.id.quantity);
-//        quantityView.addQuantity(quantities[i]);
-//        quantityView.setMaxQuantity(3);
-//        setQuantityListener(quantityView, i);
-
         return view;
     }
 
@@ -105,28 +99,6 @@ public class MieFlavourGridAdapter extends BaseAdapter {
     @Override
     public long getItemId(int i) {
         return items.get(i).id;
-    }
-
-    private void setQuantityListener(final QuantityView quantityView, final Integer i) {
-        quantityView.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
-            @Override
-            public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
-                if (chosenFlavour != i) {
-                    Arrays.fill(quantities, 0);
-                }
-                quantities[i] = newQuantity;
-                //TODO: save this info when fragment is paused instead of here
-                State.getInstance().setChooseMieFragmentId(i, newQuantity);
-                State.getInstance().setMieId(items.get(i).id);
-                Log.v("SAVED", items.get(i).id.toString()+items.get(i).flavour);
-                //TODO: change this to first time onClick hears something
-                notifyDataSetChanged();
-            }
-            @Override
-            public void onLimitReached() {
-
-            }
-        });
     }
 
     public void addQuantity(Integer i) {

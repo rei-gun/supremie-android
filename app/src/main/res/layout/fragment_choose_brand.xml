@@ -9,23 +9,28 @@
 
         <include layout="@layout/actionbar"/>
 
-        <GridView
-            android:id="@+id/grid_mie_brand"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:numColumns="2"
-            android:verticalSpacing="5dp"
-            android:horizontalSpacing="5dp"
-            android:gravity="center"
-            android:stretchMode="columnWidth"
-            android:layout_marginBottom="100dp"/>
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/brand_lanjutkan"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="PILIH MINUM AJA"
-            android:layout_alignParentBottom="true"
-            />
+            <GridView
+                android:id="@+id/grid_mie_brand"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="2"
+                android:verticalSpacing="5dp"
+                android:horizontalSpacing="5dp"
+                android:gravity="center"
+                android:stretchMode="columnWidth"
+                android:layout_marginBottom="100dp"/>
+
+            <Button
+                android:id="@+id/brand_lanjutkan"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="PILIH MINUM AJA"
+                android:layout_alignParentBottom="true"
+                />
+        </RelativeLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
