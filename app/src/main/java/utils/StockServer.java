@@ -1,6 +1,7 @@
 package utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.bintang5.supremie.activity.ChooseDiningMethod;
 import com.bintang5.supremie.activity.State;
@@ -58,6 +59,7 @@ public class StockServer extends Server {
             @Override
             public void onResponse(Call<GETResponseStock> call, Response<GETResponseStock> response) {
                 State.getInstance().setAllStock(response.body());
+//                Log.v("WHAT", State.getInstance().getAllStock().getMieStocks().size()));
                 callingActivity.enableUserInput();
             }
 

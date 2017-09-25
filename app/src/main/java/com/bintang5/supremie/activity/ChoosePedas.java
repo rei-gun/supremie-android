@@ -51,17 +51,13 @@ public class ChoosePedas extends SupremieActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (State.getInstance().getPedasLevel() == null ||
-                        State.getInstance().getPedasLevel() != i) {
-                    Arrays.fill(items, false);
-                    items[i] = true;
-                    //TODO: do this when fragment pauses instead
-                    State.getInstance().setPedasLevel(i);
-//                    gridAdapter.notifyDataSetChanged();
-                    Intent intent = new Intent(ChoosePedas.this, ChooseDrink.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.enter, R.anim. exit);
-                }
+                Arrays.fill(items, false);
+                items[i] = true;
+                //TODO: do this when fragment pauses instead
+                State.getInstance().setPedasLevel(i);
+                Intent intent = new Intent(ChoosePedas.this, ChooseDrink.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.enter, R.anim. exit);
 
             }
         });

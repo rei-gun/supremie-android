@@ -46,12 +46,13 @@ public class PedasGridAdapter extends BaseAdapter {
         TextView textView = (TextView)view.findViewById(R.id.pedas_text);
         textView.setText(pedasDescriptions[i]);
 
+        /*
         if(items[i])
         {
             view.setBackgroundColor(context.getColor(R.color.lightGrey));
         } else {
             view.setBackgroundColor(context.getColor(R.color.white));
-        }
+        }*/
 
         return view;
     }

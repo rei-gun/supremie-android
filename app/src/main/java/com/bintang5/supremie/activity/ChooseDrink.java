@@ -56,7 +56,7 @@ public class ChooseDrink extends SupremieActivity {
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (State.getInstance().getMieId() != null) {
+                if (State.getInstance().getDrinkQuantities() != null) {
                     Intent i = new Intent(ChooseDrink.this, OrderSummary.class);
                     startActivity(i);
                     overridePendingTransition(R.anim.enter, R.anim.exit);

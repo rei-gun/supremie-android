@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bintang5.supremie.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import fragment.OrderSummaryGridAdapter;
@@ -43,7 +44,15 @@ public class OrderSummary extends AppCompatActivity {
         }
 
         //offset of -1 because mySQL IDs start at 1, not 0
-        MieStock chosenMie = State.getInstance().getAllStock().getMieStocks().get(State.getInstance().getMieId()-1);
+        MieStock chosenMie = null;
+        ArrayList<MieStock> mieStocks = State.getInstance().getAllStock().getMieStocks();
+        for (MieStock ms: mieStocks) {
+            if (ms.id == State.getInstance().getMieId()) {
+                chosenMie = ms;
+                break;
+            }
+        }
+//        get(State.getInstance().getMieId()-1);
         items = new ArrayList<>();
         Integer subTotal = 0;
 

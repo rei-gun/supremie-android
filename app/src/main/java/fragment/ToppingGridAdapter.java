@@ -112,8 +112,7 @@ public class ToppingGridAdapter extends BaseAdapter {
         if (quantities[i] < 3) {
             quantities[i] += 1;
             //TODO: save this info when fragment is paused instead of here
-            State.getInstance().setChooseMieFragmentId(i, quantities[i]);
-            State.getInstance().setMieId(items.get(i).id);
+            State.getInstance().setToppingQuantity(i, quantities[i]);
             //TODO: change this to first time onClick hears something
             notifyDataSetChanged();
         }
@@ -123,8 +122,7 @@ public class ToppingGridAdapter extends BaseAdapter {
         if (quantities[i] > 0) {
             quantities[i] -= 1;
             //TODO: save this info when fragment is paused instead of here
-            State.getInstance().setChooseMieFragmentId(i, quantities[i]);
-            State.getInstance().setMieId(items.get(i).id);
+            State.getInstance().setToppingQuantity(i, quantities[i]);
             //TODO: change this to first time onClick hears something
             notifyDataSetChanged();
         }
