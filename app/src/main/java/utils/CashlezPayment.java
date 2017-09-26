@@ -26,6 +26,7 @@ import com.cashlez.android.sdk.sendreceipt.ICLSendReceiptService;
 import java.util.ArrayList;
 
 import model.Mie;
+import model.MieStock;
 import model.Order;
 
 /**
@@ -76,8 +77,9 @@ public class CashlezPayment implements ICLPaymentService,
 
         */if (clPayment.getTransactionType() != null && clPayment.isSuccess()) {
             Log.v("Payment success: ", clPayment.toString());
-            Mie mie = new Mie(State.getInstance().getMieId(), State.getInstance().getQuantityMie(),
-                    1, State.getInstance().getAllStock().getMieStocks().get(State.getInstance().getMieId()).price,
+            MieStock mieStock = State.getInstance().getMieStock();
+            Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
+                    1, mieStock.price,
                     State.getInstance().getPedasLevel() , "", State.getInstance().getToppings());
             ArrayList mies = new ArrayList();
             mies.add(mie);

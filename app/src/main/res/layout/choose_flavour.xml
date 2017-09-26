@@ -18,11 +18,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:numColumns="2"
-                android:verticalSpacing="5dp"
-                android:horizontalSpacing="5dp"
+                android:verticalSpacing="15dp"
+                android:horizontalSpacing="15dp"
                 android:gravity="center"
                 android:stretchMode="columnWidth"
-                android:layout_marginBottom="100dp"/>
+                android:layout_marginBottom="100dp"
+                android:background="@color/lightGrey" />
 
             <Button
                 android:id="@+id/flavour_lanjutkan"

@@ -15,6 +15,7 @@ import com.bintang5.supremie.R;
 import java.util.ArrayList;
 
 import model.Mie;
+import model.MieStock;
 import model.Order;
 import utils.CashlezPayment;
 import utils.OrderServer;
@@ -92,8 +93,9 @@ public class ChoosePaymentMethod extends AppCompatActivity {
 
 
     private void postOrder(String paymentMethod) {
-        Mie mie = new Mie(State.getInstance().getMieId(), State.getInstance().getQuantityMie(),
-                1, State.getInstance().getAllStock().getMieStocks().get(State.getInstance().getMieId()).price,
+        MieStock mieStock = State.getInstance().getMieStock();
+        Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
+                1, mieStock.price,
                 State.getInstance().getPedasLevel() , "", State.getInstance().getToppings());
         ArrayList mies = new ArrayList();
         mies.add(mie);

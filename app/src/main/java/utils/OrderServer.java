@@ -11,9 +11,14 @@ import com.cashlez.android.sdk.model.CLPrintObject;
 import com.cashlez.android.sdk.service.CLPrintAlignEnum;
 import com.cashlez.android.sdk.service.CLPrintEnum;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import model.Drink;
+import model.Mie;
 import model.Order;
+import model.Topping;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,32 +62,54 @@ public class OrderServer extends Server {
      *
      * @param order The Order model to be created.
      */
-    public void createOrder(final CashlezPayment cashlezPayment, final Activity callingActivity, Order order) {
-        Log.v("TEST", "test");
-
+    public void createOrder(final CashlezPayment cashlezPayment, final Activity callingActivity, final Order order) {
         service.createOrder(order).enqueue(new Callback<POSTResponseOrder>() {
             @Override
             public void onResponse(Call<POSTResponseOrder> call, Response<POSTResponseOrder> response) {
                 POSTResponseOrder r = response.body();
                 //TODO print the id to Cashlez's printer here
+                if (r != null) {
 
-                ArrayList<CLPrintObject> freeText = new ArrayList<>();
-                CLPrintObject clPrintObject = new CLPrintObject();
-                clPrintObject.setFreeText("Your order id is :"+r.getId());
-                clPrintObject.setFormat(CLPrintEnum.TITLE);
-                clPrintObject.setAlign(CLPrintAlignEnum.CENTER);
-                freeText.add(clPrintObject);
-                Log.v("BOOM", clPrintObject.getFreeText());
-                cashlezPayment.doPrintFreeText(freeText);
-                cashlezPayment.unregisterReceiver();
-                State.getInstance().clear();
-                Intent intent = new Intent(callingActivity, ChooseDiningMethod.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                callingActivity.startActivity(intent);
+                    ArrayList<CLPrintObject> freeText = new ArrayList<>();
+                    CLPrintObject clPrintObject = new CLPrintObject();
+                    String currentTimeString = new SimpleDateFormat("dd/MM/yyy").format(new Date());
+                    clPrintObject.setFreeText(currentTimeString+"\n\n");
+                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"Nomor Anda: " + r.getId()+"\n");
+                    clPrintObject.setFormat(CLPrintEnum.TITLE);
+                    clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
+
+                    for (Mie m:order.mies) {
+                        clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n"+m.quantityMie+" "+
+                                m.brand + " "+
+                        m.flavour + "\nRp. "+
+                        m.price*State.getInstance().getQuantityMie());
+                        for (Topping t:m.toppings) {
+                            clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n"+t.quantity+" "+t.name+"\nRp. "+
+                            t.quantity*t.price);
+                        }
+                    }
+                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n");
+                    for (Drink d:order.drinks) {
+                        clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n"+d.quantity+" "+d.brand+"\nRp. "+
+                        d.quantity*d.price);
+                    }
+                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n\nTax&Service:\n"+State.getInstance().getTaxChargeString());
+                    String totalPrice = State.getInstance().addDot(order.totalPrice.toString());
+                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n\nJumlah: Rp. "+totalPrice);
+                    freeText.add(clPrintObject);
+                    cashlezPayment.doPrintFreeText(freeText);
+                    cashlezPayment.unregisterReceiver();
+                    State.getInstance().clear();
+                    Intent intent = new Intent(callingActivity, ChooseDiningMethod.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    callingActivity.startActivity(intent);
+                } else {
+                    Log.v("OH SHIT!", "Something bad happened");
+                }
             }
             @Override
             public void onFailure(Call<POSTResponseOrder> call, Throwable t) {
-        
+                Log.v("OH SHIT!", "Something went wrong");
             }
         });
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,6 +27,7 @@ public class ChooseMieBrand extends SupremieActivity {
     String selectedBrand;
     MieBrandGridAdapter gridAdapter;
     Button lanjut;
+    ArrayList<MieStock> oneOfEachBrand;
 
     @Nullable
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class ChooseMieBrand extends SupremieActivity {
         actionBarTitle.setText("PILIH MIE");
 
         final GridView gridView = (GridView)findViewById(R.id.grid_mie_brand);
-        ArrayList<MieStock> oneOfEachBrand = State.getInstance().getAllStock().getOneOfEachBrand();
+        oneOfEachBrand = State.getInstance().getAllStock().getOneOfEachBrand();
         selectedBrand = State.getInstance().getBrand();
 
         gridAdapter = new MieBrandGridAdapter(this,
@@ -69,7 +71,16 @@ public class ChooseMieBrand extends SupremieActivity {
                     gridAdapter.notifyDataSetChanged();
 
                 }
-                Intent intent = new Intent(ChooseMieBrand.this, ChooseMieFlavour.class);
+                Intent intent;
+                if (!State.getInstance().getBrand().equals("Nasi")) {
+                    intent = new Intent(ChooseMieBrand.this, ChooseMieFlavour.class);
+                    Log.v("TEST", "TEST");
+                } else {
+                    MieStock nasiStock = oneOfEachBrand.get(i);
+                    State.getInstance().setChooseMieFragmentId(i, 1);
+                    State.getInstance().setMieId(nasiStock.id);
+                    intent = new Intent(ChooseMieBrand.this, ChooseTopping.class);
+                }
                 startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
 

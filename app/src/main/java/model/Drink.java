@@ -10,12 +10,18 @@ public class Drink {
 
     @SerializedName("drink_id") public Integer id;
 
+    public String brand;
+
+    public String flavour;
+
     public Integer quantity;
 
     public Integer price;
 
-    public Drink(Integer id, Integer quantity, Integer price) {
+    public Drink(Integer id, String brand, String flavour, Integer quantity, Integer price) {
         this.id = id;
+        this.brand = brand;
+        this.flavour = flavour;
         this.quantity = quantity;
         this.price = price;
     }

@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/logo_caption"
-        android:src="@drawable/makan_disini"
+        android:src="@drawable/makan_sini_selector"
         android:layout_marginTop="100dp"/>
 
     <TextView
@@ -48,6 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/atau"
-        android:src="@drawable/bungkus"/>
+        android:src="@drawable/bungkus_button_selector"/>
 
 </RelativeLayout>

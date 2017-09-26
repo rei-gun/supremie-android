@@ -33,10 +33,10 @@ public class PedasGridAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
+        i += 1;//remove this if you want level 0 back
         if (view == null) {
             view = inflater.inflate(R.layout.grid_item_pedas, null);
         }
-//        imgView.setImageAlpha();
         String uri = "@drawable/level"+String.valueOf(i);
         int imgResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
         Drawable res = context.getDrawable(imgResource);
@@ -59,7 +59,7 @@ public class PedasGridAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return items.length;
+        return items.length-1;//remove -1 if you want level 0 back
     }
 
     @Override

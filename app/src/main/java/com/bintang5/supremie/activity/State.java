@@ -3,6 +3,7 @@ package com.bintang5.supremie.activity;
 
 import java.util.ArrayList;
 
+import model.MieStock;
 import utils.responses.GETResponseStock;
 
 /**
@@ -23,6 +24,8 @@ public class State  {
 
     //overall mie id
     private Integer mieId = null;
+
+    private MieStock mieStock = null;
 
     private int[] drinkQuantities = null;
 
@@ -45,9 +48,13 @@ public class State  {
 
     private String[] pedasDescriptions;
 
+    private String taxChargeString = null;
+
+    private String serviceChargeString = null;
+
     private State() {
         pedasPrices = new int[4];
-        pedasPrices[0] = 0;
+//        pedasPrices[0] = 0;
         pedasPrices[1] = 1000;
         pedasPrices[2] = 2000;
         pedasPrices[3] = 3000;
@@ -80,6 +87,7 @@ public class State  {
         drinks = null;
         allStock = null;
         grandTotal = null;
+        mieStock = null;
     }
 
     public void setBrand(String brand) {
@@ -211,5 +219,29 @@ public class State  {
 
     public String addDot(String s) {
         return new StringBuffer(s).insert(s.length() - 3, ".").toString();
+    }
+
+    public void setMieStock(MieStock ms) {
+        this.mieStock = ms;
+    }
+
+    public MieStock getMieStock() {
+        return mieStock;
+    }
+
+    public String getTaxChargeString() {
+        return taxChargeString;
+    }
+
+    public String getServiceChargeString() {
+        return serviceChargeString;
+    }
+
+    public void setTaxChargeString(String taxChargeString) {
+        this.taxChargeString = taxChargeString;
+    }
+
+    public void setServiceChargeString(String serviceChargeString) {
+        this.serviceChargeString = serviceChargeString;
     }
 }

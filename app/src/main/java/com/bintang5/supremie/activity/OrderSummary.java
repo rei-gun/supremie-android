@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bintang5.supremie.R;
@@ -37,17 +38,13 @@ public class OrderSummary extends AppCompatActivity {
         setContentView(R.layout.order_summary);
         ExpHeightGridView gridView = (ExpHeightGridView)findViewById(R.id.grid_order_summary);
 
-        if (State.getInstance().getMieId() == null) {
-            Log.v("HELLO", "null");
-        } else {
-            Log.v("HELLO", State.getInstance().getMieId().toString());
-        }
-
         //offset of -1 because mySQL IDs start at 1, not 0
         MieStock chosenMie = null;
         ArrayList<MieStock> mieStocks = State.getInstance().getAllStock().getMieStocks();
+        Log.v("TEST", mieStocks.toString()+State.getInstance().getMieId());
         for (MieStock ms: mieStocks) {
             if (ms.id == State.getInstance().getMieId()) {
+                State.getInstance().setMieStock(ms);
                 chosenMie = ms;
                 break;
             }
@@ -56,12 +53,14 @@ public class OrderSummary extends AppCompatActivity {
         items = new ArrayList<>();
         Integer subTotal = 0;
 
-        //set fist row
-        OrderSummaryItem item = new OrderSummaryItem(chosenMie.brand+ " - "+
-                chosenMie.flavour, "QTY - "+State.getInstance().getQuantityMie().toString(),
-                "RP "+String.valueOf(State.getInstance().getQuantityMie()*chosenMie.price));
-        items.add(item);
-        subTotal += State.getInstance().getQuantityMie()*chosenMie.price;
+        //set first row
+        if (chosenMie != null) {
+            OrderSummaryItem item = new OrderSummaryItem(chosenMie.brand + " - " +
+                    chosenMie.flavour, "QTY - " + State.getInstance().getQuantityMie().toString(),
+                    "RP " + String.valueOf(State.getInstance().getQuantityMie() * chosenMie.price));
+            items.add(item);
+            subTotal += State.getInstance().getQuantityMie() * chosenMie.price;
+        }
 
         //set 2nd row
         if (State.getInstance().getPedasLevel() != null) {
@@ -86,7 +85,7 @@ public class OrderSummary extends AppCompatActivity {
                     subTotal += toppingQuantities[i] * toppingStock.price;
 
                     //TODO: put below in a new thread
-                    Topping t = new Topping(toppingStock.id, toppingQuantities[i], null, toppingStock.price);
+                    Topping t = new Topping(toppingStock.id, toppings.get(i).name, toppingQuantities[i], null, toppingStock.price);
                     ts.add(t);
                 }
             }
@@ -101,14 +100,14 @@ public class OrderSummary extends AppCompatActivity {
             for (int i = 0; i < drinkQuantities.length; i++) {
                 if (drinkQuantities[i] > 0) {
                     DrinkStock d = ds.get(i);
-                    OrderSummaryItem dRow = new OrderSummaryItem("MINUMAN - " + d.brand + " " + d.flavour,
+                    OrderSummaryItem dRow = new OrderSummaryItem("MINUMAN - " + d.brand,
                             "QTY - " + String.valueOf(drinkQuantities[i]),
                             "RP " + String.valueOf(drinkQuantities[i] * d.price));
                     items.add(dRow);
                     subTotal += drinkQuantities[i] * d.price;
 
                     //TODO: put below in a new thread
-                    Drink drink = new Drink(d.id, drinkQuantities[i], d.price);
+                    Drink drink = new Drink(d.id, d.brand, d.flavour, drinkQuantities[i], d.price);
                     drinks.add(drink);
                 }
             }
@@ -128,6 +127,7 @@ public class OrderSummary extends AppCompatActivity {
         Double grandTotal = subTotal+ (subTotal*0.15);
         String s = "RP "+String.valueOf(grandTotal.intValue());
         s = State.getInstance().addDot(s);
+        State.getInstance().setTaxChargeString(s);
         ((TextView)findViewById(R.id.total_value)).setText(s);
 
         State.getInstance().setGrandTotal(grandTotal.intValue());
@@ -138,13 +138,13 @@ public class OrderSummary extends AppCompatActivity {
         gridView.setExpanded(true);
         gridView.setFocusable(false);
 
-        FloatingActionButton b = (FloatingActionButton) findViewById(R.id.button_go_to_payment_method);
+        ImageButton b = (ImageButton) findViewById(R.id.button_go_to_payment_method);
         setBListener(b);
         b.bringToFront();
 
     }
 
-    private void setBListener(FloatingActionButton b) {
+    private void setBListener(ImageButton b) {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -85,7 +85,7 @@ public class ToppingGridAdapter extends BaseAdapter {
         });
 
         if (quantities[i] > 0) {
-            view.setBackgroundColor(context.getColor(R.color.lightGrey));
+            view.setBackgroundColor(context.getColor(R.color.darkGrey));
         } else {
             view.setBackgroundColor(context.getColor(R.color.white));
         }
