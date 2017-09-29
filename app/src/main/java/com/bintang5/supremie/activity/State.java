@@ -48,24 +48,31 @@ public class State  {
 
     private String[] pedasDescriptions;
 
+    private String[] pedasNasiDescriptions;
+
     private String taxChargeString = null;
 
     private String serviceChargeString = null;
 
     private State() {
-        pedasPrices = new int[4];
+        pedasPrices = new int[3];
 //        pedasPrices[0] = 0;
+        pedasPrices[0] = 0;
         pedasPrices[1] = 1000;
         pedasPrices[2] = 2000;
-        pedasPrices[3] = 3000;
         toppings = new ArrayList();
 //        mies = new ArrayList();
         drinks = new ArrayList();
-        pedasDescriptions = new String[4];
-        pedasDescriptions[0] = "RP 0\nLEVEL 0 (TANPA BUBUK CABAI DI DALAM PACKAGING)";
-        pedasDescriptions[1] = "RP 0\nLEVEL 1 (HANYA BUBUK CABAI DI DALAM PACKAGING)";
-        pedasDescriptions[2] = "RP 1.000\nLEVEL 2 (BUBUK CABAI DI DALAM PACKAGING + 5 CABAI RAWIT";
-        pedasDescriptions[3] = "RP 2.000\nLEVEL 3 (BUBUK CABAI DI DALAM PACKAGAING + 20 CABAI RAWIT";
+        pedasDescriptions = new String[3];
+//        pedasDescriptions[0] = "RP 0\nLEVEL 0 (TANPA BUBUK CABAI DI DALAM PACKAGING)";
+        pedasDescriptions[0] = "RP 0\nLEVEL 0 (HANYA BUBUK CABAI DI DALAM PACKAGING)";
+        pedasDescriptions[1] = "RP 1.000\nLEVEL 1 (BUBUK CABAI DI DALAM PACKAGING + 5 CABAI RAWIT";
+        pedasDescriptions[2] = "RP 2.000\nLEVEL 2 (BUBUK CABAI DI DALAM PACKAGAING + 20 CABAI RAWIT";
+        pedasNasiDescriptions = new String[3];
+        pedasNasiDescriptions[0] = "Rp 0\nLEVEL 0 (TANPA CABAI)";
+        pedasNasiDescriptions[1] = "RP 1.000\nLEVEL 1 (5 CABAI RAWIT)";
+//        pedasNasiDescriptions[2] = "RP 2.000\nLEVEL 2 (10 CABAI RAWIT)";
+        pedasNasiDescriptions[2] = "RP 2.000\nLEVEL 2 (20 CABAI RAWIT)";
     }
 
     public static State getInstance() {
@@ -243,5 +250,9 @@ public class State  {
 
     public void setServiceChargeString(String serviceChargeString) {
         this.serviceChargeString = serviceChargeString;
+    }
+
+    public String[] getNasiPedasDescriptions() {
+        return pedasNasiDescriptions;
     }
 }

@@ -22,6 +22,7 @@
         <activity android:name=".activity.ChoosePedas" />
         <activity android:name=".activity.ChooseTopping" />
         <activity android:name=".activity.OrderSummary" />
+        <activity android:name=".activity.ChoosePedasNasi" />
     </application>
 
 </manifest>

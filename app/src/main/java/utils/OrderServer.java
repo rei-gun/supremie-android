@@ -83,11 +83,16 @@ public class OrderServer extends Server {
                                 m.brand + " "+
                         m.flavour + "\nRp. "+
                         m.price*State.getInstance().getQuantityMie());
+                        //print pedas level
+                        clPrintObject.setFreeText(clPrintObject.getFreeText()+"\nLevel Pedas: "+State.getInstance().getPedasLevel()+
+                        "\nRp. "+State.getInstance().getPedasPrice(State.getInstance().getPedasLevel()));
+                        //print toppings
                         for (Topping t:m.toppings) {
                             clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n"+t.quantity+" "+t.name+"\nRp. "+
                             t.quantity*t.price);
                         }
                     }
+                    //add new line inbetween toppings and drinks
                     clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n");
                     for (Drink d:order.drinks) {
                         clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n"+d.quantity+" "+d.brand+"\nRp. "+
@@ -95,7 +100,7 @@ public class OrderServer extends Server {
                     }
                     clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n\nTax&Service:\n"+State.getInstance().getTaxChargeString());
                     String totalPrice = State.getInstance().addDot(order.totalPrice.toString());
-                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n\nJumlah: Rp. "+totalPrice);
+                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n\nJumlah: \n\nRp. "+totalPrice);
                     freeText.add(clPrintObject);
                     cashlezPayment.doPrintFreeText(freeText);
                     cashlezPayment.unregisterReceiver();

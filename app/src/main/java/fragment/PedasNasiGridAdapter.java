@@ -16,14 +16,14 @@ import com.bintang5.supremie.R;
  * Created by rei on 2/09/17.
  */
 
-public class PedasGridAdapter extends BaseAdapter {
+public class PedasNasiGridAdapter extends BaseAdapter {
 
     private Context context;
     LayoutInflater inflater;
     boolean[] items;
     String[] pedasDescriptions;
 
-    public PedasGridAdapter(Context context, boolean[] items, String[] s) {
+    public PedasNasiGridAdapter(Context context, boolean[] items, String[] s) {
         this.context = context;
         this.items = items;
         this.pedasDescriptions = s;
@@ -34,10 +34,11 @@ public class PedasGridAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
 //        i += 1;//remove this if you want level 0 back
+        Log.v("HALO", String.valueOf(i));
         if (view == null) {
             view = inflater.inflate(R.layout.grid_item_pedas, null);
         }
-        String uri = "@drawable/level"+String.valueOf(i);
+        String uri = "@drawable/rawit"+String.valueOf(i);
         int imgResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
         Drawable res = context.getDrawable(imgResource);
         ImageView imgView = (ImageView)view.findViewById(R.id.pedas_img);

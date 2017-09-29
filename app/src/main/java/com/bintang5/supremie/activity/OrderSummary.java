@@ -123,13 +123,13 @@ public class OrderSummary extends AppCompatActivity {
         Double taxCharge = subTotal*0.15;
         ((TextView)findViewById(R.id.tax_value)).setText(
                 State.getInstance().addDot("RP "+String.valueOf(taxCharge.intValue())));
+        String taxString = State.getInstance().addDot(String.valueOf(taxCharge.intValue()));
+        State.getInstance().setTaxChargeString(taxString);
 
         Double grandTotal = subTotal+ (subTotal*0.15);
         String s = "RP "+String.valueOf(grandTotal.intValue());
         s = State.getInstance().addDot(s);
-        State.getInstance().setTaxChargeString(s);
         ((TextView)findViewById(R.id.total_value)).setText(s);
-
         State.getInstance().setGrandTotal(grandTotal.intValue());
 
         gridAdapter = new OrderSummaryGridAdapter(this,
@@ -139,17 +139,18 @@ public class OrderSummary extends AppCompatActivity {
         gridView.setFocusable(false);
 
         ImageButton b = (ImageButton) findViewById(R.id.button_go_to_payment_method);
-        setBListener(b);
+        setBListener(this, b);
         b.bringToFront();
 
     }
 
-    private void setBListener(ImageButton b) {
+    private void setBListener(final OrderSummary activity, ImageButton b) {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(OrderSummary.this, ChoosePaymentMethod.class);
-                startActivity(intent);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });

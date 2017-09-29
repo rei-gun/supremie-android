@@ -3,6 +3,7 @@ package com.bintang5.supremie.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -58,9 +59,16 @@ public class ChooseTopping extends SupremieActivity {
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ChooseTopping.this, ChoosePedas.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.enter, R.anim.exit);
+                if (State.getInstance().getBrand().equals("Nasi")) {
+                    Log.v("HALO", "ABANG");
+                    Intent i = new Intent(ChooseTopping.this, ChoosePedasNasi.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.enter, R.anim.exit);
+                } else {
+                    Intent i = new Intent(ChooseTopping.this, ChoosePedas.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.enter, R.anim.exit);
+                }
             }
         });
 
