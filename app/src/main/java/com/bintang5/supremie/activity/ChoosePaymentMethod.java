@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -94,13 +95,16 @@ public class ChoosePaymentMethod extends AppCompatActivity {
 
     private void postOrder(String paymentMethod) {
         MieStock mieStock = State.getInstance().getMieStock();
-        Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
-                1, mieStock.price,
-                State.getInstance().getPedasLevel() , "", State.getInstance().getToppings());
         ArrayList mies = new ArrayList();
-        mies.add(mie);
+        if (mieStock != null) {
+            Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
+                    1, mieStock.price,
+                    State.getInstance().getPedasLevel(), "", State.getInstance().getToppings());
+            mies.add(mie);
+        }
 
         if (paymentMethod.equals("cash")) {
+            Log.v("BURP", State.getInstance().getGrandTotal().toString()+State.getInstance().getDiningMethod()+State.getInstance().getDrinks().toString());
             Order order = new Order(State.getInstance().getGrandTotal(),
                     paymentMethod, State.getInstance().getDiningMethod(),
                     mies, State.getInstance().getDrinks());
