@@ -1,6 +1,7 @@
 package fragment;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -53,7 +54,13 @@ public class ToppingGridAdapter extends BaseAdapter {
         Log.v("HERP", uri);
         Log.v("HERP", String.valueOf(i));
         int imgResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-        Drawable res = context.getDrawable(imgResource);
+        Drawable res;
+        try {
+            res = context.getDrawable(imgResource);
+        } catch (Resources.NotFoundException e) {
+            res = context.getDrawable(R.drawable.supremie_logo);
+        }
+
         ImageView imgView = (ImageView)view.findViewById(R.id.grid_img);
         imgView.setImageDrawable(res);
 

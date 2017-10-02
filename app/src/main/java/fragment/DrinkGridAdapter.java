@@ -1,6 +1,7 @@
 package fragment;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amazonaws.auth.policy.Resource;
 import com.bintang5.supremie.R;
 import com.bintang5.supremie.activity.State;
 
@@ -30,6 +32,7 @@ public class DrinkGridAdapter extends BaseAdapter {
     public ArrayList<DrinkStock> items;
     LayoutInflater inflater;
     int[] quantities;
+    OnQuantityChangeListener onQuantityChangeListener;
 
     public DrinkGridAdapter(Context context, ArrayList<DrinkStock> items, int[] quantities) {
         this.context = context;
@@ -52,7 +55,12 @@ public class DrinkGridAdapter extends BaseAdapter {
         Log.v("HERP", uri);
         Log.v("HERP", String.valueOf(i));
         int imgResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-        Drawable res = context.getDrawable(imgResource);
+        Drawable res;
+        try {
+            res = context.getDrawable(imgResource);
+        } catch (Resources.NotFoundException e) {
+            res = context.getDrawable(R.drawable.supremie_logo);
+        }
         ImageView imgView = (ImageView)view.findViewById(R.id.grid_img);
         imgView.setImageDrawable(res);
 
@@ -110,6 +118,9 @@ public class DrinkGridAdapter extends BaseAdapter {
             quantities[i] += 1;
             //TODO: save this info when fragment is paused instead of here
             State.getInstance().setDrinkQuantity(i, quantities[i]);
+            if (onQuantityChangeListener != null) {
+                onQuantityChangeListener.onQuantityChange(quantities[i]);
+            }
             //TODO: change this to first time onClick hears something
             notifyDataSetChanged();
         }
@@ -120,9 +131,19 @@ public class DrinkGridAdapter extends BaseAdapter {
             quantities[i] -= 1;
             //TODO: save this info when fragment is paused instead of here
             State.getInstance().setDrinkQuantity(i, quantities[i]);
+            if (onQuantityChangeListener != null) {
+                onQuantityChangeListener.onQuantityChange(quantities[i]);
+            }
             //TODO: change this to first time onClick hears something
             notifyDataSetChanged();
         }
     }
 
+    public interface OnQuantityChangeListener {
+        void onQuantityChange(int quantity);
+    }
+
+    public void setOnQuantityChangeListener(OnQuantityChangeListener onQuantityChangeListener) {
+        this.onQuantityChangeListener = onQuantityChangeListener;
+    }
 }

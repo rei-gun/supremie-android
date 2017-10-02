@@ -41,13 +41,11 @@ public class ChoosePaymentMethod extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_payment_method);
 
-
+        disableUserInput();
         if (!bluetoothAdapter.isEnabled()) {
             //TODO: bluetooth not enabled
         } else {
-            disableUserInput();
             cashlezPayment = new CashlezPayment(this);
-
         }
 
         Button cashButton = (Button)findViewById(R.id.button_cash);
@@ -142,6 +140,7 @@ public class ChoosePaymentMethod extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         cashlezPayment.unregisterReceiver();
+        cashlezPayment.stopLocationServices();
     }
 
     @Override
