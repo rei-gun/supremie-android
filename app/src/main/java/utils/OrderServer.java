@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.bintang5.supremie.activity.ChooseDiningMethod;
+import com.bintang5.supremie.activity.OrderSummary;
 import com.bintang5.supremie.activity.State;
 import com.cashlez.android.sdk.model.CLPrintObject;
 import com.cashlez.android.sdk.service.CLPrintAlignEnum;
@@ -115,6 +116,9 @@ public class OrderServer extends Server {
             @Override
             public void onFailure(Call<POSTResponseOrder> call, Throwable t) {
                 Log.v("OH SHIT!", "Something went wrong");
+                Intent i = new Intent(callingActivity, OrderSummary.class);
+                callingActivity.finish();
+                callingActivity.startActivity(i);
             }
         });
 

@@ -97,6 +97,18 @@ public class State  {
         mieStock = null;
     }
 
+    public void clearChoices() {
+        brand = null;
+        subMieId = null;
+        quantityMie = null;
+        mieId = null;
+        drinkQuantities = null;
+        toppingQuantities = null;
+        pedasLevel = null;
+        grandTotal = null;
+        mieStock = null;
+    }
+
     public void setBrand(String brand) {
         this.brand = brand;
     }

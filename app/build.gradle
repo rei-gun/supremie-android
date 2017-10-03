@@ -42,4 +42,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.1.0'
     compile 'com.cashlez.android:cashlez:1.5.2.7'
     compile 'com.android.support:multidex:1.0.1'
+    compile 'cat.ereza:customactivityoncrash:2.1.0'
 }

@@ -44,9 +44,9 @@ public abstract class Server {
             client = new OkHttpClient.Builder()
 //                    .addInterceptor(new AuthorizationInterceptor(c))
                     .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                    .connectTimeout(1000, TimeUnit.SECONDS)
-                    .readTimeout(1000, TimeUnit.SECONDS)
-                    .writeTimeout(1000, TimeUnit.SECONDS)
+                    .connectTimeout(10000, TimeUnit.MILLISECONDS)
+                    .readTimeout(10000, TimeUnit.MILLISECONDS)
+                    .writeTimeout(10000, TimeUnit.MILLISECONDS)
                     .build();
         }
         if (retrofit == null) {

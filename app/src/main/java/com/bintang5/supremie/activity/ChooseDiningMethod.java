@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.bintang5.supremie.R;
 
@@ -24,6 +26,7 @@ public class ChooseDiningMethod extends SupremieActivity {
         setContentView(R.layout.choose_dining_method);
         //Get stock data from server
         disableUserInput();
+
         StockServer.getInstance(this).getStock(this);
         //Log in to Cashlez
         CashlezLogin cashlezLogin = new CashlezLogin(this);
@@ -54,6 +57,19 @@ public class ChooseDiningMethod extends SupremieActivity {
             }
         });
 
+        Button clearChoices = (Button)findViewById(R.id.button_clear);
+        clearChoices.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                State.getInstance().clearChoices();
+            }
+        });
+
+        Toast.makeText(
+                getApplicationContext(),
+                "Sedang menghubung server, mohon ditunggu...",
+                Toast.LENGTH_SHORT
+        ).show();
     }
 
     /**

@@ -1,7 +1,10 @@
 package utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.SystemClock;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.bintang5.supremie.activity.ChooseDiningMethod;
 import com.bintang5.supremie.activity.State;
@@ -61,13 +64,19 @@ public class StockServer extends Server {
                 State.getInstance().setAllStock(response.body());
 //                Log.v("WHAT", State.getInstance().getAllStock().getMieStocks().size()));
                 callingActivity.enableUserInput();
+                Toast.makeText(
+                        callingActivity.getApplicationContext(),
+                        "Berhubung dengan server sukses!",
+                        Toast.LENGTH_SHORT
+                ).show();
             }
-
             @Override
             public void onFailure(Call<GETResponseStock> call, Throwable t) {
-
+                Log.v("BART", "oops");
+                Intent i = callingActivity.getIntent();
+                callingActivity.finish();
+                callingActivity.startActivity(i);
             }
         });
     }
-
 }
