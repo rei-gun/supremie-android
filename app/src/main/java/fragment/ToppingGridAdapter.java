@@ -32,6 +32,7 @@ public class ToppingGridAdapter extends BaseAdapter {
     LayoutInflater inflater;
     int[] quantities;
     View gridItemView;
+    OnQuantityChangeListener onQuantityChangeListener;
 
     public ToppingGridAdapter(Context context, ArrayList<ToppingStock> items, int[] quantities) {
         this.context = context;
@@ -120,6 +121,9 @@ public class ToppingGridAdapter extends BaseAdapter {
             quantities[i] += 1;
             //TODO: save this info when fragment is paused instead of here
             State.getInstance().setToppingQuantity(i, quantities[i]);
+            if (onQuantityChangeListener != null) {
+                onQuantityChangeListener.onQuantityChange(quantities[i]);
+            }
             //TODO: change this to first time onClick hears something
             notifyDataSetChanged();
         }
@@ -130,9 +134,19 @@ public class ToppingGridAdapter extends BaseAdapter {
             quantities[i] -= 1;
             //TODO: save this info when fragment is paused instead of here
             State.getInstance().setToppingQuantity(i, quantities[i]);
+            if (onQuantityChangeListener != null) {
+                onQuantityChangeListener.onQuantityChange(quantities[i]);
+            }
             //TODO: change this to first time onClick hears something
             notifyDataSetChanged();
         }
     }
 
+    public interface OnQuantityChangeListener {
+        void onQuantityChange(int quantity);
+    }
+
+    public void setOnQuantityChangeListener(OnQuantityChangeListener onQuantityChangeListener) {
+        this.onQuantityChangeListener = onQuantityChangeListener;
+    }
 }

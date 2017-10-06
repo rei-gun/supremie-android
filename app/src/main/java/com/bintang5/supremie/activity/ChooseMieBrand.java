@@ -50,8 +50,10 @@ public class ChooseMieBrand extends SupremieActivity {
 
         if (State.getInstance().getBrand() == null) {
             enableLanjut();
+            enableToppingLanjut();
         } else {
             disableLanjut();
+            disableToppingLanjut();
         }
     }
 
@@ -68,6 +70,7 @@ public class ChooseMieBrand extends SupremieActivity {
                     State.getInstance().setChooseMieFragmentId(null, null);//clear flavour
                     //TODO: do this only on the first time gridView is clicked
                     disableLanjut();
+                    disableToppingLanjut();
                     gridAdapter.notifyDataSetChanged();
 
                 }
@@ -113,4 +116,27 @@ public class ChooseMieBrand extends SupremieActivity {
         lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));
     }
 
+
+    public void enableToppingLanjut() {
+        lanjut = (Button)findViewById(R.id.lanjut_to_topping);
+        lanjut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                if (State.getInstance().getBrand() == null) {
+                    i = new Intent(ChooseMieBrand.this, ChooseTopping.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.enter, R.anim.exit);
+                }
+            }
+        });
+        lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.supremieRed));
+    }
+
+
+    public void disableToppingLanjut() {
+        lanjut = (Button)findViewById(R.id.lanjut_to_topping);
+        lanjut.setOnClickListener(null);
+        lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));
+    }
 }

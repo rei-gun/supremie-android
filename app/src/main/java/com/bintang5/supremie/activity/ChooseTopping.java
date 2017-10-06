@@ -3,6 +3,7 @@ package com.bintang5.supremie.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +25,7 @@ import model.ToppingStock;
 public class ChooseTopping extends SupremieActivity {
 
     int[] quantities;
+    Button lanjut;
     @Nullable
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,16 @@ public class ChooseTopping extends SupremieActivity {
         }
         final ToppingGridAdapter toppingGridAdapter = new ToppingGridAdapter(this,
                 toppingStocks, quantities);
+        toppingGridAdapter.setOnQuantityChangeListener(new ToppingGridAdapter.OnQuantityChangeListener() {
+            @Override
+            public void onQuantityChange(int quantity) {
+                if (quantity == 0 && State.getInstance().getMieId() == null) {
+                    disableLanjut();
+                } else {
+                    enableLanjut();
+                }
+            }
+        });
         gridView.setAdapter(toppingGridAdapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -54,24 +66,57 @@ public class ChooseTopping extends SupremieActivity {
                 toppingGridAdapter.notifyDataSetChanged();
             }
         });
-
+        if (State.getInstance().getBrand() == null && (State.getInstance().getToppings() == null ||
+                                                    State.getInstance().getToppings().size() == 0)) {
+            disableLanjut();
+        } else {
+            enableLanjut();
+        }
+/*
         Button lanjut = (Button)findViewById(R.id.topping_lanjutkan);
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (State.getInstance().getBrand().equals("Nasi")) {
-                    Log.v("HALO", "ABANG");
+                if (State.getInstance().getBrand() == null) { //no mie chosen
+                    Intent i = new Intent(ChooseTopping.this, OrderSummary.class);
+                    startActivity(i);
+                } else if (State.getInstance().getBrand().equals("Nasi")) {
                     Intent i = new Intent(ChooseTopping.this, ChoosePedasNasi.class);
                     startActivity(i);
-                    overridePendingTransition(R.anim.enter, R.anim.exit);
                 } else {
                     Intent i = new Intent(ChooseTopping.this, ChoosePedas.class);
                     startActivity(i);
-                    overridePendingTransition(R.anim.enter, R.anim.exit);
                 }
+                overridePendingTransition(R.anim.enter, R.anim.exit);
             }
-        });
-
+        });*/
     }
 
+    public void enableLanjut() {
+        lanjut = (Button)findViewById(R.id.topping_lanjutkan);
+        lanjut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (State.getInstance().getBrand() == null) { //no mie chosen
+                    Intent i = new Intent(ChooseTopping.this, OrderSummary.class);
+                    startActivity(i);
+                } else if (State.getInstance().getBrand().equals("Nasi")) {
+                    Intent i = new Intent(ChooseTopping.this, ChoosePedasNasi.class);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(ChooseTopping.this, ChoosePedas.class);
+                    startActivity(i);
+                }
+                overridePendingTransition(R.anim.enter, R.anim.exit);
+            }
+        });
+        lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.supremieRed));
+    }
+
+    public void disableLanjut() {
+        Log.v("Halo", "HALO");
+        lanjut = (Button)findViewById(R.id.topping_lanjutkan);
+        lanjut.setOnClickListener(null);
+        lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));
+    }
 }

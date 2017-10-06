@@ -78,26 +78,35 @@ public class OrderServer extends Server {
                     clPrintObject.setFreeText(clPrintObject.getFreeText()+"Nomor Anda: " + r.getId()+"\n");
                     clPrintObject.setFormat(CLPrintEnum.TITLE);
                     clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
-
-                    for (Mie m:order.mies) {
-                        clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n"+m.quantityMie+" "+
-                                m.brand + " "+
-                        m.flavour + "\nRp. "+
-                        m.price*State.getInstance().getQuantityMie());
-                        //print pedas level
-                        clPrintObject.setFreeText(clPrintObject.getFreeText()+"\nLevel Pedas: "+State.getInstance().getPedasLevel()+
-                        "\nRp. "+State.getInstance().getPedasPrice(State.getInstance().getPedasLevel()));
-                        //print toppings
-                        for (Topping t:m.toppings) {
-                            clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n"+t.quantity+" "+t.name+"\nRp. "+
-                            t.quantity*t.price);
+                    if (!order.mies.get(0).brand.equals("NO MIE")) {
+                        for (Mie m : order.mies) {
+                            clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + m.quantityMie + " " +
+                                    m.brand + " " +
+                                    m.flavour + "\nRp. " +
+                                    m.price * State.getInstance().getQuantityMie());
+                            //print pedas level
+                            clPrintObject.setFreeText(clPrintObject.getFreeText() + "\nLevel Pedas: " + State.getInstance().getPedasLevel() +
+                                    "\nRp. " + State.getInstance().getPedasPrice(State.getInstance().getPedasLevel()));
+                            //print toppings
+                            for (Topping t : m.toppings) {
+                                clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + t.quantity + " " + t.name + "\nRp. " +
+                                        t.quantity * t.price);
+                            }
+                        }
+                    } else {
+                        Mie m = order.mies.get(0);
+                        for (Topping t : m.toppings) {
+                            clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + t.quantity + " " + t.name + "\nRp. " +
+                                    t.quantity * t.price);
                         }
                     }
                     //add new line inbetween toppings and drinks
                     clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n");
-                    for (Drink d:order.drinks) {
-                        clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n"+d.quantity+" "+d.brand+"\nRp. "+
-                        d.quantity*d.price);
+                    if (order.drinks != null) {
+                        for (Drink d : order.drinks) {
+                            clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + d.quantity + " " + d.brand + "\nRp. " +
+                                    d.quantity * d.price);
+                        }
                     }
                     clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n\nTax&Service:\n"+State.getInstance().getTaxChargeString());
                     String totalPrice = State.getInstance().addDot(order.totalPrice.toString());

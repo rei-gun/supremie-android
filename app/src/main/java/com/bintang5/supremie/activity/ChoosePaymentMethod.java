@@ -99,10 +99,13 @@ public class ChoosePaymentMethod extends AppCompatActivity {
                     1, mieStock.price,
                     State.getInstance().getPedasLevel(), "", State.getInstance().getToppings());
             mies.add(mie);
+        } else {
+            Mie mie = new Mie(24, "NO", "MIE", 1, 1, 1, 1, "", State.getInstance().getToppings());
+            mies.add(mie);
         }
 
         if (paymentMethod.equals("cash")) {
-            Log.v("BURP", State.getInstance().getGrandTotal().toString()+State.getInstance().getDiningMethod()+State.getInstance().getDrinks().toString());
+//            Log.v("BURP", State.getInstance().getGrandTotal().toString()+State.getInstance().getDiningMethod()+State.getInstance().getDrinks().toString());
             Order order = new Order(State.getInstance().getGrandTotal(),
                     paymentMethod, State.getInstance().getDiningMethod(),
                     mies, State.getInstance().getDrinks());

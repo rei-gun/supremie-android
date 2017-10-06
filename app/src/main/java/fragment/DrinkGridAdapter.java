@@ -14,7 +14,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amazonaws.auth.policy.Resource;
 import com.bintang5.supremie.R;
 import com.bintang5.supremie.activity.State;
 

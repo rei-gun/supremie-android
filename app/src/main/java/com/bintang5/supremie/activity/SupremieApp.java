@@ -15,7 +15,7 @@ public class SupremieApp extends Application {
 
         CaocConfig.Builder.create()
                 .backgroundMode(CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM) //default: CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM
-                .enabled(true) //default: true
+                .enabled(false) //default: true
                 .showErrorDetails(true) //default: true
                 .showRestartButton(true) //default: true
                 .trackActivities(false) //default: false
