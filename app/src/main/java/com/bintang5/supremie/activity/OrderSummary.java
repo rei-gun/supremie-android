@@ -122,8 +122,13 @@ public class OrderSummary extends AppCompatActivity {
 
         //create tax & service charge row
         Double taxCharge = subTotal*0.15;
-        ((TextView)findViewById(R.id.tax_value)).setText(
-                State.getInstance().addDot("RP "+String.valueOf(taxCharge.intValue())));
+        TextView taxText = (TextView)findViewById(R.id.tax_value);
+        if (taxCharge < 1000) {
+            taxText.setText(String.valueOf(taxCharge.intValue()));
+        } else {
+            taxText.setText(State.getInstance().addDot("RP "+String.valueOf(taxCharge.intValue())));
+        }
+
         String taxString = State.getInstance().addDot(String.valueOf(taxCharge.intValue()));
         State.getInstance().setTaxChargeString(taxString);
 

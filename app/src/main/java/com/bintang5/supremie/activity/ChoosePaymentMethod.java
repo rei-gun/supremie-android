@@ -94,7 +94,11 @@ public class ChoosePaymentMethod extends AppCompatActivity {
     private void postOrder(String paymentMethod) {
         MieStock mieStock = State.getInstance().getMieStock();
         ArrayList mies = new ArrayList();
-        if (mieStock != null) {
+//        Log.v("HALO", State.getInstance().getDrinks().toString());
+        if (mieStock == null && (State.getInstance().getDrinks() == null ||
+                        State.getInstance().getDrinks().size() != 0)) {
+
+        } else if (mieStock != null) {
             Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
                     1, mieStock.price,
                     State.getInstance().getPedasLevel(), "", State.getInstance().getToppings());

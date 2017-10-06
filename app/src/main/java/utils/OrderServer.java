@@ -70,7 +70,6 @@ public class OrderServer extends Server {
                 POSTResponseOrder r = response.body();
                 //TODO print the id to Cashlez's printer here
                 if (r != null) {
-
                     ArrayList<CLPrintObject> freeText = new ArrayList<>();
                     CLPrintObject clPrintObject = new CLPrintObject();
                     String currentTimeString = new SimpleDateFormat("dd/MM/yyy").format(new Date());
@@ -78,7 +77,7 @@ public class OrderServer extends Server {
                     clPrintObject.setFreeText(clPrintObject.getFreeText()+"Nomor Anda: " + r.getId()+"\n");
                     clPrintObject.setFormat(CLPrintEnum.TITLE);
                     clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
-                    if (!order.mies.get(0).brand.equals("NO")) {
+                    if (order.mies.size() > 0 && !order.mies.get(0).brand.equals("NO")) {
                         for (Mie m : order.mies) {
                             clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + m.quantityMie + " " +
                                     m.brand + " " +
@@ -93,6 +92,8 @@ public class OrderServer extends Server {
                                         t.quantity * t.price);
                             }
                         }
+                    } else if (order.mies.size() == 0) { //drinks only
+                        //do nothing
                     } else {
                         Mie m = order.mies.get(0);
                         for (Topping t : m.toppings) {
