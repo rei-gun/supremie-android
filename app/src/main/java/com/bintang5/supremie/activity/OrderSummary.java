@@ -40,13 +40,14 @@ public class OrderSummary extends AppCompatActivity {
 
         //offset of -1 because mySQL IDs start at 1, not 0
         MieStock chosenMie = null;
-        ArrayList<MieStock> mieStocks = State.getInstance().getAllStock().getMieStocks();
-        Log.v("TEST", mieStocks.toString()+State.getInstance().getMieId());
-        for (MieStock ms: mieStocks) {
-            if (ms.id == State.getInstance().getMieId()) {
-                State.getInstance().setMieStock(ms);
-                chosenMie = ms;
-                break;
+        if (State.getInstance().getAllStock().getMieStocks() != null) {
+            ArrayList<MieStock> mieStocks = State.getInstance().getAllStock().getMieStocks();
+            for (MieStock ms : mieStocks) {
+                if (ms.id == State.getInstance().getMieId()) {
+                    State.getInstance().setMieStock(ms);
+                    chosenMie = ms;
+                    break;//since we're only doing 1 mie atm
+                }
             }
         }
 //        get(State.getInstance().getMieId()-1);

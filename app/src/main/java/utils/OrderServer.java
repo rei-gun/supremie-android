@@ -78,7 +78,7 @@ public class OrderServer extends Server {
                     clPrintObject.setFreeText(clPrintObject.getFreeText()+"Nomor Anda: " + r.getId()+"\n");
                     clPrintObject.setFormat(CLPrintEnum.TITLE);
                     clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
-                    if (!order.mies.get(0).brand.equals("NO MIE")) {
+                    if (!order.mies.get(0).brand.equals("NO")) {
                         for (Mie m : order.mies) {
                             clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + m.quantityMie + " " +
                                     m.brand + " " +
