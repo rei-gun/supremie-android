@@ -75,7 +75,6 @@ public abstract class Server {
      * @return The server's base URL.
      */
     public static String getBaseUrl() {
-//        return "http://139.59.96.68:8000"; // DigitalOcean server
        return "http://192.168.0.100:80"; // Raspberry Pi @ Supremie
     }
 
