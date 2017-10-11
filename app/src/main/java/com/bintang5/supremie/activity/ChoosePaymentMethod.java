@@ -48,6 +48,8 @@ public class ChoosePaymentMethod extends AppCompatActivity {
             cashlezPayment = new CashlezPayment(this);
         }
 
+//        Log.v("DICK", (String.valueOf(State.getInstance().getDrinks().size())));
+
         Button cashButton = (Button)findViewById(R.id.button_cash);
         cashButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,16 +97,21 @@ public class ChoosePaymentMethod extends AppCompatActivity {
         MieStock mieStock = State.getInstance().getMieStock();
         ArrayList mies = new ArrayList();
 //        Log.v("HALO", State.getInstance().getDrinks().toString());
-        if (mieStock == null && (State.getInstance().getDrinks() == null ||
-                        State.getInstance().getDrinks().size() != 0)) {
-
+        //Drinks only
+        if (mieStock == null && State.getInstance().getToppingQuantities() == null) { //(State.getInstance().getDrinks() != null ||
+                        //State.getInstance().getDrinks().size() != 0)) {
+            Log.v("CUNT", "DOCK");
+        //Ordering mie
         } else if (mieStock != null) {
             Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
                     1, mieStock.price,
                     State.getInstance().getPedasLevel(), "", State.getInstance().getToppings());
             mies.add(mie);
-        } else {
+        //topping only
+        } else if (mieStock == null && (State.getInstance().getDrinks() == null ||
+                    State.getInstance().getDrinks().size() == 0)){
             Mie mie = new Mie(24, "NO", "MIE", 1, 1, 1, 1, "", State.getInstance().getToppings());
+            Log.v("CUNT", "DICK");
             mies.add(mie);
         }
 
