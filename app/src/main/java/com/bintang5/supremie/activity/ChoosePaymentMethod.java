@@ -92,31 +92,32 @@ public class ChoosePaymentMethod extends AppCompatActivity {
 
 
     private void postOrder(String paymentMethod) {
-        MieStock mieStock = State.getInstance().getMieStock();
-        ArrayList mies = new ArrayList();
+//        MieStock mieStock = State.getInstance().getMieStock();
 //        Log.v("HALO", State.getInstance().getDrinks().toString());
         //Drinks only
-        if (mieStock == null && State.getInstance().getToppingQuantities() == null) { //(State.getInstance().getDrinks() != null ||
+//        if (mieStock == null && State.getInstance().getToppingQuantities() == null) { //(State.getInstance().getDrinks() != null ||
                         //State.getInstance().getDrinks().size() != 0)) {
         //Ordering mie
-        } else if (mieStock != null) {
-            Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
-                    1, mieStock.price,
-                    State.getInstance().getPedasLevel(), "", State.getInstance().getToppings());
-            mies.add(mie);
+//        } else if (mieStock != null) {
+//            Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
+//                    1, mieStock.price,
+//                    State.getInstance().getPedasLevel(), "", State.getInstance().getToppings());
+//            mies.add(mie);
         //topping only
-        } else if (mieStock == null && (State.getInstance().getDrinks() == null ||
-                    State.getInstance().getDrinks().size() == 0)){
-            Mie mie = new Mie(24, "NO", "MIE", 1, 1, 1, 1, "", State.getInstance().getToppings());
-            mies.add(mie);
-        }
+//        } else if (mieStock == null && (State.getInstance().getDrinks() == null ||
+//                    State.getInstance().getDrinks().size() == 0)){
+//            Mie mie = new Mie(24, "NO", "MIE", 1, 1, 1, 1, "", State.getInstance().getToppings());
+//            mies.add(mie);
+//        }
 
         if (paymentMethod.equals("cash")) {
+            State.getInstance().getMasterOrder().paymentMethod = "cash";
 //            Log.v("BURP", State.getInstance().getGrandTotal().toString()+State.getInstance().getDiningMethod()+State.getInstance().getDrinks().toString());
-            Order order = new Order(State.getInstance().getGrandTotal(),
-                    paymentMethod, State.getInstance().getDiningMethod(),
-                    mies, State.getInstance().getDrinks());
-            OrderServer.getInstance(this).createOrder(cashlezPayment, this, order);
+//            Order order = new Order(State.getInstance().getGrandTotal(),
+//                    paymentMethod, State.getInstance().getDiningMethod(),
+//                    mies, State.getInstance().getDrinks());
+            OrderServer.getInstance(this).createOrder(cashlezPayment, this,
+                    State.getInstance().getMasterOrder());
         } else if (paymentMethod.equals("debit")) {
             /*
             CLPayment debitCLPayment = new CLPayment();
@@ -126,10 +127,10 @@ public class ChoosePaymentMethod extends AppCompatActivity {
             debitCLPayment.setVerificationMode(CLVerificationMode.PIN);
             cashlezPayment.doPayDebitPin(debitCLPayment);
             */
-            Order order = new Order(State.getInstance().getGrandTotal(),
-                    "card", State.getInstance().getDiningMethod(),
-                    mies, State.getInstance().getDrinks());
-            OrderServer.getInstance(this).createOrder(cashlezPayment, this, order);
+//            Order order = new Order(State.getInstance().getGrandTotal(),
+//                    "card", State.getInstance().getDiningMethod(),
+//                    mies, State.getInstance().getDrinks());
+//            OrderServer.getInstance(this).createOrder(cashlezPayment, this, order);
         } else if (paymentMethod.equals("credit")) {
             /*
             CLPayment debitCLPayment = new CLPayment();
@@ -139,10 +140,10 @@ public class ChoosePaymentMethod extends AppCompatActivity {
             debitCLPayment.setVerificationMode(CLVerificationMode.PIN);
             cashlezPayment.doPayCreditPin(debitCLPayment);
             */
-            Order order = new Order(State.getInstance().getGrandTotal(),
-                    "card", State.getInstance().getDiningMethod(),
-                    mies, State.getInstance().getDrinks());
-            OrderServer.getInstance(this).createOrder(cashlezPayment, this,order);
+//            Order order = new Order(State.getInstance().getGrandTotal(),
+//                    "card", State.getInstance().getDiningMethod(),
+//                    mies, State.getInstance().getDrinks());
+//            OrderServer.getInstance(this).createOrder(cashlezPayment, this,order);
         }
     }
 

@@ -62,7 +62,6 @@ public class StockServer extends Server {
             @Override
             public void onResponse(Call<GETResponseStock> call, Response<GETResponseStock> response) {
                 State.getInstance().setAllStock(response.body());
-//                Log.v("WHAT", State.getInstance().getAllStock().getMieStocks().size()));
                 callingActivity.enableUserInput();
                 Toast.makeText(
                         callingActivity.getApplicationContext(),
@@ -72,7 +71,7 @@ public class StockServer extends Server {
             }
             @Override
             public void onFailure(Call<GETResponseStock> call, Throwable t) {
-                Log.v("BART", "oops");
+                Log.v("BART", t.toString());
                 Intent i = callingActivity.getIntent();
                 callingActivity.finish();
                 callingActivity.startActivity(i);

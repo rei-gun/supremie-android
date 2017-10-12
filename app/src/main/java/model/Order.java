@@ -39,8 +39,8 @@ public class Order {
         this.totalPrice = null;
         this.paymentMethod = null;
         this.diningMethod = null;
-        this.mies = null;
-        this.drinks = null;
+        this.mies = new ArrayList<>();
+        this.drinks = new ArrayList<>();
     }
 
     @Override

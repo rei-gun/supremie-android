@@ -109,7 +109,7 @@ public class OrderServer extends Server {
                                     d.quantity * d.price);
                         }
                     }
-                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n\nTax&Service:\n"+State.getInstance().getTaxChargeString());
+                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n\nTax&Service:\n"+State.getInstance().getTaxServiceString());
                     String totalPrice = State.getInstance().addDot(order.totalPrice.toString());
                     clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n\nJumlah: \n\nRp. "+totalPrice);
                     freeText.add(clPrintObject);

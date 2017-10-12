@@ -107,6 +107,14 @@
                 android:layout_alignParentBottom="true"
                 android:src="@drawable/bayar_button_selector"
                 />
+            <Button
+                android:id="@+id/button_new_mie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NAMBAH"
+                android:layout_above="@+id/button_go_to_payment_method"
+                />
+
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

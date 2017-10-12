@@ -3,7 +3,9 @@ package com.bintang5.supremie.activity;
 
 import java.util.ArrayList;
 
+import model.Mie;
 import model.MieStock;
+import model.Order;
 import utils.responses.GETResponseStock;
 
 /**
@@ -52,7 +54,9 @@ public class State  {
 
     private String taxChargeString = null;
 
-    private String serviceChargeString = null;
+//    private ArrayList<Mie> mies = null;
+
+    private Order masterOrder;
 
     private State() {
         pedasPrices = new int[3];
@@ -61,7 +65,6 @@ public class State  {
         pedasPrices[1] = 1000;
         pedasPrices[2] = 2000;
         toppings = new ArrayList();
-//        mies = new ArrayList();
         drinks = new ArrayList();
         pedasDescriptions = new String[3];
 //        pedasDescriptions[0] = "RP 0\nLEVEL 0 (TANPA BUBUK CABAI DI DALAM PACKAGING)";
@@ -73,6 +76,8 @@ public class State  {
         pedasNasiDescriptions[1] = "RP 1.000\nLEVEL 1 (5 CABAI RAWIT)";
 //        pedasNasiDescriptions[2] = "RP 2.000\nLEVEL 2 (10 CABAI RAWIT)";
         pedasNasiDescriptions[2] = "RP 2.000\nLEVEL 2 (20 CABAI RAWIT)";
+//        mies = new ArrayList<>();
+        masterOrder = new Order();
     }
 
     public static State getInstance() {
@@ -107,6 +112,19 @@ public class State  {
         pedasLevel = null;
         grandTotal = null;
         mieStock = null;
+//        mies = null;
+    }
+
+    public void clearNewMie() {
+        brand = null;
+        subMieId = null;
+        quantityMie = null;
+        mieId = null;
+        pedasLevel = null;
+        toppings = null;
+        grandTotal = null;
+        mieStock = null;
+        toppingQuantities = null;
     }
 
     public void setBrand(String brand) {
@@ -186,27 +204,9 @@ public class State  {
         return grandTotal;
     }
 
-    public Boolean isOrderDataSetup() {
-        if (drinks == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public void deleteOrderData() {
-//        mies = null;
-        drinks = null;
-        toppings = null;
-    }
-
     public ArrayList getToppings() {
         return toppings;
     }
-
-//    public ArrayList getMies() {
-//        return mies;
-//    }
 
     public ArrayList getDrinks() {
         return drinks;
@@ -215,10 +215,6 @@ public class State  {
     public void setToppings(ArrayList toppings) {
         this.toppings = toppings;
     }
-
-//    public void setMies(ArrayList mies) {
-//        this.mies = mies;
-//    }
 
     public void setDrinks(ArrayList drinks) {
         this.drinks = drinks;
@@ -237,7 +233,11 @@ public class State  {
     }
 
     public String addDot(String s) {
-        return new StringBuffer(s).insert(s.length() - 3, ".").toString();
+        if (s.length() > 3) {
+            return new StringBuffer(s).insert(s.length() - 3, ".").toString();
+        } else {
+            return s;
+        }
     }
 
     public void setMieStock(MieStock ms) {
@@ -248,23 +248,29 @@ public class State  {
         return mieStock;
     }
 
-    public String getTaxChargeString() {
+    public String getTaxServiceString() {
         return taxChargeString;
     }
 
-    public String getServiceChargeString() {
-        return serviceChargeString;
-    }
-
-    public void setTaxChargeString(String taxChargeString) {
+    public void setTaxServiceString(String taxChargeString) {
         this.taxChargeString = taxChargeString;
-    }
-
-    public void setServiceChargeString(String serviceChargeString) {
-        this.serviceChargeString = serviceChargeString;
     }
 
     public String[] getNasiPedasDescriptions() {
         return pedasNasiDescriptions;
+    }
+
+//    public ArrayList<Mie> getMies() { return mies; };
+
+//    public void setMies(ArrayList<Mie> mies) {
+//        this.mies = mies;
+//    }
+
+    public void setMasterOrder(Order masterOrder) {
+        this.masterOrder = masterOrder;
+    }
+
+    public Order getMasterOrder() {
+        return masterOrder;
     }
 }
