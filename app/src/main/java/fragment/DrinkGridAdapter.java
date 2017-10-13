@@ -51,8 +51,8 @@ public class DrinkGridAdapter extends BaseAdapter {
         DrinkStock drink = getItem(i);
         String uri = "@drawable/"+drink.brand;
         uri = uri.replace(" ", "").toLowerCase();
-        Log.v("HERP", uri);
-        Log.v("HERP", String.valueOf(i));
+//        Log.v("HERP", uri);
+//        Log.v("HERP", String.valueOf(i));
         int imgResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
         Drawable res;
         try {

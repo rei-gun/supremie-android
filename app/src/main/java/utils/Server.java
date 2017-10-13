@@ -76,10 +76,9 @@ public abstract class Server {
      */
     public static String getBaseUrl() {
 //       return "http://192.168.0.100:80"; // Raspberry Pi @ Supremie
-//        return "http://192.168.0.104:8000"; //Rei's MAC @ Office
-        return "http://192.168.1.106:8000"; //Rei's MAC @ Martabak Testing
+        return "http://192.168.0.115:8000"; //Rei's MAC @ Office
+//        return "http://192.168.1.106:8000"; //Rei's MAC @ Martabak Testing
     }
-
     /*
      * Fetch an instance of Picasso to load an image.
      * @param c The context.

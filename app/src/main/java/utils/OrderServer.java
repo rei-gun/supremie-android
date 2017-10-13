@@ -77,16 +77,17 @@ public class OrderServer extends Server {
                     clPrintObject.setFreeText(clPrintObject.getFreeText()+"Nomor Anda: " + r.getId()+"\n");
                     clPrintObject.setFormat(CLPrintEnum.TITLE);
                     clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
-                    if (order.mies.size() > 0 && !order.mies.get(0).brand.equals("NO")) {
+                    if (order.mies.size() > 0) {// && !order.mies.get(0).brand.equals("NO")) {
                         for (Mie m : order.mies) {
-                            clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + m.quantityMie + " " +
-                                    m.brand + " " +
-                                    m.flavour + "\nRp. " +
-                                    m.price * State.getInstance().getQuantityMie());
-                            //print pedas level
-                            clPrintObject.setFreeText(clPrintObject.getFreeText() + "\nLevel Pedas: " + State.getInstance().getPedasLevel() +
-                                    "\nRp. " + State.getInstance().getPedasPrice(State.getInstance().getPedasLevel()));
-                            //print toppings
+                            if (!m.brand.equals("NO")) {
+                                clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + m.quantityMie + " " +
+                                        m.brand + " " +
+                                        m.flavour + "\nRp. " +
+                                        m.price * m.quantityMie);                               //print pedas level
+                                clPrintObject.setFreeText(clPrintObject.getFreeText() + "\nLevel Pedas: " + m.extraChili +
+                                        "\nRp. " + State.getInstance().getPedasPrice(m.extraChili));
+                                //print toppings
+                            }
                             for (Topping t : m.toppings) {
                                 clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + t.quantity + " " + t.name + "\nRp. " +
                                         t.quantity * t.price);

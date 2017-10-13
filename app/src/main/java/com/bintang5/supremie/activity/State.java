@@ -56,7 +56,9 @@ public class State  {
 
 //    private ArrayList<Mie> mies = null;
 
-    private Order masterOrder;
+    private Order masterOrder = null;
+
+    public Order tempOrder = null;
 
     private State() {
         pedasPrices = new int[3];
@@ -95,11 +97,13 @@ public class State  {
         drinkQuantities = null;
         toppingQuantities = null;
         pedasLevel = null;
-        toppings = null;
-        drinks = null;
+        toppings = new ArrayList();
+        drinks = new ArrayList();
         allStock = null;
         grandTotal = null;
         mieStock = null;
+        masterOrder = null;
+        tempOrder = null;
     }
 
     public void clearChoices() {
@@ -112,7 +116,8 @@ public class State  {
         pedasLevel = null;
         grandTotal = null;
         mieStock = null;
-//        mies = null;
+        masterOrder = null;
+        tempOrder = null;
     }
 
     public void clearNewMie() {
@@ -271,6 +276,11 @@ public class State  {
     }
 
     public Order getMasterOrder() {
-        return masterOrder;
+        if (masterOrder == null) {
+            masterOrder = new Order();
+            return masterOrder;
+        } else {
+            return masterOrder;
+        }
     }
 }

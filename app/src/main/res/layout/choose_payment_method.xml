@@ -9,9 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="CASH"
-        android:textSize="20dp"
-        android:background="@drawable/ic_cash"
+        android:textSize="20sp"
+        android:background="@drawable/bayar_tunai"
         />
     <!--Button
         android:id="@+id/button_credit"

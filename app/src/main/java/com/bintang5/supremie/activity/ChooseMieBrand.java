@@ -34,7 +34,7 @@ public class ChooseMieBrand extends SupremieActivity {
         setContentView(R.layout.choose_brand);
         super.onCreate(savedInstanceState);
         TextView actionBarTitle = (TextView)findViewById(R.id.toolbar_title);
-        actionBarTitle.setText("PILIH MIE / NASI");
+        actionBarTitle.setText("PILIH MIE / NASI / ROTI");
 
         final GridView gridView = (GridView)findViewById(R.id.grid_mie_brand);
         oneOfEachBrand = State.getInstance().getAllStock().getOneOfEachBrand();

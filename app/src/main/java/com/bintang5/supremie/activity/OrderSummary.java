@@ -32,6 +32,7 @@ public class OrderSummary extends AppCompatActivity {
     ArrayList<OrderSummaryItem> items;
     OrderSummaryGridAdapter gridAdapter;
     Order tempOrder;
+    Integer subTotal;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,21 +53,23 @@ public class OrderSummary extends AppCompatActivity {
 //            }
 //        }
 //        get(State.getInstance().getMieId()-1);
-        Log.v("BITCH", String.valueOf(State.getInstance().getMasterOrder().mies.size()));
-        tempOrder = updateOrder();
+//        Log.v("BITCH", String.valueOf(State.getInstance().getMasterOrder().mies.size()));
         items = new ArrayList<>();
-        Integer subTotal = 0;
+        subTotal = 0;
+        tempOrder = updateOrder();
         //set first row
         if (tempOrder.mies.size() > 0) {
             for (Mie m: tempOrder.mies) {
-                OrderSummaryItem item = new OrderSummaryItem(m.brand + " - " +
-                        m.flavour, "QTY - " + m.quantityMie.toString(),
-                        "RP " + String.valueOf(m.quantityMie * m.price));
-                items.add(item);
-                OrderSummaryItem pedas = new OrderSummaryItem("LEVEL PEDAS - LEVEL " + m.extraChili.toString(),
-                    "", "RP " + String.valueOf(State.getInstance().getPedasPrice(m.extraChili)));
-                items.add(pedas);
-                subTotal += m.quantityMie * m.price;
+                if (!m.brand.equals("NO")) {
+                    OrderSummaryItem item = new OrderSummaryItem(m.brand + " - " +
+                            m.flavour, "QTY - " + m.quantityMie.toString(),
+                            "RP " + String.valueOf(m.quantityMie * m.price));
+                    items.add(item);
+                    OrderSummaryItem pedas = new OrderSummaryItem("LEVEL PEDAS - LEVEL " + m.extraChili.toString(),
+                            "", "RP " + String.valueOf(State.getInstance().getPedasPrice(m.extraChili)));
+                    items.add(pedas);
+                    subTotal += m.quantityMie * m.price;
+                }
                 if (m.toppings.size() > 0) {
                     for (Topping topping: m.toppings) {
                         OrderSummaryItem toppingItem = new OrderSummaryItem("TOPPING - " + topping.name,
@@ -109,27 +112,7 @@ public class OrderSummary extends AppCompatActivity {
 //            State.getInstance().setToppings(ts);
 //        }
 
-        //create drink rows
-        int[] drinkQuantities = State.getInstance().getDrinkQuantities();
-        if (drinkQuantities != null) {
-            ArrayList<DrinkStock> ds = State.getInstance().getAllStock().getDrinkStocks();
-            ArrayList<Drink> drinks = new ArrayList<>();
-            for (int i = 0; i < drinkQuantities.length; i++) {
-                if (drinkQuantities[i] > 0) {
-                    DrinkStock d = ds.get(i);
-                    OrderSummaryItem dRow = new OrderSummaryItem("MINUMAN - " + d.brand,
-                            "QTY - " + String.valueOf(drinkQuantities[i]),
-                            "RP " + String.valueOf(drinkQuantities[i] * d.price));
-                    items.add(dRow);
-                    subTotal += drinkQuantities[i] * d.price;
 
-                    //TODO: put below in a new thread
-                    Drink drink = new Drink(d.id, d.brand, d.flavour, drinkQuantities[i], d.price);
-                    drinks.add(drink);
-                }
-            }
-            State.getInstance().setDrinks(drinks);
-        }
 
         //create subtotal row
         ((TextView)findViewById(R.id.subtotal_value)).setText(
@@ -153,6 +136,7 @@ public class OrderSummary extends AppCompatActivity {
         s = State.getInstance().addDot(s);
         ((TextView)findViewById(R.id.total_value)).setText(s);
         State.getInstance().setGrandTotal(grandTotal.intValue());
+        tempOrder.totalPrice = grandTotal.intValue();
 
         gridAdapter = new OrderSummaryGridAdapter(this,
                 items);
@@ -160,7 +144,7 @@ public class OrderSummary extends AppCompatActivity {
         gridView.setExpanded(true);
         gridView.setFocusable(false);
 
-        ImageButton b = (ImageButton) findViewById(R.id.button_go_to_payment_method);
+        Button b = (Button) findViewById(R.id.button_go_to_payment_method);
         setBListener(this, b);
         b.bringToFront();
         Button nambah = (Button)findViewById(R.id.button_new_mie);
@@ -168,10 +152,11 @@ public class OrderSummary extends AppCompatActivity {
 
     }
 
-    private void setBListener(final OrderSummary activity, ImageButton b) {
+    private void setBListener(final OrderSummary activity, Button b) {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                State.getInstance().tempOrder = tempOrder;
                 Intent intent = new Intent(OrderSummary.this, ChoosePaymentMethod.class);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity.startActivity(intent);
@@ -195,20 +180,21 @@ public class OrderSummary extends AppCompatActivity {
 
     private Order updateOrder() {
         Order mo = State.getInstance().getMasterOrder();
-        Order tempOrder = new Order(mo.totalPrice, null, mo.diningMethod, new ArrayList<>(mo.mies), mo.drinks);
+//        Log.v("HERP", State.getInstance().getDrinks().toString());
+        Order tempOrder = new Order(mo.totalPrice, null, State.getInstance().getDiningMethod(),
+                new ArrayList(mo.mies), new ArrayList());
         MieStock mieStock = State.getInstance().getMieStock();
         ArrayList mies = tempOrder.mies;
+        ArrayList drinks = tempOrder.drinks;
 
         if (mieStock == null && State.getInstance().getToppingQuantities() == null) {
             //Drinks only
         } else if (mieStock != null) {//Ordering mie
-            Log.v("BITCH5", String.valueOf(State.getInstance().getMasterOrder().mies.size()));
             ArrayList<Topping> ts = new ArrayList<>();
             int[] toppingQuantities = State.getInstance().getToppingQuantities();
             if (toppingQuantities != null) {
                 ArrayList<ToppingStock> toppings = State.getInstance().getAllStock().getToppingStocks();
                 for (int i = 0; i < toppingQuantities.length; i++) {
-                    Log.v("BITCH6", String.valueOf(State.getInstance().getMasterOrder().mies.size()));
                     if (toppingQuantities[i] > 0) {
                         ToppingStock toppingStock = toppings.get(i);
                         Topping topping = new Topping(toppingStock.id, toppingStock.name, toppingQuantities[i],
@@ -217,20 +203,53 @@ public class OrderSummary extends AppCompatActivity {
                     }
                 }
             }
-            Log.v("BITCH1", String.valueOf(State.getInstance().getMasterOrder().mies.size()));
             Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
                     1, mieStock.price,
                     State.getInstance().getPedasLevel(), "", ts);
-            Log.v("BITCH2", String.valueOf(State.getInstance().getMasterOrder().mies.size()));
             mies.add(mie);
-            Log.v("BITCH", String.valueOf(State.getInstance().getMasterOrder().mies.size()));
         } else if (mieStock == null && (State.getInstance().getDrinks() == null ||
                 State.getInstance().getDrinks().size() == 0)) { //topping only
-            Mie mie = new Mie(24, "NO", "MIE", 1, 1, 1, 1, "", State.getInstance().getToppings());
+            Mie mie = new Mie(24, "NO", "MIE", 1, 1, 1, 0, "", buildToppings());
             mies.add(mie);
-            Log.v("BITCH3", String.valueOf(State.getInstance().getMasterOrder().mies.size()));
         }
-        Log.v("BITCH4", String.valueOf(State.getInstance().getMasterOrder().mies.size()));
+
+        //create drink rows
+        int[] drinkQuantities = State.getInstance().getDrinkQuantities();
+        if (drinkQuantities != null) {
+            ArrayList<DrinkStock> ds = State.getInstance().getAllStock().getDrinkStocks();
+            for (int i = 0; i < drinkQuantities.length; i++) {
+                if (drinkQuantities[i] > 0) {
+                    DrinkStock d = ds.get(i);
+                    OrderSummaryItem dRow = new OrderSummaryItem("MINUMAN - " + d.brand,
+                            "QTY - " + String.valueOf(drinkQuantities[i]),
+                            "RP " + String.valueOf(drinkQuantities[i] * d.price));
+                    items.add(dRow);
+                    subTotal += drinkQuantities[i] * d.price;
+
+                    //TODO: put below in a new thread
+                    Drink drink = new Drink(d.id, d.brand, d.flavour, drinkQuantities[i], d.price);
+                    drinks.add(drink);
+                }
+            }
+//            State.getInstance().setDrinks(drinks);
+        }
         return tempOrder;
+    }
+
+    private ArrayList<Topping> buildToppings() {
+        ArrayList<Topping> ts = new ArrayList<>();
+        int[] toppingQuantities = State.getInstance().getToppingQuantities();
+        if (toppingQuantities != null) {
+            ArrayList<ToppingStock> toppings = State.getInstance().getAllStock().getToppingStocks();
+            for (int i = 0; i < toppingQuantities.length; i++) {
+                if (toppingQuantities[i] > 0) {
+                    ToppingStock toppingStock = toppings.get(i);
+                    Topping topping = new Topping(toppingStock.id, toppingStock.name, toppingQuantities[i],
+                            null, toppingStock.price);
+                    ts.add(topping);
+                }
+            }
+        }
+        return ts;
     }
 }

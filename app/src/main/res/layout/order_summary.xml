@@ -98,23 +98,35 @@
                 android:textSize="25dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_above="@+id/button_go_to_payment_method"/>
+                android:layout_above="@+id/order_summary_buttons"/>
 
-            <ImageButton
-                android:id="@+id/button_go_to_payment_method"
+            <LinearLayout
+                android:id="@+id/order_summary_buttons"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:src="@drawable/bayar_button_selector"
-                />
-            <Button
-                android:id="@+id/button_new_mie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NAMBAH"
-                android:layout_above="@+id/button_go_to_payment_method"
-                />
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_alignParentBottom="true">
 
+                <Button
+                    android:id="@+id/button_new_mie"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="NAMBAH"
+                    android:textSize="40sp"
+                    android:layout_weight="1"
+                    android:layout_margin="2dp"
+                    />
+                <Button
+                    android:id="@+id/button_go_to_payment_method"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="BAYAR"
+                    android:textSize="40sp"
+                    android:layout_weight="1"
+                    android:layout_margin="2dp"
+                    />
+            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

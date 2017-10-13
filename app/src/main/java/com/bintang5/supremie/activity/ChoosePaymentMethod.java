@@ -52,23 +52,24 @@ public class ChoosePaymentMethod extends AppCompatActivity {
         cashButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ChoosePaymentMethod.this);
-                builder.setTitle("Pastikan Anda mau bayar dengan cash");
-                builder.setMessage("Anda tidak bisa berubah putusan setelah kini");
-                builder.setPositiveButton("Konfirmasi", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        postOrder("cash");
-
-                    }
-                });
-                builder.setNegativeButton("Ganti Methode", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                builder.show();
+//                AlertDialog.Builder builder = new AlertDialog.Builder(ChoosePaymentMethod.this);
+//                builder.setTitle("Pastikan Anda mau bayar dengan cash");
+//                builder.setMessage("Anda tidak bisa berubah putusan setelah kini");
+//                builder.setPositiveButton("Konfirmasi", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        postOrder("cash");
+//
+//                    }
+//                });
+//                builder.setNegativeButton("Ganti Methode", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.cancel();
+//                    }
+//                });
+//                builder.show();
+                postOrder("cash");
             }
         });
 /*
@@ -111,13 +112,13 @@ public class ChoosePaymentMethod extends AppCompatActivity {
 //        }
 
         if (paymentMethod.equals("cash")) {
-            State.getInstance().getMasterOrder().paymentMethod = "cash";
+            State.getInstance().tempOrder.paymentMethod = "cash";
 //            Log.v("BURP", State.getInstance().getGrandTotal().toString()+State.getInstance().getDiningMethod()+State.getInstance().getDrinks().toString());
 //            Order order = new Order(State.getInstance().getGrandTotal(),
 //                    paymentMethod, State.getInstance().getDiningMethod(),
 //                    mies, State.getInstance().getDrinks());
             OrderServer.getInstance(this).createOrder(cashlezPayment, this,
-                    State.getInstance().getMasterOrder());
+                    State.getInstance().tempOrder);
         } else if (paymentMethod.equals("debit")) {
             /*
             CLPayment debitCLPayment = new CLPayment();
