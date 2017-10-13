@@ -112,7 +112,23 @@ public class OrderSummary extends AppCompatActivity {
 //            State.getInstance().setToppings(ts);
 //        }
 
+        int[] drinkQuantities = State.getInstance().getDrinkQuantities();
+        if (drinkQuantities != null) {
+            ArrayList<DrinkStock> ds = State.getInstance().getAllStock().getDrinkStocks();
+            for (int i = 0; i < drinkQuantities.length; i++) {
+                if (drinkQuantities[i] > 0) {
+                    DrinkStock d = ds.get(i);
+                    OrderSummaryItem dRow = new OrderSummaryItem("MINUMAN - " + d.brand,
+                            "QTY - " + String.valueOf(drinkQuantities[i]),
+                            "RP " + String.valueOf(drinkQuantities[i] * d.price));
+                    items.add(dRow);
+                    subTotal += drinkQuantities[i] * d.price;
 
+                    //TODO: put below in a new thread
+                }
+            }
+//            State.getInstance().setDrinks(drinks);
+        }
 
         //create subtotal row
         ((TextView)findViewById(R.id.subtotal_value)).setText(
@@ -204,7 +220,7 @@ public class OrderSummary extends AppCompatActivity {
                 }
             }
             Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
-                    1, mieStock.price,
+                    1, mieStock.price*State.getInstance().getQuantityMie(),
                     State.getInstance().getPedasLevel(), "", ts);
             mies.add(mie);
         } else if (mieStock == null && (State.getInstance().getDrinks() == null ||
@@ -220,13 +236,6 @@ public class OrderSummary extends AppCompatActivity {
             for (int i = 0; i < drinkQuantities.length; i++) {
                 if (drinkQuantities[i] > 0) {
                     DrinkStock d = ds.get(i);
-                    OrderSummaryItem dRow = new OrderSummaryItem("MINUMAN - " + d.brand,
-                            "QTY - " + String.valueOf(drinkQuantities[i]),
-                            "RP " + String.valueOf(drinkQuantities[i] * d.price));
-                    items.add(dRow);
-                    subTotal += drinkQuantities[i] * d.price;
-
-                    //TODO: put below in a new thread
                     Drink drink = new Drink(d.id, d.brand, d.flavour, drinkQuantities[i], d.price);
                     drinks.add(drink);
                 }

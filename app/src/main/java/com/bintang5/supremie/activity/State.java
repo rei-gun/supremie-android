@@ -238,7 +238,8 @@ public class State  {
     }
 
     public String addDot(String s) {
-        if (s.length() > 3) {
+        Character first_char = s.charAt(0);
+        if (s.length() > 3 && !first_char.equals("R")) {
             return new StringBuffer(s).insert(s.length() - 3, ".").toString();
         } else {
             return s;

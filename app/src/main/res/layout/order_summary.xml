@@ -116,6 +116,7 @@
                     android:textSize="40sp"
                     android:layout_weight="1"
                     android:layout_margin="2dp"
+                    android:background="@drawable/default_selector"
                     />
                 <Button
                     android:id="@+id/button_go_to_payment_method"
@@ -125,6 +126,7 @@
                     android:textSize="40sp"
                     android:layout_weight="1"
                     android:layout_margin="2dp"
+                    android:background="@drawable/default_selector"
                     />
             </LinearLayout>
         </RelativeLayout>

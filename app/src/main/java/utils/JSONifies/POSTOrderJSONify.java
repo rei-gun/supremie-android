@@ -32,7 +32,6 @@ public class POSTOrderJSONify implements JsonSerializer<Order> {
         JsonArray mieArray = new JsonArray();
         if (src.mies.size() != 0) {
             for (Mie m : src.mies) {
-                Log.v("BIGDICK2", m.toString());
                 JsonObject jsonMie = new JsonObject();
                 jsonMie.addProperty("id", m.id);
                 jsonMie.addProperty("quantity_mie", m.quantityMie);
@@ -43,7 +42,6 @@ public class POSTOrderJSONify implements JsonSerializer<Order> {
                 JsonArray toppingArray = new JsonArray();
                 if (m.toppings != null) {
                     for (Topping t : m.toppings) {
-                        Log.v("BIGDICK3", m.toString());
                         JsonObject jsonTopping = new JsonObject();
                         jsonTopping.addProperty("id", t.id);
                         jsonTopping.addProperty("quantity", t.quantity);
@@ -59,7 +57,7 @@ public class POSTOrderJSONify implements JsonSerializer<Order> {
             }
         }
         orderObject.add("mies", mieArray);
-        Log.v("BIGDICK", mieArray.toString());
+//        Log.v("BIGDICK", mieArray.toString());
 
         JsonArray drinkArray = new JsonArray();
         if (src.drinks != null) {
