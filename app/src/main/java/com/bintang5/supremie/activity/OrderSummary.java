@@ -207,6 +207,7 @@ public class OrderSummary extends AppCompatActivity {
         if (mieStock == null && State.getInstance().getToppingQuantities() == null) {
             //Drinks only
         } else if (mieStock != null) {//Ordering mie
+            Log.v("BITCH", "FART");
             Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
                     1, mieStock.price * State.getInstance().getQuantityMie(),
                     State.getInstance().getPedasLevel(), "", new ArrayList<Topping>());
