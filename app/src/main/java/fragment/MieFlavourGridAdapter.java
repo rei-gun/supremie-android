@@ -130,8 +130,8 @@ public class MieFlavourGridAdapter extends BaseAdapter {
             if (onQuantityChangeListener != null) {
                 onQuantityChangeListener.onQuantityChange(quantities[i]);
             }
+            State.getInstance().setMieStock(items.get(i));
             notifyDataSetChanged();
-
         }
 
     }

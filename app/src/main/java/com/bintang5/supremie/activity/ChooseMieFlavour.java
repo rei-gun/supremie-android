@@ -65,7 +65,6 @@ public class ChooseMieFlavour extends SupremieActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 //                Log.v("DERP", String.valueOf(i));
-                State.getInstance().setMieStock(oneBrand.get(i));
                 flavourGridAdapter.addQuantity(i);
                 flavourGridAdapter.notifyDataSetChanged();
             }
