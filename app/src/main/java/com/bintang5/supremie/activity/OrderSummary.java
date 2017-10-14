@@ -57,6 +57,7 @@ public class OrderSummary extends AppCompatActivity {
         items = new ArrayList<>();
         subTotal = 0;
         tempOrder = updateOrder();
+        //start building the grid items
         //set first row
         if (tempOrder.mies.size() > 0) {
             for (Mie m: tempOrder.mies) {
@@ -206,7 +207,11 @@ public class OrderSummary extends AppCompatActivity {
         if (mieStock == null && State.getInstance().getToppingQuantities() == null) {
             //Drinks only
         } else if (mieStock != null) {//Ordering mie
-            ArrayList<Topping> ts = new ArrayList<>();
+            Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
+                    1, mieStock.price * State.getInstance().getQuantityMie(),
+                    State.getInstance().getPedasLevel(), "", new ArrayList<Topping>());
+            mies.add(mie);
+            ArrayList<Topping> ts = mie.toppings;
             int[] toppingQuantities = State.getInstance().getToppingQuantities();
             if (toppingQuantities != null) {
                 ArrayList<ToppingStock> toppings = State.getInstance().getAllStock().getToppingStocks();
@@ -219,10 +224,7 @@ public class OrderSummary extends AppCompatActivity {
                     }
                 }
             }
-            Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
-                    1, mieStock.price*State.getInstance().getQuantityMie(),
-                    State.getInstance().getPedasLevel(), "", ts);
-            mies.add(mie);
+
         } else if (mieStock == null && (State.getInstance().getDrinks() == null ||
                 State.getInstance().getDrinks().size() == 0)) { //topping only
             Mie mie = new Mie(24, "NO", "MIE", 1, 1, 1, 0, "", buildToppings());

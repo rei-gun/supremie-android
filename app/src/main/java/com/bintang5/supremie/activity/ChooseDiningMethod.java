@@ -33,6 +33,7 @@ public class ChooseDiningMethod extends SupremieActivity {
         cashlezLogin.doLoginAggregator(new User());
 
         ImageButton dineInButton = (ImageButton)findViewById(R.id.button_dine_in);
+        dineInButton.setBackground(null);
         dineInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +48,7 @@ public class ChooseDiningMethod extends SupremieActivity {
         });
 
         ImageButton takeawayButton = (ImageButton)findViewById(R.id.button_takeaway);
+        takeawayButton.setBackground(null);
         takeawayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

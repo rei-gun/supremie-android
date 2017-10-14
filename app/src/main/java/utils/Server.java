@@ -75,9 +75,10 @@ public abstract class Server {
      * @return The server's base URL.
      */
     public static String getBaseUrl() {
-//       return "http://192.168.0.100:80"; // Raspberry Pi @ Supremie
-        return "http://192.168.0.115:8000"; //Rei's MAC @ Office
+       return "http://192.168.0.100:80"; // Raspberry Pi @ Supremie
+//        return "http://192.168.0.115:8000"; //Rei's MAC @ Office
 //        return "http://192.168.1.106:8000"; //Rei's MAC @ Martabak Testing
+//        return "http://192.168.0.108:8000"; //Rei's MAC @ Ruko
     }
     /*
      * Fetch an instance of Picasso to load an image.
