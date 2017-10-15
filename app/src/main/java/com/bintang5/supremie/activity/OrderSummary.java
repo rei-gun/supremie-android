@@ -69,6 +69,7 @@ public class OrderSummary extends AppCompatActivity {
                     OrderSummaryItem pedas = new OrderSummaryItem("LEVEL PEDAS - LEVEL " + m.extraChili.toString(),
                             "", "RP " + String.valueOf(State.getInstance().getPedasPrice(m.extraChili)));
                     items.add(pedas);
+                    subTotal += State.getInstance().getPedasPrice(m.extraChili);
                     subTotal += m.quantityMie * m.price;
                 }
                 if (m.toppings.size() > 0) {
