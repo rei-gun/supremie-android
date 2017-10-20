@@ -67,7 +67,7 @@ public class OrderSummary extends AppCompatActivity {
                             m.flavour, "QTY - " + m.quantityMie.toString(),
                             "RP " + String.valueOf(m.price));
                     items.add(item);
-                    if (!State.getInstance().getBrand().equals("Roti")) {
+                    if (State.getInstance().getBrand() == null || !State.getInstance().getBrand().equals("Roti")) {
                         OrderSummaryItem pedas = new OrderSummaryItem("LEVEL PEDAS - LEVEL " + m.extraChili.toString(),
                                 "", "RP " + String.valueOf(State.getInstance().getPedasPrice(m.extraChili)));
                         items.add(pedas);

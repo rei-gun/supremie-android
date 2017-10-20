@@ -77,6 +77,7 @@ public class ChooseMieBrand extends SupremieActivity {
                 Intent intent;
                 //Roti Bakar chosen, skip ChooseFlavour
                 if (State.getInstance().getBrand().equals("Roti")) {
+//                    State.getInstance().setBrand("Roti");
                     State.getInstance().setMieStock(oneOfEachBrand.get(i));
                     State.getInstance().quantityMie = 1;
                     State.getInstance().setPedasLevel(0);

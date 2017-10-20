@@ -123,9 +123,10 @@ public class ChooseTopping extends SupremieActivity {
     }
 
     public void disableLanjut() {
-        Log.v("Halo", "HALO");
-        lanjut = (Button)findViewById(R.id.topping_lanjutkan);
-        lanjut.setOnClickListener(null);
-        lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));
+        if (!State.getInstance().getBrand().equals("Roti")) {
+            lanjut = (Button) findViewById(R.id.topping_lanjutkan);
+            lanjut.setOnClickListener(null);
+            lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));
+        }
     }
 }

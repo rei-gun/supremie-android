@@ -67,7 +67,7 @@ public class ChooseDrink extends SupremieActivity {
 
         //initialise the lanjutkan button
 //        Log.v("CUNT", State.getInstance().getBrand());//
-        if (State.getInstance().getBrand().equals("Roti")) {
+        if (State.getInstance().getBrand() == null || State.getInstance().getBrand().equals("Roti")) {
             enableLanjut();
         } else if (State.getInstance().getSubMieId() == null && (State.getInstance().getDrinks() == null || State.getInstance().getDrinks().size() == 0)) {
             disableLanjut();
