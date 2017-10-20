@@ -75,9 +75,16 @@ public class ChooseMieBrand extends SupremieActivity {
 
                 }
                 Intent intent;
-                if (!State.getInstance().getBrand().equals("Nasi")) {
+                //Roti Bakar chosen, skip ChooseFlavour
+                if (State.getInstance().getBrand().equals("Roti")) {
+                    State.getInstance().setMieStock(oneOfEachBrand.get(i));
+                    State.getInstance().quantityMie = 1;
+                    State.getInstance().setPedasLevel(0);
+                    intent = new Intent(ChooseMieBrand.this, ChooseTopping.class);
+                }
+                else if (!State.getInstance().getBrand().equals("Nasi")) {
                     intent = new Intent(ChooseMieBrand.this, ChooseMieFlavour.class);
-                    Log.v("TEST", "TEST");
+//                    Log.v("TEST", "TEST");
                 } else {
                     MieStock nasiStock = oneOfEachBrand.get(i);
                     State.getInstance().setChooseMieFragmentId(i, 1);

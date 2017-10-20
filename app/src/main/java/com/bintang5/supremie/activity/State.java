@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import model.Mie;
 import model.MieStock;
 import model.Order;
+import model.ToppingStock;
 import utils.responses.GETResponseStock;
 
 /**
@@ -22,7 +23,7 @@ public class State  {
     //id of the chosen flavour in chosen brand
     private Integer subMieId = null;
 
-    private Integer quantityMie = null;
+    public Integer quantityMie = null;
 
     //overall mie id
     private Integer mieId = null;
@@ -239,7 +240,7 @@ public class State  {
 
     public String addDot(String s) {
         Character first_char = s.charAt(0);
-        if (s.length() > 3 && !first_char.equals("R")) {
+        if (s.length() > 5 && !first_char.equals("R")) {
             return new StringBuffer(s).insert(s.length() - 3, ".").toString();
         } else {
             return s;
@@ -283,5 +284,9 @@ public class State  {
         } else {
             return masterOrder;
         }
+    }
+
+    public ArrayList<ToppingStock> getRotiToppings() {
+        return allStock.rotiToppingStocks;
     }
 }

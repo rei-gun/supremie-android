@@ -38,7 +38,13 @@ public class ChooseTopping extends SupremieActivity {
         GridView gridView = (GridView)findViewById(R.id.grid_mie_flavour);
         State state = State.getInstance();
 
-        ArrayList<ToppingStock> toppingStocks = state.getAllStock().getToppingStocks();
+        ArrayList<ToppingStock> toppingStocks;
+        if (!State.getInstance().getBrand().equals("Roti")) {
+            toppingStocks = state.getAllStock().getToppingStocks();
+        } else { //Roti Bakar chosen, get different toppings
+            toppingStocks = state.getRotiToppings();
+        }
+
         if (State.getInstance().getToppingQuantities() != null) {
             quantities = State.getInstance().getToppingQuantities();
         } else {
@@ -102,6 +108,9 @@ public class ChooseTopping extends SupremieActivity {
                     startActivity(i);
                 } else if (State.getInstance().getBrand().equals("Nasi")) {
                     Intent i = new Intent(ChooseTopping.this, ChoosePedasNasi.class);
+                    startActivity(i);
+                } else if(State.getInstance().getBrand().equals("Roti")) {
+                    Intent i = new Intent(ChooseTopping.this, ChooseDrink.class);
                     startActivity(i);
                 } else {
                     Intent i = new Intent(ChooseTopping.this, ChoosePedas.class);

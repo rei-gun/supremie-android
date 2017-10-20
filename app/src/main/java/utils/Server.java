@@ -79,6 +79,7 @@ public abstract class Server {
 //        return "http://192.168.0.115:8000"; //Rei's MAC @ Office
 //        return "http://192.168.1.106:8000"; //Rei's MAC @ Martabak Testing
 //        return "http://192.168.0.108:8000"; //Rei's MAC @ Ruko
+//        return "http://192.168.1.122:8000";
     }
     /*
      * Fetch an instance of Picasso to load an image.

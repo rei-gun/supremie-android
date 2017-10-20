@@ -66,9 +66,10 @@ public class ChooseDrink extends SupremieActivity {
         });
 
         //initialise the lanjutkan button
-//        Log.v("CUNT", State.getInstance().getDrinks().toString());//
-        if (State.getInstance().getSubMieId() == null && (State.getInstance().getDrinks() == null ||
-                                                        State.getInstance().getDrinks().size() == 0)) {
+//        Log.v("CUNT", State.getInstance().getBrand());//
+        if (State.getInstance().getBrand().equals("Roti")) {
+            enableLanjut();
+        } else if (State.getInstance().getSubMieId() == null && (State.getInstance().getDrinks() == null || State.getInstance().getDrinks().size() == 0)) {
             disableLanjut();
         } else {
             enableLanjut();
@@ -90,9 +91,11 @@ public class ChooseDrink extends SupremieActivity {
     }
 
     public void disableLanjut() {
-        lanjut = (Button)findViewById(R.id.topping_lanjutkan);
-        lanjut.setOnClickListener(null);
-        lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));
+        if (!State.getInstance().getBrand().equals("Roti")) {
+            lanjut = (Button) findViewById(R.id.topping_lanjutkan);
+            lanjut.setOnClickListener(null);
+            lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));
+        }
     }
 
 }

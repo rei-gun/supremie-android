@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bintang5.supremie.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import fragment.OrderSummaryGridAdapter;
@@ -64,13 +65,15 @@ public class OrderSummary extends AppCompatActivity {
                 if (!m.brand.equals("NO")) {
                     OrderSummaryItem item = new OrderSummaryItem(m.brand + " - " +
                             m.flavour, "QTY - " + m.quantityMie.toString(),
-                            "RP " + String.valueOf(m.quantityMie * m.price));
+                            "RP " + String.valueOf(m.price));
                     items.add(item);
-                    OrderSummaryItem pedas = new OrderSummaryItem("LEVEL PEDAS - LEVEL " + m.extraChili.toString(),
-                            "", "RP " + String.valueOf(State.getInstance().getPedasPrice(m.extraChili)));
-                    items.add(pedas);
+                    if (!State.getInstance().getBrand().equals("Roti")) {
+                        OrderSummaryItem pedas = new OrderSummaryItem("LEVEL PEDAS - LEVEL " + m.extraChili.toString(),
+                                "", "RP " + String.valueOf(State.getInstance().getPedasPrice(m.extraChili)));
+                        items.add(pedas);
+                    }
                     subTotal += State.getInstance().getPedasPrice(m.extraChili);
-                    subTotal += m.quantityMie * m.price;
+                    subTotal += m.price;
                 }
                 if (m.toppings.size() > 0) {
                     for (Topping topping: m.toppings) {
@@ -216,10 +219,22 @@ public class OrderSummary extends AppCompatActivity {
             ArrayList<Topping> ts = mie.toppings;
             int[] toppingQuantities = State.getInstance().getToppingQuantities();
             if (toppingQuantities != null) {
-                ArrayList<ToppingStock> toppings = State.getInstance().getAllStock().getToppingStocks();
+                ArrayList<ToppingStock> toppings;
+                if (State.getInstance().getBrand().equals("Roti")) {
+                    toppings = State.getInstance().getRotiToppings();
+                } else {
+                    toppings = State.getInstance().getAllStock().getToppingStocks();
+                }
                 for (int i = 0; i < toppingQuantities.length; i++) {
                     if (toppingQuantities[i] > 0) {
-                        ToppingStock toppingStock = toppings.get(i);
+                        //Roti chosen, offset non roti toppings
+                        ToppingStock toppingStock;
+//                        if (State.getInstance().getBrand().equals("Roti")) {
+//                            int offset = State.getInstance().getRotiToppings().size();
+//                            toppingStock = State.getInstance().getRotiToppings();
+//                        } else {
+                            toppingStock = toppings.get(i);
+//                        }
                         Topping topping = new Topping(toppingStock.id, toppingStock.name, toppingQuantities[i],
                                 null, toppingStock.price);
                         ts.add(topping);

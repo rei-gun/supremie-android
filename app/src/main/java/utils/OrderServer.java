@@ -83,11 +83,14 @@ public class OrderServer extends Server {
                                 clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + m.quantityMie + " " +
                                         m.brand + " " +
                                         m.flavour + "\nRp. " +
-                                        m.price * m.quantityMie);                               //print pedas level
-                                clPrintObject.setFreeText(clPrintObject.getFreeText() + "\nLevel Pedas: " + m.extraChili +
-                                        "\nRp. " + State.getInstance().getPedasPrice(m.extraChili));
-                                //print toppings
+                                        m.price);
+                                if (!m.brand.equals("Roti")) {
+                                    //print pedas level
+                                    clPrintObject.setFreeText(clPrintObject.getFreeText() + "\nLevel Pedas: " + m.extraChili +
+                                            "\nRp. " + State.getInstance().getPedasPrice(m.extraChili));
+                                }
                             }
+                            //print toppings
                             for (Topping t : m.toppings) {
                                 clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + t.quantity + " " + t.name + "\nRp. " +
                                         t.quantity * t.price);
