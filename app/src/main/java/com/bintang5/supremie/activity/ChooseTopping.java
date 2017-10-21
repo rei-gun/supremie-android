@@ -39,8 +39,9 @@ public class ChooseTopping extends SupremieActivity {
         State state = State.getInstance();
 
         ArrayList<ToppingStock> toppingStocks;
-        if (State.getInstance().getBrand().equals("Roti") ||
-                State.getInstance().getBrand().equals("Pisang")) {
+        if (State.getInstance().getBrand() != null &&
+                (State.getInstance().getBrand().equals("Roti") ||
+                State.getInstance().getBrand().equals("Pisang"))) {
             toppingStocks = state.getRotiToppings();
 
         } else { //normal toppings
@@ -126,8 +127,10 @@ public class ChooseTopping extends SupremieActivity {
     }
 
     public void disableLanjut() {
-        if (!State.getInstance().getBrand().equals("Roti") &&
-                !State.getInstance().getBrand().equals("Pisang")) {
+        if (State.getInstance().getBrand() != null &&
+                (!State.getInstance().getBrand().equals("Roti") &&
+                !State.getInstance().getBrand().equals("Pisang"))
+            ) {
             lanjut = (Button) findViewById(R.id.topping_lanjutkan);
             lanjut.setOnClickListener(null);
             lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));
