@@ -64,6 +64,7 @@ public class ChooseMieBrand extends SupremieActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //check clicked Brand is different to previous click
                 if (State.getInstance().getBrand() != oneOfEachBrand.get(i).brand ) {
+                    State.getInstance().toppingQuantities = null; //if you change brand, topping choices get cleared
                     gridAdapter.selectedBrand = oneOfEachBrand.get(i).brand;
                     State.getInstance().setBrand(oneOfEachBrand.get(i).brand);
                     //TODO: do this when fragment pauses instead
@@ -79,7 +80,6 @@ public class ChooseMieBrand extends SupremieActivity {
                 //Roti Bakar chosen, skip ChooseFlavour
                 if (State.getInstance().getBrand().equals("Roti") ||
                         State.getInstance().getBrand().equals("Pisang")) {
-//                    State.getInstance().setBrand("Roti");
                     State.getInstance().setMieStock(oneOfEachBrand.get(i));
                     State.getInstance().quantityMie = 1;
                     State.getInstance().setPedasLevel(0);
@@ -87,7 +87,6 @@ public class ChooseMieBrand extends SupremieActivity {
                 }
                 else if (!State.getInstance().getBrand().equals("Nasi")) {
                     intent = new Intent(ChooseMieBrand.this, ChooseMieFlavour.class);
-//                    Log.v("TEST", "TEST");
                 } else {
                     MieStock nasiStock = oneOfEachBrand.get(i);
                     State.getInstance().setChooseMieFragmentId(i, 1);

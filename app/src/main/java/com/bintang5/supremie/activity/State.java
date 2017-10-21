@@ -32,7 +32,7 @@ public class State  {
 
     private int[] drinkQuantities = null;
 
-    private int[] toppingQuantities = null;
+    public int[] toppingQuantities = null;
 
     private Integer pedasLevel = null;
 

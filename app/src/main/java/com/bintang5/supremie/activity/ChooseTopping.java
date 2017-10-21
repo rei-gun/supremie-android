@@ -48,6 +48,7 @@ public class ChooseTopping extends SupremieActivity {
             toppingStocks = state.getAllStock().getToppingStocks();
         }
 
+        //initialise toppings quantity array
         if (State.getInstance().getToppingQuantities() != null) {
             quantities = State.getInstance().getToppingQuantities();
         } else {
