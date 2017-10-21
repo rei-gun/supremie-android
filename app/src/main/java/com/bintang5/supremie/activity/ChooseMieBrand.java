@@ -34,7 +34,8 @@ public class ChooseMieBrand extends SupremieActivity {
         setContentView(R.layout.choose_brand);
         super.onCreate(savedInstanceState);
         TextView actionBarTitle = (TextView)findViewById(R.id.toolbar_title);
-        actionBarTitle.setText("PILIH MIE / NASI / ROTI");
+        actionBarTitle.setText("PILIH MIE / NASI / ROTI / PISANG");
+        actionBarTitle.setTextSize(43);
 
         final GridView gridView = (GridView)findViewById(R.id.grid_mie_brand);
         oneOfEachBrand = State.getInstance().getAllStock().getOneOfEachBrand();
@@ -76,7 +77,8 @@ public class ChooseMieBrand extends SupremieActivity {
                 }
                 Intent intent;
                 //Roti Bakar chosen, skip ChooseFlavour
-                if (State.getInstance().getBrand().equals("Roti")) {
+                if (State.getInstance().getBrand().equals("Roti") ||
+                        State.getInstance().getBrand().equals("Pisang")) {
 //                    State.getInstance().setBrand("Roti");
                     State.getInstance().setMieStock(oneOfEachBrand.get(i));
                     State.getInstance().quantityMie = 1;

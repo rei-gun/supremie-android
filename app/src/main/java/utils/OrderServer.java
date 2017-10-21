@@ -84,7 +84,7 @@ public class OrderServer extends Server {
                                         m.brand + " " +
                                         m.flavour + "\nRp. " +
                                         m.price);
-                                if (!m.brand.equals("Roti")) {
+                                if (!m.brand.equals("Roti") || !m.brand.equals("Pisang")) {
                                     //print pedas level
                                     clPrintObject.setFreeText(clPrintObject.getFreeText() + "\nLevel Pedas: " + m.extraChili +
                                             "\nRp. " + State.getInstance().getPedasPrice(m.extraChili));

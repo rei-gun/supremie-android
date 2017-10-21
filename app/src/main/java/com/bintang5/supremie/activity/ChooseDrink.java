@@ -66,9 +66,11 @@ public class ChooseDrink extends SupremieActivity {
         });
 
         //initialise the lanjutkan button
-//        Log.v("CUNT", State.getInstance().getBrand());//
-        if (State.getInstance().getBrand() == null || State.getInstance().getBrand().equals("Roti")) {
+        //User has chosen Roti/Pisang or Drinks only
+        if (State.getInstance().getBrand() == null || State.getInstance().getBrand().equals("Roti") ||
+                State.getInstance().getBrand().equals("Pisang")) {
             enableLanjut();
+        //User has chosen toppings only
         } else if (State.getInstance().getSubMieId() == null && (State.getInstance().getDrinks() == null || State.getInstance().getDrinks().size() == 0)) {
             disableLanjut();
         } else {
@@ -91,7 +93,8 @@ public class ChooseDrink extends SupremieActivity {
     }
 
     public void disableLanjut() {
-        if (!State.getInstance().getBrand().equals("Roti")) {
+        if (!State.getInstance().getBrand().equals("Roti") ||
+                !State.getInstance().getBrand().equals("Pisang")) {
             lanjut = (Button) findViewById(R.id.topping_lanjutkan);
             lanjut.setOnClickListener(null);
             lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));

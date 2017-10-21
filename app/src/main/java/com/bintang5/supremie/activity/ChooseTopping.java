@@ -39,10 +39,12 @@ public class ChooseTopping extends SupremieActivity {
         State state = State.getInstance();
 
         ArrayList<ToppingStock> toppingStocks;
-        if (!State.getInstance().getBrand().equals("Roti")) {
-            toppingStocks = state.getAllStock().getToppingStocks();
-        } else { //Roti Bakar chosen, get different toppings
+        if (State.getInstance().getBrand().equals("Roti") ||
+                State.getInstance().getBrand().equals("Pisang")) {
             toppingStocks = state.getRotiToppings();
+
+        } else { //normal toppings
+            toppingStocks = state.getAllStock().getToppingStocks();
         }
 
         if (State.getInstance().getToppingQuantities() != null) {
@@ -109,7 +111,8 @@ public class ChooseTopping extends SupremieActivity {
                 } else if (State.getInstance().getBrand().equals("Nasi")) {
                     Intent i = new Intent(ChooseTopping.this, ChoosePedasNasi.class);
                     startActivity(i);
-                } else if(State.getInstance().getBrand().equals("Roti")) {
+                } else if(State.getInstance().getBrand().equals("Roti") ||
+                        State.getInstance().getBrand().equals("Pisang")) {
                     Intent i = new Intent(ChooseTopping.this, ChooseDrink.class);
                     startActivity(i);
                 } else {
@@ -123,7 +126,8 @@ public class ChooseTopping extends SupremieActivity {
     }
 
     public void disableLanjut() {
-        if (!State.getInstance().getBrand().equals("Roti")) {
+        if (!State.getInstance().getBrand().equals("Roti") &&
+                !State.getInstance().getBrand().equals("Pisang")) {
             lanjut = (Button) findViewById(R.id.topping_lanjutkan);
             lanjut.setOnClickListener(null);
             lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));
