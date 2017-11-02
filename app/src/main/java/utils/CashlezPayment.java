@@ -3,10 +3,9 @@ package utils;
 //import com.cashlez.android.garuda.library.cashlezlib.ApplicationState;
 //import com.cashlez.android.garuda.library.cashlezlib.payment.BasePaymentPresenter;
 
-import android.app.Activity;
 import android.util.Log;
 
-import com.bintang5.supremie.activity.PaymentMethodActivity;
+import com.bintang5.supremie.activity.ChoosePaymentMethod;
 import com.bintang5.supremie.activity.State;
 import com.cashlez.android.sdk.CLPayment;
 import com.cashlez.android.sdk.checkcompanion.CLCompanionResponse;
@@ -27,6 +26,7 @@ import com.cashlez.android.sdk.sendreceipt.ICLSendReceiptService;
 import java.util.ArrayList;
 
 import model.Mie;
+import model.MieStock;
 import model.Order;
 
 /**
@@ -37,10 +37,10 @@ public class CashlezPayment implements ICLPaymentService,
         ICLPrintingService, ICLSendReceiptService, ICLHelpMessageService, ICLCheckCompanionService {
 
     private ICLPaymentHandler paymentHandler;
-    private PaymentMethodActivity callingActivity;
+    private ChoosePaymentMethod callingActivity;
     private CLPrinterHandler printerHandler;
 
-    public CashlezPayment(PaymentMethodActivity callingActivity) {
+    public CashlezPayment(ChoosePaymentMethod callingActivity) {
         this.callingActivity = callingActivity;
         initHandler();
     }
@@ -75,10 +75,11 @@ public class CashlezPayment implements ICLPaymentService,
         /*if (clPayment.getErrorCode().equals("008090")) {
             Log.v("Transaction cancelled", "oops");
 
-        } else*/ if (clPayment.getTransactionType() != null && clPayment.isSuccess()) {
+        */if (clPayment.getTransactionType() != null && clPayment.isSuccess()) {
             Log.v("Payment success: ", clPayment.toString());
-            Mie mie = new Mie(State.getInstance().getMieId(), State.getInstance().getQuantityMie(),
-                    1, State.getInstance().getAllStock().getMieStocks().get(State.getInstance().getMieId()).price,
+            MieStock mieStock = State.getInstance().getMieStock();
+            Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
+                    1, mieStock.price,
                     State.getInstance().getPedasLevel() , "", State.getInstance().getToppings());
             ArrayList mies = new ArrayList();
             mies.add(mie);
@@ -147,19 +148,7 @@ public class CashlezPayment implements ICLPaymentService,
     }
 
     void doConnectLocationProvider() {
-//        this.applicationState = applicationState;
         paymentHandler.doConnectLocationProvider();
-//        applicationState.getPrinterHandler().registerPrinterListener(this);
-//        applicationState.getPrinterHandler().doInitPrinterConnection();
-//        CLPrinterHandler printerHandler = new CLPrinterHandler(context);
-//        printerHandler.registerPrinterListener(new ICLPrintingService() {
-//            @Override
-//            public void onGetPrintingResponse(CLPrinterResponse clPrinterResponse) {
-//                Intent intent = new Intent(context, MainActivity.class);
-//                context.startActivity(intent);
-//            }
-//        });
-//        printerHandler.doInitPrinterConnection();
     }
 
     void doSendHelpMessage(String message) {

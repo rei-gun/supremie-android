@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/actionbar"/>
+
+        <GridView
+            android:id="@+id/grid_mie_brand"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="2"
+            android:verticalSpacing="15dp"
+            android:horizontalSpacing="15dp"
+            android:gravity="center"
+            android:stretchMode="columnWidth"
+            android:layout_marginBottom="100dp"
+            android:background="@color/lightGrey"
+            android:layout_weight="0"
+        />
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+            <Button
+                android:id="@+id/brand_lanjutkan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="40sp"
+                android:text="MAU MINUM AJA"
+                android:layout_weight="1"
+                android:layout_margin="2dp"
+                />
+            <Button
+                android:id="@+id/lanjut_to_topping"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="40sp"
+                android:text="MAU TOPPING AJA"
+                android:layout_weight="1"
+                android:layout_margin="2dp"/>
+        </LinearLayout>
+    </FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

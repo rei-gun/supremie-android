@@ -3,12 +3,16 @@ package com.bintang5.supremie.activity;
 
 import java.util.ArrayList;
 
+import model.Mie;
+import model.MieStock;
+import model.Order;
+import model.ToppingStock;
 import utils.responses.GETResponseStock;
 
 /**
  * Keeps key variables in memory.
  */
-public class State  {
+public class State {
 
     private static State instance;
 
@@ -17,16 +21,18 @@ public class State  {
     private String brand = null;
 
     //id of the chosen flavour in chosen brand
-    private Integer chooseMieFragmentId = null;
+    private Integer subMieId = null;
 
-    private Integer quantityMie = null;
+    public Integer quantityMie = null;
 
     //overall mie id
     private Integer mieId = null;
 
+    private MieStock mieStock = null;
+
     private int[] drinkQuantities = null;
 
-    private int[] toppingQuantities = null;
+    public int[] toppingQuantities = null;
 
     private Integer pedasLevel = null;
 
@@ -45,22 +51,30 @@ public class State  {
 
     private String[] pedasDescriptions;
 
-    private int prevTabId;
+    private String[] pedasNasiDescriptions;
+
+    private String taxChargeString = null;
+
+    private Order masterOrder = null;
+
+    public Order tempOrder = null;
 
     private State() {
-        pedasPrices = new int[4];
+        pedasPrices = new int[3];
         pedasPrices[0] = 0;
         pedasPrices[1] = 1000;
         pedasPrices[2] = 2000;
-        pedasPrices[3] = 3000;
         toppings = new ArrayList();
-//        mies = new ArrayList();
         drinks = new ArrayList();
-        pedasDescriptions = new String[4];
-        pedasDescriptions[0] = "RP 0\nLEVEL 0 (TANPA BUBUK CABAI DI DALAM PACKAGING)";
-        pedasDescriptions[1] = "RP 0\nLEVEL 1 (HANYA BUBUK CABAI DI DALAM PACKAGING)";
-        pedasDescriptions[2] = "RP 1.000\nLEVEL 2 (BUBUK CABAI DI DALAM PACKAGING + 5 CABAI RAWIT";
-        pedasDescriptions[3] = "RP 2.000\nLEVEL 3 (BUBUK CABAI DI DALAM PACKAGAING + 20 CABAI RAWIT";
+        pedasDescriptions = new String[3];
+        pedasDescriptions[0] = "RP 0\nLEVEL 0 (HANYA BUBUK CABAI DI DALAM PACKAGING)";
+        pedasDescriptions[1] = "RP 1.000\nLEVEL 1 (BUBUK CABAI DI DALAM PACKAGING + 5 CABAI RAWIT";
+        pedasDescriptions[2] = "RP 2.000\nLEVEL 2 (BUBUK CABAI DI DALAM PACKAGAING + 20 CABAI RAWIT";
+        pedasNasiDescriptions = new String[3];
+        pedasNasiDescriptions[0] = "Rp 0\nLEVEL 0 (TANPA CABAI)";
+        pedasNasiDescriptions[1] = "RP 1.000\nLEVEL 1 (5 CABAI RAWIT)";
+        pedasNasiDescriptions[2] = "RP 2.000\nLEVEL 2 (20 CABAI RAWIT)";
+        masterOrder = new Order();
     }
 
     public static State getInstance() {
@@ -72,16 +86,45 @@ public class State  {
 
     public void clear() {
         brand = null;
-        chooseMieFragmentId = null;
+        subMieId = null;
         quantityMie = null;
         mieId = null;
         drinkQuantities = null;
         toppingQuantities = null;
         pedasLevel = null;
-        toppings = null;
-        drinks = null;
+        toppings = new ArrayList();
+        drinks = new ArrayList();
         allStock = null;
         grandTotal = null;
+        mieStock = null;
+        masterOrder = null;
+        tempOrder = null;
+    }
+
+    public void clearChoices() {
+        brand = null;
+        subMieId = null;
+        quantityMie = null;
+        mieId = null;
+        drinkQuantities = null;
+        toppingQuantities = null;
+        pedasLevel = null;
+        grandTotal = null;
+        mieStock = null;
+        masterOrder = null;
+        tempOrder = null;
+    }
+
+    public void clearNewMie() {
+        brand = null;
+        subMieId = null;
+        quantityMie = null;
+        mieId = null;
+        pedasLevel = null;
+        toppings = null;
+        grandTotal = null;
+        mieStock = null;
+        toppingQuantities = null;
     }
 
     public void setBrand(String brand) {
@@ -92,8 +135,8 @@ public class State  {
         return brand;
     }
 
-    public void setChooseMieFragmentId(Integer chooseMieFragmentId, Integer quantityMie) {
-        this.chooseMieFragmentId = chooseMieFragmentId;
+    public void setChooseMieFragmentId(Integer subMieId, Integer quantityMie) {
+        this.subMieId = subMieId;
         this.quantityMie = quantityMie;
     }
 
@@ -101,8 +144,8 @@ public class State  {
         this.mieId = mieId;
     }
 
-    public Integer getChooseMieFragmentId() {
-        return chooseMieFragmentId;
+    public Integer getSubMieId() {
+        return subMieId;
     }
 
     public Integer getMieId() {
@@ -161,27 +204,9 @@ public class State  {
         return grandTotal;
     }
 
-    public Boolean isOrderDataSetup() {
-        if (drinks == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public void deleteOrderData() {
-//        mies = null;
-        drinks = null;
-        toppings = null;
-    }
-
     public ArrayList getToppings() {
         return toppings;
     }
-
-//    public ArrayList getMies() {
-//        return mies;
-//    }
 
     public ArrayList getDrinks() {
         return drinks;
@@ -190,10 +215,6 @@ public class State  {
     public void setToppings(ArrayList toppings) {
         this.toppings = toppings;
     }
-
-//    public void setMies(ArrayList mies) {
-//        this.mies = mies;
-//    }
 
     public void setDrinks(ArrayList drinks) {
         this.drinks = drinks;
@@ -212,14 +233,48 @@ public class State  {
     }
 
     public String addDot(String s) {
-        return new StringBuffer(s).insert(s.length() - 3, ".").toString();
+        Character first_char = s.charAt(0);
+        if (s.length() > 5 && !first_char.equals("R")) {
+            return new StringBuffer(s).insert(s.length() - 3, ".").toString();
+        } else {
+            return s;
+        }
     }
 
-    public void setPrevTabId(int i) {
-        prevTabId = i;
+    public void setMieStock(MieStock ms) {
+        this.mieStock = ms;
     }
 
-    public int getPrevTabId() {
-        return prevTabId;
+    public MieStock getMieStock() {
+        return mieStock;
+    }
+
+    public String getTaxServiceString() {
+        return taxChargeString;
+    }
+
+    public void setTaxServiceString(String taxChargeString) {
+        this.taxChargeString = taxChargeString;
+    }
+
+    public String[] getNasiPedasDescriptions() {
+        return pedasNasiDescriptions;
+    }
+
+    public void setMasterOrder(Order masterOrder) {
+        this.masterOrder = masterOrder;
+    }
+
+    public Order getMasterOrder() {
+        if (masterOrder == null) {
+            masterOrder = new Order();
+            return masterOrder;
+        } else {
+            return masterOrder;
+        }
+    }
+
+    public ArrayList<ToppingStock> getRotiToppings() {
+        return allStock.rotiToppingStocks;
     }
 }

@@ -4,21 +4,26 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".activity.SupremieApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
         <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/app_name">
+            android:name=".activity.ChooseDiningMethod">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.PaymentMethodActivity" />
+        <activity android:name=".activity.ChoosePaymentMethod" />
+        <activity android:name=".activity.ChooseMieBrand" />
+        <activity android:name=".activity.ChooseMieFlavour" />
+        <activity android:name=".activity.ChooseDrink" />
+        <activity android:name=".activity.ChoosePedas" />
+        <activity android:name=".activity.ChooseTopping" />
+        <activity android:name=".activity.OrderSummary" />
+        <activity android:name=".activity.ChoosePedasNasi" />
     </application>
 
 </manifest>

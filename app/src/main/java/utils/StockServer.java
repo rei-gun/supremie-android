@@ -1,8 +1,12 @@
 package utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.SystemClock;
+import android.util.Log;
+import android.widget.Toast;
 
-import com.bintang5.supremie.activity.MainActivity;
+import com.bintang5.supremie.activity.ChooseDiningMethod;
 import com.bintang5.supremie.activity.State;
 
 import retrofit2.Call;
@@ -50,23 +54,28 @@ public class StockServer extends Server {
      * Create a new permintaan.
      *
      * @return The permintaan model that was added.
+     * @param callingActivity
      */
-    public void getStock(final MainActivity callingActivity) {
+    public void getStock(final ChooseDiningMethod callingActivity) {
 
-        if (callingActivity instanceof MainActivity) {
-            service.getStock().enqueue(new Callback<GETResponseStock>() {
-                @Override
-                public void onResponse(Call<GETResponseStock> call, Response<GETResponseStock> response) {
-                    State.getInstance().setAllStock(response.body());
-                    callingActivity.enableUserInput();
-                }
-
-                @Override
-                public void onFailure(Call<GETResponseStock> call, Throwable t) {
-
-                }
-            });
-        }
+        service.getStock().enqueue(new Callback<GETResponseStock>() {
+            @Override
+            public void onResponse(Call<GETResponseStock> call, Response<GETResponseStock> response) {
+                State.getInstance().setAllStock(response.body());
+                callingActivity.enableUserInput();
+                Toast.makeText(
+                        callingActivity.getApplicationContext(),
+                        "Berhubung dengan server sukses!",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+            @Override
+            public void onFailure(Call<GETResponseStock> call, Throwable t) {
+                Log.v("BART", t.toString());
+                Intent i = callingActivity.getIntent();
+                callingActivity.finish();
+                callingActivity.startActivity(i);
+            }
+        });
     }
-
 }

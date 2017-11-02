@@ -28,36 +28,36 @@ public class POSTOrderJSONify implements JsonSerializer<Order> {
         orderObject.addProperty("total_price", src.totalPrice);
         orderObject.addProperty("payment_method", src.paymentMethod);
         orderObject.addProperty("dining_method", src.diningMethod);
-
+        Log.v("BIGDOCK", (String.valueOf(src.mies.size())));
         JsonArray mieArray = new JsonArray();
-        for (Mie m : src.mies) {
-            Log.v("BIGDICK2", m.toString());
-            JsonObject jsonMie = new JsonObject();
-            jsonMie.addProperty("id", m.id);
-            jsonMie.addProperty("quantity_mie", m.quantityMie);
-            jsonMie.addProperty("quantity_whole", m.quantityWhole);
-            jsonMie.addProperty("price", m.price);
-            jsonMie.addProperty("extra_chili", m.extraChili);
-            jsonMie.addProperty("note", m.note);
-            JsonArray toppingArray = new JsonArray();
-            if (m.toppings != null) {
-                for (Topping t : m.toppings) {
-                    Log.v("BIGDICK3", m.toString());
-                    JsonObject jsonTopping = new JsonObject();
-                    jsonTopping.addProperty("id", t.id);
-                    jsonTopping.addProperty("quantity", t.quantity);
-                    jsonTopping.addProperty("price", t.price);
-                    if (t.type != null) {
-                        jsonTopping.addProperty("type", t.type);
+        if (src.mies.size() != 0) {
+            for (Mie m : src.mies) {
+                JsonObject jsonMie = new JsonObject();
+                jsonMie.addProperty("id", m.id);
+                jsonMie.addProperty("quantity_mie", m.quantityMie);
+                jsonMie.addProperty("quantity_whole", m.quantityWhole);
+                jsonMie.addProperty("price", m.price);
+                jsonMie.addProperty("extra_chili", m.extraChili);
+                jsonMie.addProperty("note", m.note);
+                JsonArray toppingArray = new JsonArray();
+                if (m.toppings != null) {
+                    for (Topping t : m.toppings) {
+                        JsonObject jsonTopping = new JsonObject();
+                        jsonTopping.addProperty("id", t.id);
+                        jsonTopping.addProperty("quantity", t.quantity);
+                        jsonTopping.addProperty("price", t.price);
+                        if (t.type != null) {
+                            jsonTopping.addProperty("type", t.type);
+                        }
+                        toppingArray.add(jsonTopping);
                     }
-                    toppingArray.add(jsonTopping);
                 }
+                jsonMie.add("toppings", toppingArray);
+                mieArray.add(jsonMie);
             }
-            jsonMie.add("toppings", toppingArray);
-            mieArray.add(jsonMie);
         }
         orderObject.add("mies", mieArray);
-        Log.v("BIGDICK", mieArray.toString());
+//        Log.v("BIGDICK", mieArray.toString());
 
         JsonArray drinkArray = new JsonArray();
         if (src.drinks != null) {

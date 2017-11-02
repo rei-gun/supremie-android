@@ -26,7 +26,7 @@
     <color name="pureWhite">#ffffff</color>
 
     <color name="colorChatInputBackground">#FFFFFF</color>
-    <color name="colorChatSelected">#606060</color>
+    <color name="darkerGrey">#606060</color>
 
     <color name="permintaanRed">#ff0000</color>
     <color name="permintaanGreen">#00ff00</color>

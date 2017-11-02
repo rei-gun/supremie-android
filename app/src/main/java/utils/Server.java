@@ -42,11 +42,10 @@ public abstract class Server {
     protected Server(Context c) {
         if (client == null) {
             client = new OkHttpClient.Builder()
-//                    .addInterceptor(new AuthorizationInterceptor(c))
                     .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                    .connectTimeout(1000, TimeUnit.SECONDS)
-                    .readTimeout(1000, TimeUnit.SECONDS)
-                    .writeTimeout(1000, TimeUnit.SECONDS)
+                    .connectTimeout(10000, TimeUnit.MILLISECONDS)
+                    .readTimeout(10000, TimeUnit.MILLISECONDS)
+                    .writeTimeout(10000, TimeUnit.MILLISECONDS)
                     .build();
         }
         if (retrofit == null) {
@@ -75,21 +74,10 @@ public abstract class Server {
      * @return The server's base URL.
      */
     public static String getBaseUrl() {
-        return "http://139.59.96.68:8000"; // DigitalOcean server
 //       return "http://192.168.0.100:80"; // Raspberry Pi @ Supremie
+//        return "http://192.168.0.115:8000"; //Rei's MAC @ Office
+        return "http://192.168.1.100:8000"; //Rei's MAC @ Martabak Testing
+//        return "http://192.168.0.108:8000"; //Rei's MAC @ Ruko
+//        return "http://192.168.1.122:8000";
     }
-
-    /*
-     * Fetch an instance of Picasso to load an image.
-     * @param c The context.
-     * @return The Picasso instance.
-     *
-    public static Picasso picasso(Context c) {
-        Picasso p = new Picasso.Builder(c)
-                .downloader(new OkHttp3Downloader(client))
-                .build();
-        p.setLoggingEnabled(true);
-        return p;
-    }
-*/
 }

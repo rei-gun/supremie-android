@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="550dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/supremie_logo"/>
+
+    <TextView
+        android:id="@+id/logo_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INSTANT NOODLE HOUSE"
+        android:textSize="35dp"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        />
+
+    <ImageButton
+        android:id="@+id/button_dine_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/logo_caption"
+        android:src="@drawable/makan_sini_selector"
+        android:layout_marginTop="100dp"/>
+
+    <TextView
+        android:id="@+id/atau"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="ATAU"
+        android:textSize="20dp"
+        android:layout_below="@+id/button_dine_in"
+        android:layout_margin="10dp"/>
+
+    <ImageButton
+        android:id="@+id/button_takeaway"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/atau"
+        android:src="@drawable/bungkus_button_selector"/>
+
+    <Button
+        android:id="@+id/button_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_takeaway"
+        android:text="HAPUS SEMUA PILIHAN"
+        android:textSize="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
+
+</RelativeLayout>

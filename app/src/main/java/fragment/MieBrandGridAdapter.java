@@ -1,12 +1,14 @@
 package fragment;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -28,7 +30,7 @@ public class MieBrandGridAdapter extends BaseAdapter {
     private Context context;
     public ArrayList<MieStock> items;
     LayoutInflater inflater;
-    String selectedBrand;
+    public String selectedBrand;
 
     public MieBrandGridAdapter(Context context, ArrayList<MieStock> items, String selectedBrand) {
         this.context = context;
@@ -47,7 +49,12 @@ public class MieBrandGridAdapter extends BaseAdapter {
         //set image
         String uri = "@drawable/"+getItem(i).brand.replace(" ", "").toLowerCase();
         int imgResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-        Drawable res = context.getDrawable(imgResource);
+        Drawable res;
+        try {
+            res = context.getDrawable(imgResource);
+        } catch (Resources.NotFoundException e) {
+            res = context.getDrawable(R.drawable.supremie_logo);
+        }
         ImageView imgView = (ImageView)view.findViewById(R.id.mie_brand_img);
         imgView.setImageDrawable(res);
 

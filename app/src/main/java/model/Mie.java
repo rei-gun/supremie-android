@@ -12,6 +12,10 @@ public class Mie {
 
     public Integer id;
 
+    public String brand;
+
+    public String flavour;
+
     @SerializedName("quantity_mie")public Integer quantityMie;
 
     @SerializedName("quantity_whole")public Integer quantityWhole;
@@ -24,9 +28,11 @@ public class Mie {
 
     public ArrayList<Topping> toppings;
 
-    public Mie(Integer id, Integer quantityMie, Integer quantityWhole, Integer price,
+    public Mie(Integer id, String brand, String flavour, Integer quantityMie, Integer quantityWhole, Integer price,
                Integer extraChili, String note, ArrayList<Topping> toppings) {
         this.id = id;
+        this.brand = brand;
+        this.flavour = flavour;
         this.quantityMie = quantityMie;
         this.quantityWhole = quantityWhole;
         this.price = price;

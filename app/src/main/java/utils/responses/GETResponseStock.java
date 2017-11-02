@@ -1,5 +1,7 @@
 package utils.responses;
 
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -21,12 +23,26 @@ public class GETResponseStock {
     @Expose
     private ArrayList<ToppingStock> toppingStocks;
 
+    public ArrayList<ToppingStock> rotiToppingStocks;
+
     public GETResponseStock(ArrayList<MieStock> mieStocks,
                             ArrayList<ToppingStock> toppingStocks,
                             ArrayList<DrinkStock> drinkStocks) {
         this.mieStocks = mieStocks;
         this.drinkStocks = drinkStocks;
         this.toppingStocks = toppingStocks;
+        this.rotiToppingStocks = new ArrayList<>();
+        ArrayList<ToppingStock> newToppingStocks = new ArrayList<>();
+        for (int i=0; i<toppingStocks.size(); i++) {
+            //if there's prefix "roti" in name
+            if (toppingStocks.get(i).name.split("_")[0].equals("roti")) {
+                toppingStocks.get(i).name = toppingStocks.get(i).name.split("_")[1];
+                rotiToppingStocks.add(toppingStocks.get(i));
+            } else {
+                newToppingStocks.add(toppingStocks.get(i));
+            }
+        }
+        this.toppingStocks = newToppingStocks;
     }
 
     public ArrayList<MieStock> getMieStocks() {
