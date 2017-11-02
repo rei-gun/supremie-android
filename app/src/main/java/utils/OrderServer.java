@@ -76,64 +76,117 @@ public class OrderServer extends Server {
                 //TODO print the id to Cashlez's printer here
                 if (r != null) {
                     ArrayList<CLPrintObject> freeText = new ArrayList<>();
-                    CLPrintObject date = new CLPrintObject();
+                    CLPrintObject clPrintObject = new CLPrintObject();
                     String currentTimeString = new SimpleDateFormat("dd/MM/yyy").format(new Date());
-                    date.setFreeText(currentTimeString+"\n\n");
-                    date.setFormat(CLPrintEnum.TITLE);
-                    date.setAlign(CLPrintAlignEnum.LEFT);
-                    freeText.add(date);
+                    clPrintObject.setFreeText(currentTimeString+"\n\n");
+                    clPrintObject.setFormat(CLPrintEnum.NORMAL);
+                    clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
+                    freeText.add(clPrintObject);
 
-                    CLPrintObject logo = new CLPrintObject();
+                    clPrintObject = new CLPrintObject();
                     Bitmap logoIcon = BitmapFactory.decodeResource(c.getResources(), c.getResources().getIdentifier("supremie_logo","drawable",c.getPackageName()));
-                    logo.setBitmap(logoIcon);
-                    logo.setFormat(CLPrintEnum.SMALL_LOGO);
-                    logo.setAlign(CLPrintAlignEnum.CENTER);
-                    freeText.add(logo);
-//                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"Nomor Anda: " + r.getId()+"\n");
-//                    clPrintObject.setFormat(CLPrintEnum.TITLE);
-//                    clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
-//                    if (order.mies.size() > 0) {// && !order.mies.get(0).brand.equals("NO")) {
-//                        for (Mie m : order.mies) {
-//                            if (!m.brand.equals("NO")) {
-//                                clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + m.quantityMie + " " +
-//                                        m.brand + " " +
-//                                        m.flavour + "\nRp. " +
-//                                        m.price);
-//                                if (!m.brand.equals("Roti") || !m.brand.equals("Pisang")) {
-//                                    //print pedas level
-//                                    clPrintObject.setFreeText(clPrintObject.getFreeText() + "\nLevel Pedas: " + m.extraChili +
-//                                            "\nRp. " + State.getInstance().getPedasPrice(m.extraChili));
-//                                }
-//                            }
-//                            //print toppings
-//                            for (Topping t : m.toppings) {
-//                                clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + t.quantity + " " + t.name + "\nRp. " +
-//                                        t.quantity * t.price);
-//                            }
-//                        }
-//                    } else if (order.mies.size() == 0) { //drinks only
-//                        //do nothing
+                    clPrintObject.setBitmap(logoIcon);
+                    clPrintObject.setFormat(CLPrintEnum.SMALL_LOGO);
+                    clPrintObject.setAlign(CLPrintAlignEnum.CENTER);
+                    freeText.add(clPrintObject);
+
+                    clPrintObject = new CLPrintObject();
+                    clPrintObject.setFreeText("Nomor Anda: " + r.getId());
+                    clPrintObject.setFormat(CLPrintEnum.TITLE);
+                    clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
+                    freeText.add(clPrintObject);
+                    if (order.mies.size() > 0) {// && !order.mies.get(0).brand.equals("NO")) {
+                        for (Mie m : order.mies) {
+                            if (!m.brand.equals("NO")) {
+                                clPrintObject = new CLPrintObject();
+                                clPrintObject.setFormat(CLPrintEnum.NORMAL);
+                                clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
+                                clPrintObject.setFreeText(m.quantityMie + " " +
+                                        m.brand + " " +m.flavour);
+                                freeText.add(clPrintObject);
+                                clPrintObject = new CLPrintObject();
+                                clPrintObject.setFormat(CLPrintEnum.NORMAL);
+                                clPrintObject.setAlign(CLPrintAlignEnum.RIGHT);
+                                clPrintObject.setFreeText("Rp. "+m.price);
+                                freeText.add(clPrintObject);
+                                if (!m.brand.equals("Roti") || !m.brand.equals("Pisang")) {
+                                    //print pedas level if not Roti or Pisang
+                                    clPrintObject = new CLPrintObject();
+                                    clPrintObject.setFormat(CLPrintEnum.NORMAL);
+                                    clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
+                                    clPrintObject.setFreeText("Level Pedas: " + m.extraChili);
+                                    freeText.add(clPrintObject);
+                                    clPrintObject = new CLPrintObject();
+                                    clPrintObject.setFormat(CLPrintEnum.NORMAL);
+                                    clPrintObject.setAlign(CLPrintAlignEnum.RIGHT);
+                                    clPrintObject.setFreeText("Rp. " + State.getInstance().getPedasPrice(m.extraChili));
+                                    freeText.add(clPrintObject);
+                                }
+                            }
+                            //print toppings
+                            for (Topping t : m.toppings) {
+                                clPrintObject = new CLPrintObject();
+                                clPrintObject.setFormat(CLPrintEnum.NORMAL);
+                                clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
+                                clPrintObject.setFreeText(t.quantity + " " + t.name);
+                                freeText.add(clPrintObject);
+                                clPrintObject = new CLPrintObject();
+                                clPrintObject.setFormat(CLPrintEnum.NORMAL);
+                                clPrintObject.setAlign(CLPrintAlignEnum.RIGHT);
+                                clPrintObject.setFreeText("Rp. "+t.quantity * t.price);
+                                freeText.add(clPrintObject);
+                            }
+                        }
+                    } else if (order.mies.size() == 0) { //drinks only
+                        //do nothing
 //                    } else {
+//                        //toppings only with no other dishes
 //                        Mie m = order.mies.get(0);
 //                        for (Topping t : m.toppings) {
 //                            clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + t.quantity + " " + t.name + "\nRp. " +
 //                                    t.quantity * t.price);
 //                        }
-//                    }
-//                    //add new line inbetween toppings and drinks
-//                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n");
-//                    if (order.drinks != null) {
-//                        for (Drink d : order.drinks) {
-//                            clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + d.quantity + " " + d.brand + "\nRp. " +
-//                                    d.quantity * d.price);
-//                        }
-//                    }
-//                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n\nTax&Service:\n"+State.getInstance().getTaxServiceString());
-//                    String totalPrice = State.getInstance().addDot(order.totalPrice.toString());
-//                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n\nJumlah: \n\nRp. "+totalPrice);
-//                    freeText.add(clPrintObject);
+                    }
+                    //add new line inbetween toppings and drinks
+                    clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n");
+                    if (order.drinks != null) {
+                        for (Drink d : order.drinks) {
+                            clPrintObject = new CLPrintObject();
+                            clPrintObject.setFormat(CLPrintEnum.NORMAL);
+                            clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
+                            clPrintObject.setFreeText(d.quantity + " " + d.brand);
+                            freeText.add(clPrintObject);
+                            clPrintObject = new CLPrintObject();
+                            clPrintObject.setFormat(CLPrintEnum.NORMAL);
+                            clPrintObject.setAlign(CLPrintAlignEnum.RIGHT);
+                            clPrintObject.setFreeText("Rp. "+d.quantity * d.price);
+                            freeText.add(clPrintObject);
+                        }
+                    }
+
+                    clPrintObject = new CLPrintObject();
+                    clPrintObject.setFormat(CLPrintEnum.BOLD);
+                    clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
+                    clPrintObject.setFreeText("\n\nTax & Service:");
+                    freeText.add(clPrintObject);
+                    clPrintObject = new CLPrintObject();
+                    clPrintObject.setFormat(CLPrintEnum.NORMAL);
+                    clPrintObject.setAlign(CLPrintAlignEnum.RIGHT);
+                    clPrintObject.setFreeText("Rp. "+State.getInstance().getTaxServiceString());
+                    freeText.add(clPrintObject);
+                    clPrintObject = new CLPrintObject();
+                    clPrintObject.setFormat(CLPrintEnum.BOLD);
+                    clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
+                    String totalPrice = State.getInstance().addDot(order.totalPrice.toString());
+                    clPrintObject.setFreeText("\nJumlah:\n");
+                    freeText.add(clPrintObject);
+                    clPrintObject = new CLPrintObject();
+                    clPrintObject.setFormat(CLPrintEnum.TITLE);
+                    clPrintObject.setAlign(CLPrintAlignEnum.CENTER);
+                    clPrintObject.setFreeText("Rp. "+totalPrice);
+                    freeText.add(clPrintObject);
                     cashlezPayment.doPrintFreeText(freeText);
-//                    cashlezPayment.unregisterReceiver();
+                    cashlezPayment.unregisterReceiver();
                     //TODO: Place the below inside a callback from the printer when it finishes.
 //                    c.getResources().getString(R.str)
 //                    State.getInstance().clear();

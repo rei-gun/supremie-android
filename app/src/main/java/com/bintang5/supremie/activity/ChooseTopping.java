@@ -76,8 +76,13 @@ public class ChooseTopping extends SupremieActivity {
                 toppingGridAdapter.notifyDataSetChanged();
             }
         });
-        if (State.getInstance().getBrand() == null && (State.getInstance().getToppings() == null ||
-                                                    State.getInstance().getToppings().size() == 0)) {
+//        if (State.getInstance().getBrand() == null && (State.getInstance().getToppings() == null ||
+//                                                    State.getInstance().getToppings().size() == 0)) {
+//            disableLanjut();
+//        } else {
+//            enableLanjut();
+//        }
+        if (State.getInstance().getBrand() == null) {
             disableLanjut();
         } else {
             enableLanjut();
@@ -128,13 +133,13 @@ public class ChooseTopping extends SupremieActivity {
     }
 
     public void disableLanjut() {
-        if (State.getInstance().getBrand() != null &&
-                (!State.getInstance().getBrand().equals("Roti") &&
-                !State.getInstance().getBrand().equals("Pisang"))
-            ) {
+//        if (State.getInstance().getBrand() != null &&
+//                (!State.getInstance().getBrand().equals("Roti") &&
+//                !State.getInstance().getBrand().equals("Pisang"))
+//            ) {
             lanjut = (Button) findViewById(R.id.topping_lanjutkan);
             lanjut.setOnClickListener(null);
             lanjut.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGrey));
-        }
+//        }
     }
 }
