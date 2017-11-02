@@ -3,8 +3,12 @@ package utils;
 //import com.cashlez.android.garuda.library.cashlezlib.ApplicationState;
 //import com.cashlez.android.garuda.library.cashlezlib.payment.BasePaymentPresenter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
+import com.bintang5.supremie.activity.BasePaymentActivity;
+import com.bintang5.supremie.activity.ChooseDiningMethod;
 import com.bintang5.supremie.activity.ChoosePaymentMethod;
 import com.bintang5.supremie.activity.State;
 import com.cashlez.android.sdk.CLPayment;
@@ -37,19 +41,19 @@ public class CashlezPayment implements ICLPaymentService,
         ICLPrintingService, ICLSendReceiptService, ICLHelpMessageService, ICLCheckCompanionService {
 
     private ICLPaymentHandler paymentHandler;
-    private ChoosePaymentMethod callingActivity;
+    private BasePaymentActivity callingActivity;
     private CLPrinterHandler printerHandler;
 
-    public CashlezPayment(ChoosePaymentMethod callingActivity) {
+    public CashlezPayment(BasePaymentActivity callingActivity) {
         this.callingActivity = callingActivity;
         initHandler();
     }
 
     public void initHandler() {
-        //TODO: bingung disini
         paymentHandler = new CLPaymentHandler(callingActivity.getBaseContext(), callingActivity.getIntent().getExtras(), this);
         initPrinter();
-        callingActivity.enableUserInput();
+        //TODO: mau taruh enableUserInput di tempat lain saat printer terhubung
+//        callingActivity.enableUserInput();
     }
 
     private void initPrinter() {
@@ -106,17 +110,21 @@ public class CashlezPayment implements ICLPaymentService,
 
     @Override
     public void onGetReaderCompanion(CLPaymentResponse clPayment) {
-//        if (isViewAttached() && clPayment != null) {
-//            getView().onHideLoading();
-//            getView().onReaderStatus(clPayment.isSuccess());
-//        }
-
+        if (clPayment.isSuccess()) {
+            callingActivity.enableUserInput();
+        }
         Log.v("Payment response", clPayment.isSuccess() + "");
     }
 
     @Override
     public void onGetPrintingResponse(CLPrinterResponse printerResponse) {
-
+        if (printerResponse.getMessage().equals(
+                callingActivity.getResources().getString(com.cashlez.android.sdk.R.string.printing_finished))) {
+            State.getInstance().clear();
+            Intent intent = new Intent(callingActivity, ChooseDiningMethod.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            callingActivity.startActivity(intent);
+        }
     }
 
     @Override

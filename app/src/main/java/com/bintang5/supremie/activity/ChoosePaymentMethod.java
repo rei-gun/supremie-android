@@ -25,10 +25,9 @@ import utils.OrderServer;
  * Created by rei on 2/09/17.
  */
 
-public class ChoosePaymentMethod extends AppCompatActivity {
+public class ChoosePaymentMethod extends BasePaymentActivity {
 
-    protected BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    private CashlezPayment cashlezPayment;
+
 
     @Override
     protected void onStart() {
@@ -42,11 +41,7 @@ public class ChoosePaymentMethod extends AppCompatActivity {
         setContentView(R.layout.choose_payment_method);
 
         disableUserInput();
-        if (!bluetoothAdapter.isEnabled()) {
-            //TODO: bluetooth not enabled
-        } else {
-            cashlezPayment = new CashlezPayment(this);
-        }
+
 
         Button cashButton = (Button)findViewById(R.id.button_cash);
         cashButton.setOnClickListener(new View.OnClickListener() {
@@ -151,29 +146,15 @@ public class ChoosePaymentMethod extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        cashlezPayment.unregisterReceiver();
         cashlezPayment.stopLocationServices();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        cashlezPayment.registerReceiver();
         cashlezPayment.doStartPayment();
     }
 
-    /**
-     * Disables the entire screen from user input
-     */
-    public void disableUserInput() {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-    }
 
-    /**
-     * Enables the entire screen for user input
-     */
-    public void enableUserInput() {
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-    }
 
 }

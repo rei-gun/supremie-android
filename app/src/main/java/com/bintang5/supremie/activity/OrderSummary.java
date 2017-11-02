@@ -28,7 +28,7 @@ import model.ToppingStock;
  * Created by rei on 2/09/17.
  */
 
-public class OrderSummary extends AppCompatActivity {
+public class OrderSummary extends BasePaymentActivity {
 
     ArrayList<OrderSummaryItem> items;
     OrderSummaryGridAdapter gridAdapter;
@@ -229,5 +229,16 @@ public class OrderSummary extends AppCompatActivity {
             }
         }
         return ts;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cashlezPayment.doStartPayment();
     }
 }
