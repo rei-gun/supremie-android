@@ -139,13 +139,6 @@ public class OrderServer extends Server {
                         }
                     } else if (order.mies.size() == 0) { //drinks only
                         //do nothing
-//                    } else {
-//                        //toppings only with no other dishes
-//                        Mie m = order.mies.get(0);
-//                        for (Topping t : m.toppings) {
-//                            clPrintObject.setFreeText(clPrintObject.getFreeText() + "\n" + t.quantity + " " + t.name + "\nRp. " +
-//                                    t.quantity * t.price);
-//                        }
                     }
                     //add new line inbetween toppings and drinks
                     clPrintObject.setFreeText(clPrintObject.getFreeText()+"\n");
@@ -187,12 +180,6 @@ public class OrderServer extends Server {
                     freeText.add(clPrintObject);
                     cashlezPayment.doPrintFreeText(freeText);
                     cashlezPayment.unregisterReceiver();
-                    //TODO: Place the below inside a callback from the printer when it finishes.
-//                    c.getResources().getString(R.str)
-//                    State.getInstance().clear();
-//                    Intent intent = new Intent(callingActivity, ChooseDiningMethod.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    callingActivity.startActivity(intent);
                 } else {
                     Log.v("UH OH!", "Something bad happened");
                 }

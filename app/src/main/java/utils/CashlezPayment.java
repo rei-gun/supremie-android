@@ -1,15 +1,10 @@
 package utils;
 
-//import com.cashlez.android.garuda.library.cashlezlib.ApplicationState;
-//import com.cashlez.android.garuda.library.cashlezlib.payment.BasePaymentPresenter;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
 import com.bintang5.supremie.activity.BasePaymentActivity;
 import com.bintang5.supremie.activity.ChooseDiningMethod;
-import com.bintang5.supremie.activity.ChoosePaymentMethod;
 import com.bintang5.supremie.activity.State;
 import com.cashlez.android.sdk.CLPayment;
 import com.cashlez.android.sdk.checkcompanion.CLCompanionResponse;
@@ -52,8 +47,6 @@ public class CashlezPayment implements ICLPaymentService,
     public void initHandler() {
         paymentHandler = new CLPaymentHandler(callingActivity.getBaseContext(), callingActivity.getIntent().getExtras(), this);
         initPrinter();
-        //TODO: mau taruh enableUserInput di tempat lain saat printer terhubung
-//        callingActivity.enableUserInput();
     }
 
     private void initPrinter() {
@@ -68,18 +61,7 @@ public class CashlezPayment implements ICLPaymentService,
 
     @Override
     public void onGetPaymentResponse(CLPaymentResponse clPayment) {
-        Log.v("Payment received", clPayment.toString());
-        Log.v("BITCH", String.valueOf(clPayment.isSuccess()));
-        if (clPayment.getTransactionId() == null) {
-            Log.v("Payment", "null");
-        } else {
-            Log.v("Payment", clPayment.getTransactionId().toString());
-        }
-
-        /*if (clPayment.getErrorCode().equals("008090")) {
-            Log.v("Transaction cancelled", "oops");
-
-        */if (clPayment.getTransactionType() != null && clPayment.isSuccess()) {
+        if (clPayment.getTransactionType() != null && clPayment.isSuccess()) {
             Log.v("Payment success: ", clPayment.toString());
             MieStock mieStock = State.getInstance().getMieStock();
             Mie mie = new Mie(mieStock.id, mieStock.brand, mieStock.flavour, State.getInstance().getQuantityMie(),
@@ -97,15 +79,10 @@ public class CashlezPayment implements ICLPaymentService,
             Log.v("Transaction message", clPayment.getMessage());
         }
 
-
     }
 
     @Override
     public void onProvideSignature(CLPaymentResponse paymentResponse) {
-//        if (isViewAttached()) {
-//            getView().onHideLoading();
-//            getView().onProvideSignature(paymentResponse);
-//        }
     }
 
     @Override
@@ -113,7 +90,6 @@ public class CashlezPayment implements ICLPaymentService,
         if (clPayment.isSuccess()) {
             callingActivity.enableUserInput();
         }
-        Log.v("Payment response", clPayment.isSuccess() + "");
     }
 
     @Override
@@ -129,30 +105,14 @@ public class CashlezPayment implements ICLPaymentService,
 
     @Override
     public void onGetSendReceiptResponse(CLSendReceiptResponse receiptResponse) {
-//        if (isViewAttached()) {
-//            getView().onHideLoading();
-//            getView().onSendReceiptResponse(receiptResponse.getMessage());
-//        }
     }
 
     @Override
     public void onGetHelpResponse(CLHelpResponse response) {
-//        if (isViewAttached()) {
-//            getView().onHideLoading();
-//            getView().onSendHelpMessage(response.getMessage());
-//        }
     }
 
     @Override
     public void onGetCompanionResponse(CLCompanionResponse cp) {
-//        if (isViewAttached()) {
-//            getView().onHideLoading();
-//            if(cp.isSuccess()) {
-//                getView().onCompanionSuccess(cp.getCompanion().getCompanionName());
-//            }else{
-//                getView().onCompanionError(cp.getMessage());
-//            }
-//        }
     }
 
     void doConnectLocationProvider() {
@@ -160,18 +120,10 @@ public class CashlezPayment implements ICLPaymentService,
     }
 
     void doSendHelpMessage(String message) {
-//        if (isViewAttached()) {
-//            getView().onShowLoading();
-//            ICLHelpHandler helpFlow = new CLHelpHandler(context, this);
-//            helpFlow.doSendMessage(message);
-//        }
     }
 
     void doProceedSignature(String signSvg) {
-//        if (isViewAttached()) {
-//            getView().onShowLoading();
-            paymentHandler.doProceedSignature(signSvg);
-//        }
+        paymentHandler.doProceedSignature(signSvg);
     }
 
     void doStopLocationProvider() {
@@ -179,77 +131,37 @@ public class CashlezPayment implements ICLPaymentService,
     }
 
     void doPrintPaymentResult(CLPaymentResponse paymentResponse) {
-        //ga perlu
-//        applicationState.getPrinterHandler().doPrint(paymentResponse);
     }
 
     void doCheckReader() {
-//        if (isViewAttached()) {
-//            getView().onShowLoading();
-
-//            ICLCheckCompanionHandler checkReader = new CLCheckCompanionHandler(applicationState.getContext(), this);
-//            CLReaderCompanion reader = new CLReaderCompanion();
-//            reader.setBtAddress("54:7F:54:68:79:4B");
-//            reader.setDeviceTypeEnum(CLDeviceTypeEnum.INGENICO_ICMP_122);
-//            reader.setSerialNumber("14076PP20188406");
-//            reader.setCompanionName("ICMP-Ingenico");
-//            checkReader.doCheckCompanion(reader);
-//        }
     }
 
     void doSendReceipt(CLPaymentResponse paymentResponse) {
-//        if (isViewAttached()) {
-//            getView().onShowLoading();
-//
-//            ICLSendReceiptHandler sendReceiptFlow = new CLSendReceiptHandler(applicationState.getContext(), this);
-//            paymentResponse.setEmailAddress(paymentResponse.getEmailAddress());
-//            paymentResponse.setHpNo(paymentResponse.getHpNo());
-//            paymentResponse.setHideLocation(false);
-//            paymentResponse.setEmailAddressChecked(true);
-//            paymentResponse.setHPChecked(true);
-//            sendReceiptFlow.doSendReceipt(paymentResponse);
-//        }
     }
 
     void doPrintFreeText(ArrayList<CLPrintObject> clPrintObject) {
-//        applicationState.getPrinterHandler().doPrintFreeText(clPrintObject);
         printerHandler.doPrintFreeText(clPrintObject);
     }
 
     public void doPayDebitPin(CLPayment debitCLPayment) {
-//        if (isViewAttached()) {
-//            getView().onShowLoading();
-        Log.v("PAYMENT", debitCLPayment.getAmount());
+//        Log.v("PAYMENT", debitCLPayment.getAmount());
         paymentHandler.doProceedPayment(debitCLPayment);
-//        }
     }
 
     public void doPayDebitSign(CLPayment debitSign) {
-//        if (isViewAttached()) {
-//            getView().onShowLoading();
-            paymentHandler.doProceedPayment(debitSign);
-//        }
+        paymentHandler.doProceedPayment(debitSign);
     }
 
     public void doPayCreditPin(CLPayment creditPin) {
-//        if (isViewAttached()) {
-//            getView().onShowLoading();
-            paymentHandler.doProceedPayment(creditPin);
-//        }
+        paymentHandler.doProceedPayment(creditPin);
     }
 
     public void doPayCreditSign(CLPayment creditSign) {
-//        if (isViewAttached()) {
-//            getView().onShowLoading();
-            paymentHandler.doProceedPayment(creditSign);
-//        }
+        paymentHandler.doProceedPayment(creditSign);
     }
 
     public void doPayCash(CLPayment cashCLPayment) {
-//        if (isViewAttached()) {
-//            getView().onShowLoading();
-            paymentHandler.doProceedPayment(cashCLPayment);
-//        }
+        paymentHandler.doProceedPayment(cashCLPayment);
     }
 
     public void registerReceiver() {

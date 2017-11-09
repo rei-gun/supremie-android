@@ -79,7 +79,8 @@ public class ChooseMieBrand extends SupremieActivity {
                 Intent intent;
                 //Roti Bakar chosen, skip ChooseFlavour
                 if (State.getInstance().getBrand().equals("Roti") ||
-                        State.getInstance().getBrand().equals("Pisang")) {
+                        State.getInstance().getBrand().equals("Pisang") ||
+                        State.getInstance().getBrand().equals("Nasi")) {
                     State.getInstance().setMieStock(oneOfEachBrand.get(i));
                     State.getInstance().quantityMie = 1;
                     State.getInstance().setPedasLevel(0);
@@ -95,8 +96,6 @@ public class ChooseMieBrand extends SupremieActivity {
                 }
                 startActivity(intent);
                 overridePendingTransition(R.anim.enter, R.anim.exit);
-
-
             }
         });
     }
