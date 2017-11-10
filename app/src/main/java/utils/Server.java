@@ -74,8 +74,8 @@ public abstract class Server {
      * @return The server's base URL.
      */
     public static String getBaseUrl() {
-//       return "http://192.168.0.100:80"; // Raspberry Pi @ Supremie
-        return "http://192.168.1.107:8000"; //Rei's MAC @ Office
+       return "http://192.168.0.100:80"; // Raspberry Pi @ Supremie
+//        return "http://192.168.1.107:8000"; //Rei's MAC @ Office
 //        return "http://192.168.1.100:8000"; //Rei's MAC @ Martabak Testing
 //        return "http://192.168.0.108:8000"; //Rei's MAC @ Ruko
 //        return "http://192.168.1.122:8000";

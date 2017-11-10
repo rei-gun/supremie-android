@@ -51,13 +51,13 @@ public class OrderSummary extends BasePaymentActivity {
                 if (!m.brand.equals("NO")) {
                     OrderSummaryItem item = new OrderSummaryItem(m.brand + " - " +
                             m.flavour, "QTY - " + m.quantityMie.toString(),
-                            "RP " + String.valueOf(m.price));
+                            "Rp " + String.valueOf(m.price));
                     items.add(item);
                     //User has chosen Drink/Topping only or Roti/Pisang so don't render Pedas level
                     if (m.brand == null || (!m.brand.equals("Roti") &&
                             !m.brand.equals("Pisang"))) {
                         OrderSummaryItem pedas = new OrderSummaryItem("LEVEL PEDAS - LEVEL " + m.extraChili.toString(),
-                                "", "RP " + String.valueOf(State.getInstance().getPedasPrice(m.extraChili)));
+                                "", "Rp " + String.valueOf(State.getInstance().getPedasPrice(m.extraChili)));
                         items.add(pedas);
                     }
                     subTotal += State.getInstance().getPedasPrice(m.extraChili);
@@ -67,7 +67,7 @@ public class OrderSummary extends BasePaymentActivity {
                     for (Topping topping: m.toppings) {
                         OrderSummaryItem toppingItem = new OrderSummaryItem("TOPPING - " + topping.name,
                                 "QTY - " + topping.quantity.toString(),
-                                "RP " + String.valueOf(topping.quantity*topping.price));
+                                "Rp " + String.valueOf(topping.quantity*topping.price));
                         items.add(toppingItem);
                         subTotal += topping.quantity * topping.price;
                     }
@@ -83,7 +83,7 @@ public class OrderSummary extends BasePaymentActivity {
                     DrinkStock d = ds.get(i);
                     OrderSummaryItem dRow = new OrderSummaryItem("MINUMAN - " + d.brand,
                             "QTY - " + String.valueOf(drinkQuantities[i]),
-                            "RP " + String.valueOf(drinkQuantities[i] * d.price));
+                            "Rp " + String.valueOf(drinkQuantities[i] * d.price));
                     items.add(dRow);
                     subTotal += drinkQuantities[i] * d.price;
 
@@ -93,8 +93,9 @@ public class OrderSummary extends BasePaymentActivity {
         }
 
         //create subtotal row
-        ((TextView)findViewById(R.id.subtotal_value)).setText(
-                State.getInstance().addDot("RP "+subTotal.toString()));
+        String subtotalString = State.getInstance().addDot("Rp "+subTotal.toString());
+        ((TextView)findViewById(R.id.subtotal_value)).setText(subtotalString);
+        State.getInstance().subTotalString = subtotalString;
 
 
         //create tax & service charge row
@@ -103,14 +104,14 @@ public class OrderSummary extends BasePaymentActivity {
         if (taxCharge < 1000) {
             taxText.setText(String.valueOf(taxCharge.intValue()));
         } else {
-            taxText.setText(State.getInstance().addDot("RP "+String.valueOf(taxCharge.intValue())));
+            taxText.setText(State.getInstance().addDot("Rp "+String.valueOf(taxCharge.intValue())));
         }
 
         String taxString = State.getInstance().addDot(String.valueOf(taxCharge.intValue()));
         State.getInstance().setTaxServiceString(taxString);
 
         Double grandTotal = subTotal+ (subTotal*0.15);
-        String s = "RP "+String.valueOf(grandTotal.intValue());
+        String s = "Rp "+String.valueOf(grandTotal.intValue());
         s = State.getInstance().addDot(s);
         ((TextView)findViewById(R.id.total_value)).setText(s);
         State.getInstance().setGrandTotal(grandTotal.intValue());

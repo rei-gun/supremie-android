@@ -59,6 +59,8 @@ public class State {
 
     public Order tempOrder = null;
 
+    public String subTotalString = null;
+
     private State() {
         pedasPrices = new int[3];
         pedasPrices[0] = 0;

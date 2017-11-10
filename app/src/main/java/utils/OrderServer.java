@@ -160,6 +160,16 @@ public class OrderServer extends Server {
                     clPrintObject = new CLPrintObject();
                     clPrintObject.setFormat(CLPrintEnum.BOLD);
                     clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
+                    clPrintObject.setFreeText("\nSubtotal:");
+                    freeText.add(clPrintObject);
+                    clPrintObject = new CLPrintObject();
+                    clPrintObject.setFormat(CLPrintEnum.NORMAL);
+                    clPrintObject.setAlign(CLPrintAlignEnum.RIGHT);
+                    clPrintObject.setFreeText(State.getInstance().subTotalString);
+                    freeText.add(clPrintObject);
+                    clPrintObject = new CLPrintObject();
+                    clPrintObject.setFormat(CLPrintEnum.BOLD);
+                    clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
                     clPrintObject.setFreeText("\n\nTax & Service:");
                     freeText.add(clPrintObject);
                     clPrintObject = new CLPrintObject();
@@ -171,7 +181,7 @@ public class OrderServer extends Server {
                     clPrintObject.setFormat(CLPrintEnum.BOLD);
                     clPrintObject.setAlign(CLPrintAlignEnum.LEFT);
                     String totalPrice = State.getInstance().addDot(order.totalPrice.toString());
-                    clPrintObject.setFreeText("\nJumlah:\n");
+                    clPrintObject.setFreeText("\nTotal:\n");
                     freeText.add(clPrintObject);
                     clPrintObject = new CLPrintObject();
                     clPrintObject.setFormat(CLPrintEnum.TITLE);
