@@ -78,6 +78,6 @@ public abstract class Server {
 //        return "http://192.168.1.107:8000"; //Rei's MAC @ Office
 //        return "http://192.168.1.100:8000"; //Rei's MAC @ Martabak Testing
 //        return "http://192.168.0.108:8000"; //Rei's MAC @ Ruko
-//        return "http://192.168.1.122:8000";
+//        return "http://192.168.123.131:8000";
     }
 }
